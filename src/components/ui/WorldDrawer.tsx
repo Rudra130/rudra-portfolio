@@ -40,15 +40,15 @@ export const WorldDrawer: React.FC = () => {
       opacity: 1,
       transition: {
         type: 'spring' as const,
-        damping: prefersReduced ? 50 : 28,
-        stiffness: prefersReduced ? 300 : 220,
+        damping: prefersReduced ? 50 : 26,
+        stiffness: prefersReduced ? 300 : 260,
       },
     },
     exit: {
       x: '100%',
       opacity: 0,
       transition: {
-        duration: prefersReduced ? 0.05 : 0.35,
+        duration: prefersReduced ? 0.05 : 0.25,
         ease: 'easeIn' as const,
       },
     },
@@ -103,8 +103,8 @@ export const WorldDrawer: React.FC = () => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.35 }}
+            exit={{ opacity: 0, transition: { duration: 0.15 } }}
+            transition={{ duration: 0.3 }}
             className="fixed inset-0 z-40 pointer-events-none flex flex-col justify-between items-center"
           >
             {/* Top Letterbox Bar */}
@@ -166,7 +166,7 @@ export const WorldDrawer: React.FC = () => {
 
       {/* 4. Main Right-Side Glassmorphic Panel with Staggered Framer Motion Animations */}
       <AnimatePresence mode="wait">
-        {cameraMode === 'INSPECTING' && (
+        {activeWorldId && (
           <motion.div
             key={activeWorldId}
             variants={drawerPanelVariants}
