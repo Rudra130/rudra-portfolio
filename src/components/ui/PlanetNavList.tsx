@@ -6,14 +6,8 @@ import { worldsData } from '../../data/worlds';
 
 export const PlanetNavList: React.FC = () => {
   const { activeWorldId, selectWorld } = useUniverseStore();
-  const [manualCollapsed, setManualCollapsed] = useState<boolean | null>(null);
-  const [isHovered, setIsHovered] = useState(false);
-
-  // Auto-collapse when inspecting a world to let the 3D planet shine, unless hovered or manually toggled
-  const isCollapsed =
-    manualCollapsed !== null
-      ? manualCollapsed
-      : activeWorldId !== null && !isHovered;
+  // Collapsed mode by default as requested
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
 
   const prefersReduced =
     typeof window !== 'undefined' &&
@@ -22,8 +16,6 @@ export const PlanetNavList: React.FC = () => {
   return (
     <aside
       aria-label="Portfolio Dimensions Navigation"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       className="fixed left-3 sm:left-6 top-1/2 -translate-y-1/2 z-30 select-none transition-all duration-300"
     >
       <motion.div
@@ -33,25 +25,25 @@ export const PlanetNavList: React.FC = () => {
         className="flex flex-col rounded-2xl bg-slate-950/80 backdrop-blur-md border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.6)] p-1.5 sm:p-2"
       >
         {/* Dock Header */}
-        <div className="flex items-center justify-between px-2 py-1.5 mb-1 border-b border-white/5">
+        <div className="flex items-center justify-between px-2 py-1.5 mb-1 border-b border-white/5 gap-2">
           <div className="flex items-center gap-2">
-            <Compass className="w-3.5 h-3.5 text-amber-400 animate-spin-slow" />
+            <Compass className="w-3.5 h-3.5 text-amber-400 animate-spin-slow shrink-0" />
             {!isCollapsed && (
-              <span className="text-[10px] font-mono uppercase tracking-widest text-slate-400">
+              <span className="text-[10px] font-mono uppercase tracking-widest text-slate-400 whitespace-nowrap">
                 Explore
               </span>
             )}
           </div>
           <button
-            onClick={() => setManualCollapsed(!isCollapsed)}
+            onClick={() => setIsCollapsed((prev) => !prev)}
             className="p-1 rounded text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
             title={isCollapsed ? 'Expand Navigation' : 'Collapse Navigation'}
             aria-label={isCollapsed ? 'Expand Navigation' : 'Collapse Navigation'}
           >
             {isCollapsed ? (
-              <ChevronRight className="w-3 h-3 text-slate-300" />
+              <ChevronRight className="w-3.5 h-3.5 text-slate-300" />
             ) : (
-              <ChevronLeft className="w-3 h-3 text-slate-300" />
+              <ChevronLeft className="w-3.5 h-3.5 text-slate-300" />
             )}
           </button>
         </div>
@@ -73,6 +65,7 @@ export const PlanetNavList: React.FC = () => {
                     : 'text-slate-300 hover:text-white hover:bg-white/10 border border-transparent'
                 }`}
                 title={world.realWorldIdentity}
+                aria-label={world.realWorldIdentity}
                 aria-current={isActive ? 'page' : undefined}
               >
                 {/* Visual Orb / Celestial Symbol */}
