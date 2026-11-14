@@ -11,6 +11,8 @@ describe('Content Architecture & Data Integrity', () => {
     expect(profileData.metrics.leetcodeCount).toBe('600+');
     expect(profileData.metrics.leetcodeRating).toBe('1812');
     expect(profileData.experience.company).toBe('Salescode AI');
+    expect(profileData.githubUrl).toBe('https://github.com/Rudra130');
+    expect(profileData.linkedinUrl).toBe('https://www.linkedin.com/in/rudratiwari1306/');
   });
 
   it('should define all 9 Vedic Grahas with valid properties', () => {

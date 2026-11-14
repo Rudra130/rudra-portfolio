@@ -422,7 +422,7 @@ export const WorldDrawer: React.FC = () => {
                         className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 hover:border-amber-400/40 text-slate-200 text-xs font-mono transition-all"
                       >
                         <ExternalLink className="w-4 h-4 text-amber-400" />
-                        <span>linkedin.com/in/rudra-tiwari</span>
+                        <span>linkedin.com/in/rudratiwari1306</span>
                       </a>
                     </div>
                   </motion.div>
