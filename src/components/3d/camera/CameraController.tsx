@@ -13,7 +13,7 @@ export const CameraController: React.FC = () => {
   const { activeWorldId, cameraMode, setCameraMode, zoomLevel } = useUniverseStore();
 
   // Overview camera: high top-down vantage point looking down at the Sun with all planets revolving around it
-  const overviewPos = useRef(new THREE.Vector3(0, 290, 140));
+  const overviewPos = useRef(new THREE.Vector3(0, 360, 180));
   const sunCenter = useRef(new THREE.Vector3(0, 0, 0));
 
   // Synchronize button zoom changes from HUD relative to current control target
@@ -107,7 +107,7 @@ export const CameraController: React.FC = () => {
       rotateSpeed={0.8}
       enableRotate={true}
       minDistance={15}
-      maxDistance={700}
+      maxDistance={900}
       maxPolarAngle={Math.PI / 2 - 0.05} // prevent clipping through ground plane
       minPolarAngle={Math.PI / 16}
       dampingFactor={0.06}

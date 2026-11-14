@@ -9,14 +9,14 @@ import { CelestialBodyMeta } from '../../../types/celestial';
 // Shared live coordinate registry for 100% accurate camera tracking
 export const celestialPositions: Record<string, [number, number, number]> = {
   surya: [0, 0, 0],
-  budh: [36, 0, 0],
-  shukra: [60, 0, 0],
-  chandra: [86, 0, 0],
-  mangal: [114, 0, 0],
-  guru: [152, 0, 0],
-  shani: [194, 0, 0],
-  rahu: [238, 0, 0],
-  ketu: [284, 0, 0],
+  budh: [46, 0, 0],
+  shukra: [76, 0, 0],
+  chandra: [108, 0, 0],
+  mangal: [142, 0, 0],
+  guru: [188, 0, 0],
+  shani: [242, 0, 0],
+  rahu: [300, 0, 0],
+  ketu: [358, 0, 0],
 };
 
 interface PlanetProps {
@@ -67,7 +67,7 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
 
     // Peaceful, realistic axial rotation
     if (meshRef.current) {
-      meshRef.current.rotation.y += delta * 0.07;
+      meshRef.current.rotation.y += delta * 0.06;
     }
   });
 
@@ -90,15 +90,15 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
     >
       {/* Invisible Expanded Click Hitbox for instant, effortless clicking */}
       <mesh visible={false}>
-        <sphereGeometry args={[world.radius * 1.5, 16, 16]} />
+        <sphereGeometry args={[world.radius * 1.35, 16, 16]} />
         <meshBasicMaterial />
       </mesh>
 
       {/* Dedicated Inspection Keylight */}
       {isSelected && (
         <directionalLight
-          position={[3.5, 4.5, 7.0]}
-          intensity={3.8}
+          position={[world.radius * 0.8, world.radius * 1.0, world.radius * 1.6]}
+          intensity={4.0}
           color="#fffaf0"
         />
       )}
@@ -168,7 +168,7 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
 
       {/* Atmospheric Rim Glow on Hover/Selection */}
       {(isHovered || isSelected) && (
-        <mesh scale={[1.15, 1.15, 1.15]}>
+        <mesh scale={[1.14, 1.14, 1.14]}>
           <sphereGeometry args={[world.radius, 32, 32]} />
           <meshBasicMaterial
             color={world.glowColor}
@@ -183,9 +183,9 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
       {/* 3D Contextual Label Tag - Clickable */}
       {!activeWorldId && (
         <Html
-          position={[0, world.radius + 2.2, 0]}
+          position={[0, world.radius + 3.2, 0]}
           center
-          distanceFactor={80}
+          distanceFactor={100}
           className="select-none transition-all duration-300"
         >
           <div
@@ -196,7 +196,7 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
             className={`flex flex-col items-center whitespace-nowrap px-4 py-1.5 rounded-full text-center transition-all cursor-pointer pointer-events-auto ${
               isHovered
                 ? 'bg-slate-900/90 border border-amber-400 text-amber-300 scale-110 shadow-[0_0_20px_rgba(245,158,11,0.6)]'
-                : 'bg-slate-950/65 text-slate-200 border border-white/10 opacity-90 hover:border-amber-400 hover:text-amber-300'
+                : 'bg-slate-950/70 text-slate-200 border border-white/10 opacity-90 hover:border-amber-400 hover:text-amber-300'
             }`}
           >
             <span className="text-[12px] font-display font-semibold tracking-wide flex items-center gap-1.5">

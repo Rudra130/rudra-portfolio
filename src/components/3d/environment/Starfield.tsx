@@ -43,7 +43,7 @@ export const Starfield: React.FC = () => {
     <group>
       {/* Deep Space Milky Way Skybox Sphere */}
       <mesh>
-        <sphereGeometry args={[900, 48, 48]} />
+        <sphereGeometry args={[1200, 48, 48]} />
         <meshBasicMaterial
           map={bgTexture}
           side={THREE.BackSide}

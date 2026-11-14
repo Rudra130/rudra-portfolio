@@ -21,7 +21,7 @@ export const OrbitalRings: React.FC = () => {
         const lineMat = new THREE.LineBasicMaterial({
           color: world.color,
           transparent: true,
-          opacity: 0.65,
+          opacity: 0.7,
           depthWrite: false,
         });
         const line = new THREE.LineLoop(lineGeo, lineMat);
@@ -47,11 +47,11 @@ export const OrbitalRings: React.FC = () => {
 
             {/* 2. Luminous Anti-Aliased Ribbon Ring for clear, bold visibility */}
             <mesh rotation={[-Math.PI / 2, 0, 0]}>
-              <ringGeometry args={[ring.orbitRadius - 0.35, ring.orbitRadius + 0.35, 160]} />
+              <ringGeometry args={[ring.orbitRadius - 0.6, ring.orbitRadius + 0.6, 160]} />
               <meshBasicMaterial
                 color={ring.color}
                 transparent={true}
-                opacity={isHighlighted ? 0.7 : 0.38}
+                opacity={isHighlighted ? 0.75 : 0.42}
                 side={THREE.DoubleSide}
                 blending={THREE.AdditiveBlending}
                 depthWrite={false}

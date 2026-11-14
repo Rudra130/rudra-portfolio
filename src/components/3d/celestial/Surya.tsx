@@ -20,15 +20,15 @@ export const Surya: React.FC = () => {
 
   useFrame((_, delta) => {
     if (meshRef.current) {
-      meshRef.current.rotation.y += delta * 0.025;
+      meshRef.current.rotation.y += delta * 0.02;
     }
     if (coronaRef.current) {
-      coronaRef.current.rotation.z -= delta * 0.015;
-      const pulse = 1 + Math.sin(Date.now() * 0.0012) * 0.02;
+      coronaRef.current.rotation.z -= delta * 0.012;
+      const pulse = 1 + Math.sin(Date.now() * 0.001) * 0.02;
       coronaRef.current.scale.set(pulse, pulse, pulse);
     }
     if (outerGlowRef.current) {
-      outerGlowRef.current.rotation.y += delta * 0.012;
+      outerGlowRef.current.rotation.y += delta * 0.01;
     }
   });
 
@@ -51,13 +51,13 @@ export const Surya: React.FC = () => {
     >
       {/* Generous Click Hitbox */}
       <mesh visible={false}>
-        <sphereGeometry args={[15.0, 16, 16]} />
+        <sphereGeometry args={[24.0, 16, 16]} />
         <meshBasicMaterial />
       </mesh>
 
-      {/* Photorealistic Sun Sphere (Enlarged to Radius 12.0) */}
+      {/* Photorealistic Sun Sphere (Enlarged to Radius 20.0) */}
       <mesh ref={meshRef}>
-        <sphereGeometry args={[12.0, 64, 64]} />
+        <sphereGeometry args={[20.0, 64, 64]} />
         <meshStandardMaterial
           map={sunTexture}
           emissiveMap={sunTexture}
@@ -69,7 +69,7 @@ export const Surya: React.FC = () => {
 
       {/* Fiery Solar Corona Shell */}
       <mesh ref={coronaRef}>
-        <sphereGeometry args={[13.8, 36, 36]} />
+        <sphereGeometry args={[22.5, 36, 36]} />
         <meshBasicMaterial
           color="#ea580c"
           transparent={true}
@@ -81,7 +81,7 @@ export const Surya: React.FC = () => {
 
       {/* Outer Ethereal Atmosphere Aura */}
       <mesh ref={outerGlowRef}>
-        <sphereGeometry args={[16.2, 36, 36]} />
+        <sphereGeometry args={[26.0, 36, 36]} />
         <meshBasicMaterial
           color="#fef08a"
           transparent={true}
@@ -93,7 +93,7 @@ export const Surya: React.FC = () => {
 
       {/* Surya Contextual Label */}
       {!activeWorldId && (
-        <Html position={[0, -15.5, 0]} center distanceFactor={75} className="select-none">
+        <Html position={[0, -24.5, 0]} center distanceFactor={100} className="select-none">
           <div
             onClick={(e) => {
               e.stopPropagation();
