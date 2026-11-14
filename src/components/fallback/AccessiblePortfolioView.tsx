@@ -36,8 +36,7 @@ export const AccessiblePortfolioView: React.FC = () => {
           <img
             src={profileData.avatarPath || '/assets/user-photos/profile/profile-main.webp'}
             alt={profileData.name}
-            className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-2xl object-cover shadow-2xl border border-white/10"
-            style={{ objectPosition: 'center 20%' }}
+            className="relative w-32 h-40 sm:w-36 sm:h-44 rounded-2xl object-cover object-center shadow-2xl border border-white/10"
           />
         </div>
 
