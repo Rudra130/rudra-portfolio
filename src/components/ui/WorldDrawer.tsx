@@ -99,27 +99,7 @@ export const WorldDrawer: React.FC = () => {
 
   return (
     <>
-      {/* 1. Prominent Top-Left Back Button (Cleanly aligned below profile brand header) */}
-      <motion.div
-        initial={{ opacity: 0, x: -16 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: -16 }}
-        transition={{ duration: 0.25, ease: 'easeOut' }}
-        className="fixed top-20 sm:top-[76px] left-6 z-50"
-      >
-        <button
-          onClick={closeDrawer}
-          className="group flex items-center gap-2.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-slate-950/85 backdrop-blur-md border border-amber-500/40 text-amber-200 hover:text-white hover:border-amber-400 hover:bg-slate-900 shadow-[0_0_20px_rgba(245,158,11,0.35)] transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
-          title="Return to Solar System Overview (Esc)"
-        >
-          <ArrowLeft className="w-4 h-4 text-amber-400 group-hover:-translate-x-1 transition-transform" />
-          <span className="text-xs sm:text-sm font-display font-medium tracking-wide">
-            Back to Overview
-          </span>
-        </button>
-      </motion.div>
-
-      {/* 4. Main Right-Side Glassmorphic Panel with Staggered Framer Motion Animations */}
+      {/* Main Right-Side Glassmorphic Panel with Staggered Framer Motion Animations */}
       <AnimatePresence mode="wait">
         {activeWorldId && (
           <motion.div
@@ -137,13 +117,25 @@ export const WorldDrawer: React.FC = () => {
               animate="visible"
               className="mb-6 relative"
             >
-              <button
-                onClick={closeDrawer}
-                className="absolute top-0 right-0 p-2 rounded-full text-slate-400 hover:text-white hover:bg-white/10 transition-all cursor-pointer"
-                title="Close and return to overview (Esc)"
-              >
-                <span className="text-xl leading-none">✕</span>
-              </button>
+              {/* Top Navigation Row inside Drawer */}
+              <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/5">
+                <button
+                  onClick={closeDrawer}
+                  className="group flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 hover:bg-amber-500/10 border border-white/10 hover:border-amber-500/30 text-slate-300 hover:text-amber-200 transition-all text-xs font-display cursor-pointer"
+                  title="Return to Solar System Overview (Esc)"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5 text-amber-400 group-hover:-translate-x-0.5 transition-transform" />
+                  <span>Back to Overview</span>
+                </button>
+
+                <button
+                  onClick={closeDrawer}
+                  className="p-1.5 rounded-full text-slate-400 hover:text-white hover:bg-white/10 transition-all cursor-pointer"
+                  title="Close and return to overview (Esc)"
+                >
+                  <span className="text-lg leading-none">✕</span>
+                </button>
+              </div>
 
               <motion.div variants={itemVariants} className="flex items-center gap-3 mb-1 pr-10">
                 <span className="text-2xl" style={{ color: world.color }}>
