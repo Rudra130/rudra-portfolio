@@ -17,6 +17,28 @@ export function calculateOrbitalPosition(
   return [x, y, z];
 }
 
+/**
+ * High-performance vector-allocation-free calculation writing directly to a target object
+ */
+export function computeEllipticalPosition(
+  orbitRadius: number,
+  angleRad: number,
+  eccentricity: number,
+  inclinationDeg: number,
+  target: { x: number; y: number; z: number }
+): void {
+  if (orbitRadius === 0) {
+    target.x = 0;
+    target.y = 0;
+    target.z = 0;
+    return;
+  }
+  const incRad = (inclinationDeg * Math.PI) / 180;
+  target.x = orbitRadius * Math.cos(angleRad);
+  target.z = orbitRadius * Math.sqrt(1 - eccentricity * eccentricity) * Math.sin(angleRad);
+  target.y = orbitRadius * Math.sin(incRad) * Math.sin(angleRad);
+}
+
 export function clamp(value: number, min: number, max: number): number {
   return Math.max(min, Math.min(max, value));
 }

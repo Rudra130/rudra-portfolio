@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { calculateOrbitalPosition, clamp, lerp } from '../../src/utils/math';
+import { calculateOrbitalPosition, computeEllipticalPosition, clamp, lerp } from '../../src/utils/math';
 
 describe('Math Utilities', () => {
   it('should return [0, 0, 0] for center orbit radius 0 (Surya)', () => {
@@ -12,6 +12,16 @@ describe('Math Utilities', () => {
     expect(pos[0]).toBeCloseTo(20);
     expect(pos[1]).toBeCloseTo(0);
     expect(pos[2]).toBeCloseTo(0);
+  });
+
+  it('should accurately compute vector-free elliptical coordinates', () => {
+    const target = { x: 0, y: 0, z: 0 };
+    computeEllipticalPosition(100, Math.PI / 2, 0.06, 2.5, target);
+    expect(target.x).toBeCloseTo(0);
+    // eccentricity 0.06 -> sqrt(1 - 0.0036) = ~0.9982 * 100
+    expect(target.z).toBeCloseTo(100 * Math.sqrt(1 - 0.06 * 0.06));
+    // inclination 2.5 deg -> sin(2.5 * pi / 180) * 100
+    expect(target.y).toBeCloseTo(100 * Math.sin((2.5 * Math.PI) / 180));
   });
 
   it('should clamp numbers correctly within bounds', () => {

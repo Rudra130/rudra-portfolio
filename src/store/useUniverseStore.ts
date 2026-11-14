@@ -14,6 +14,7 @@ interface UniverseState {
   isAudioMuted: boolean;
   isSearchOpen: boolean;
   zoomLevel: number;
+  isOrbitPaused: boolean;
 
   enterUniverse: () => void;
   selectWorld: (id: CelestialId | null) => void;
@@ -23,6 +24,7 @@ interface UniverseState {
   setActiveTab: (tab: string) => void;
   toggleFallback2D: () => void;
   toggleAudio: () => void;
+  toggleOrbitPause: () => void;
   setSearchOpen: (open: boolean) => void;
   zoomIn: () => void;
   zoomOut: () => void;
@@ -39,6 +41,7 @@ export const useUniverseStore = create<UniverseState>((set) => ({
   isAudioMuted: true,
   isSearchOpen: false,
   zoomLevel: 1.0,
+  isOrbitPaused: false,
 
   enterUniverse: () => {
     set({ hasEnteredUniverse: true, cameraMode: 'OVERVIEW' });
@@ -91,6 +94,10 @@ export const useUniverseStore = create<UniverseState>((set) => ({
 
   toggleAudio: () => {
     set((state) => ({ isAudioMuted: !state.isAudioMuted }));
+  },
+
+  toggleOrbitPause: () => {
+    set((state) => ({ isOrbitPaused: !state.isOrbitPaused }));
   },
 
   setSearchOpen: (open: boolean) => {

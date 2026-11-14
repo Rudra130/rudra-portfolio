@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
+import gsap from 'gsap';
 import { useUniverseStore } from '../../../store/useUniverseStore';
 import { worldsData } from '../../../data/worlds';
 import { celestialPositions } from '../celestial/PlanetarySystem';
@@ -9,6 +10,7 @@ import { celestialPositions } from '../celestial/PlanetarySystem';
 export const CameraController: React.FC = () => {
   const { camera } = useThree();
   const controlsRef = useRef<any>(null);
+  const tweenRef = useRef<gsap.core.Tween | null>(null);
 
   const { activeWorldId, cameraMode, setCameraMode, zoomLevel } = useUniverseStore();
 
@@ -30,71 +32,129 @@ export const CameraController: React.FC = () => {
     }
   }, [zoomLevel, camera]);
 
-  useFrame((_, delta) => {
-    if (activeWorldId) {
+  // GSAP Camera Choreography on planet selection or return
+  useEffect(() => {
+    if (tweenRef.current) {
+      tweenRef.current.kill();
+      tweenRef.current = null;
+    }
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (activeWorldId && cameraMode === 'APPROACHING') {
       const world = worldsData.find((w) => w.id === activeWorldId);
       if (world) {
-        // Read accurate live 3D coordinate of the focused celestial body
         const pos = celestialPositions[activeWorldId] || [0, 0, 0];
-        const px = pos[0];
-        const py = pos[1];
-        const pz = pos[2];
-
         const dist = world.cameraDistance;
 
-        // Target is shifted to the RIGHT of the planet (+0.45 * dist)
-        // so the planet is squarely projected in the LEFT ~25-30% of the screen
-        const targetVec = new THREE.Vector3(
-          px + dist * 0.45,
-          py,
-          pz
+        // Destination target: shifted right (+0.45 * dist) so the planet sits on the left ~30%
+        const destTarget = new THREE.Vector3(
+          pos[0] + dist * 0.45,
+          pos[1],
+          pos[2]
         );
 
-        // Position camera in front of the target with slight vertical elevation
-        const camVec = new THREE.Vector3(
-          px + dist * 0.40,
-          py + dist * 0.12,
-          pz + dist * 1.15
+        // Destination camera position: elevated and in front
+        const destCam = new THREE.Vector3(
+          pos[0] + dist * 0.40,
+          pos[1] + dist * 0.12,
+          pos[2] + dist * 1.15
         );
 
-        if (cameraMode === 'APPROACHING') {
-          camera.position.lerp(camVec, delta * 4.2);
+        const proxy = {
+          camX: camera.position.x,
+          camY: camera.position.y,
+          camZ: camera.position.z,
+          tarX: controlsRef.current ? controlsRef.current.target.x : 0,
+          tarY: controlsRef.current ? controlsRef.current.target.y : 0,
+          tarZ: controlsRef.current ? controlsRef.current.target.z : 0,
+        };
+
+        const duration = prefersReduced ? 0.05 : 1.7;
+
+        tweenRef.current = gsap.to(proxy, {
+          camX: destCam.x,
+          camY: destCam.y,
+          camZ: destCam.z,
+          tarX: destTarget.x,
+          tarY: destTarget.y,
+          tarZ: destTarget.z,
+          duration,
+          ease: 'power3.inOut',
+          onUpdate: () => {
+            camera.position.set(proxy.camX, proxy.camY, proxy.camZ);
+            if (controlsRef.current) {
+              controlsRef.current.target.set(proxy.tarX, proxy.tarY, proxy.tarZ);
+              controlsRef.current.update();
+            }
+          },
+          onComplete: () => {
+            setCameraMode('INSPECTING');
+            tweenRef.current = null;
+          },
+        });
+      }
+    } else if (cameraMode === 'RETURNING') {
+      const proxy = {
+        camX: camera.position.x,
+        camY: camera.position.y,
+        camZ: camera.position.z,
+        tarX: controlsRef.current ? controlsRef.current.target.x : 0,
+        tarY: controlsRef.current ? controlsRef.current.target.y : 0,
+        tarZ: controlsRef.current ? controlsRef.current.target.z : 0,
+      };
+
+      const duration = prefersReduced ? 0.05 : 1.5;
+
+      tweenRef.current = gsap.to(proxy, {
+        camX: overviewPos.current.x,
+        camY: overviewPos.current.y,
+        camZ: overviewPos.current.z,
+        tarX: sunCenter.current.x,
+        tarY: sunCenter.current.y,
+        tarZ: sunCenter.current.z,
+        duration,
+        ease: 'power2.out',
+        onUpdate: () => {
+          camera.position.set(proxy.camX, proxy.camY, proxy.camZ);
           if (controlsRef.current) {
-            controlsRef.current.target.lerp(targetVec, delta * 4.2);
+            controlsRef.current.target.set(proxy.tarX, proxy.tarY, proxy.tarZ);
             controlsRef.current.update();
           }
-
-          if (camera.position.distanceTo(camVec) < 0.4) {
-            setCameraMode('INSPECTING');
-          }
-        } else if (cameraMode === 'INSPECTING') {
-          // Lock target so the planet stays solidly framed on the left
-          if (controlsRef.current) {
-            controlsRef.current.target.copy(targetVec);
-          }
-        }
-      }
-    } else {
-      // Returning to Overview
-      if (cameraMode === 'RETURNING') {
-        const currentOverview = overviewPos.current;
-
-        camera.position.lerp(currentOverview, delta * 3.8);
-        if (controlsRef.current) {
-          controlsRef.current.target.lerp(sunCenter.current, delta * 3.8);
-          controlsRef.current.update();
-        }
-
-        if (camera.position.distanceTo(currentOverview) < 1.0) {
-          camera.position.copy(currentOverview);
+        },
+        onComplete: () => {
+          camera.position.copy(overviewPos.current);
           if (controlsRef.current) {
             controlsRef.current.target.copy(sunCenter.current);
             controlsRef.current.update();
           }
           setCameraMode('OVERVIEW');
-        }
+          tweenRef.current = null;
+        },
+      });
+    }
+
+    return () => {
+      if (tweenRef.current) {
+        tweenRef.current.kill();
+        tweenRef.current = null;
       }
-      // When in 'OVERVIEW', never modify camera or target so mouse wheel zoom & orbit drag are 100% natural!
+    };
+  }, [activeWorldId, cameraMode, camera, setCameraMode]);
+
+  useFrame(() => {
+    // Lock target during inspection to keep the planet cleanly framed on the left
+    if (cameraMode === 'INSPECTING' && activeWorldId) {
+      const world = worldsData.find((w) => w.id === activeWorldId);
+      if (world && controlsRef.current) {
+        const pos = celestialPositions[activeWorldId] || [0, 0, 0];
+        const dist = world.cameraDistance;
+        controlsRef.current.target.set(
+          pos[0] + dist * 0.45,
+          pos[1],
+          pos[2]
+        );
+      }
     }
   });
 
@@ -110,7 +170,12 @@ export const CameraController: React.FC = () => {
       maxDistance={900}
       maxPolarAngle={Math.PI / 2 - 0.05} // prevent clipping through ground plane
       minPolarAngle={Math.PI / 16}
+      enableDamping={true}
       dampingFactor={0.06}
+      touches={{
+        ONE: THREE.TOUCH.ROTATE,
+        TWO: THREE.TOUCH.DOLLY_PAN,
+      }}
       enabled={cameraMode === 'OVERVIEW'}
     />
   );

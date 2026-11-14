@@ -1,10 +1,11 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useMemo } from 'react';
 import { useFrame, useLoader } from '@react-three/fiber';
 import { Html } from '@react-three/drei';
 import * as THREE from 'three';
 import { worldsData } from '../../../data/worlds';
 import { useUniverseStore } from '../../../store/useUniverseStore';
 import { CelestialBodyMeta } from '../../../types/celestial';
+import { computeEllipticalPosition } from '../../../utils/math';
 
 // Shared live coordinate registry for 100% accurate camera tracking
 export const celestialPositions: Record<string, [number, number, number]> = {
@@ -34,12 +35,21 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
 }) => {
   const groupRef = useRef<THREE.Group>(null);
   const meshRef = useRef<THREE.Mesh>(null);
+  const cloudsRef = useRef<THREE.Mesh>(null);
+  const glowRef = useRef<THREE.Mesh>(null);
   const angleRef = useRef<number>(initialAngle);
   const downPosRef = useRef<{ x: number; y: number } | null>(null);
+  const glowScaleRef = useRef<number>(1.12);
 
-  const { selectWorld, setHoveredWorld, hoveredWorldId, activeWorldId } = useUniverseStore();
+  // Preallocated vector for zero allocation in useFrame
+  const tempPos = useMemo(() => ({ x: 0, y: 0, z: 0 }), []);
+
+  const { selectWorld, setHoveredWorld, hoveredWorldId, activeWorldId, isOrbitPaused } =
+    useUniverseStore();
   const isHovered = hoveredWorldId === world.id;
   const isSelected = activeWorldId === world.id;
+
+  const hasAtmosphere = ['shukra', 'chandra', 'guru'].includes(world.id);
 
   // Ultra-reliable single-click handler that ignores minor sub-pixel drag but guarantees instant response
   const handlePointerDown = (e: any) => {
@@ -61,32 +71,56 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
 
   // Initialize starting coordinate
   useEffect(() => {
-    const initX = Math.cos(initialAngle) * world.orbitRadius;
-    const initZ = Math.sin(initialAngle) * world.orbitRadius;
-    celestialPositions[world.id] = [initX, 0, initZ];
+    computeEllipticalPosition(
+      world.orbitRadius,
+      initialAngle,
+      world.eccentricity ?? 0.05,
+      world.inclination ?? 0,
+      tempPos
+    );
+    celestialPositions[world.id] = [tempPos.x, tempPos.y, tempPos.z];
     if (groupRef.current) {
-      groupRef.current.position.set(initX, 0, initZ);
+      groupRef.current.position.set(tempPos.x, tempPos.y, tempPos.z);
     }
-  }, [initialAngle, world.id, world.orbitRadius]);
+  }, [initialAngle, world.id, world.orbitRadius, world.eccentricity, world.inclination, tempPos]);
 
   useFrame((_, delta) => {
-    // When this planet is selected, freeze its orbital revolution so it stays fixed in frame!
-    if (!isSelected) {
-      const speedMultiplier = activeWorldId ? 0.15 : 1.0;
+    // 1. Continuous Elliptical Revolution
+    // If global pause is active or this specific world is selected, orbital revolution is halted
+    if (!isOrbitPaused && !isSelected) {
+      const speedMultiplier = activeWorldId ? 0.2 : 1.0;
       angleRef.current += delta * world.orbitSpeed * 0.08 * speedMultiplier;
     }
 
-    const x = Math.cos(angleRef.current) * world.orbitRadius;
-    const z = Math.sin(angleRef.current) * world.orbitRadius;
-    celestialPositions[world.id] = [x, 0, z];
+    computeEllipticalPosition(
+      world.orbitRadius,
+      angleRef.current,
+      world.eccentricity ?? 0.05,
+      world.inclination ?? 0,
+      tempPos
+    );
+    celestialPositions[world.id] = [tempPos.x, tempPos.y, tempPos.z];
 
     if (groupRef.current) {
-      groupRef.current.position.set(x, 0, z);
+      groupRef.current.position.set(tempPos.x, tempPos.y, tempPos.z);
     }
 
-    // Peaceful, realistic axial rotation
+    // 2. Independent Axial Rotation (Rotates continuously, even when selected!)
     if (meshRef.current) {
-      meshRef.current.rotation.y += delta * 0.06;
+      meshRef.current.rotation.y += delta * (world.rotationSpeed ?? 0.05);
+    }
+
+    // 3. Differential Cloud Layer Rotation
+    if (cloudsRef.current) {
+      const cloudSpeed = world.cloudSpeed ?? (world.rotationSpeed ?? 0.05) * 1.35;
+      cloudsRef.current.rotation.y += delta * cloudSpeed;
+    }
+
+    // 4. Smooth Atmospheric Glow Lerp on Hover/Selection
+    const targetGlowScale = isHovered ? 1.25 : isSelected ? 1.18 : 1.12;
+    glowScaleRef.current = THREE.MathUtils.lerp(glowScaleRef.current, targetGlowScale, delta * 6);
+    if (glowRef.current) {
+      glowRef.current.scale.setScalar(glowScaleRef.current);
     }
   });
 
@@ -125,114 +159,131 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
         />
       )}
 
-      {/* Photorealistic Planetary Sphere */}
-      <mesh
-        ref={meshRef}
-        onPointerDown={handlePointerDown}
-        onPointerUp={handlePointerUp}
-        onClick={(e) => {
-          e.stopPropagation();
-          selectWorld(world.id);
-        }}
-      >
-        <sphereGeometry args={[world.radius, 64, 64]} />
-        {texture ? (
-          <meshStandardMaterial
-            map={texture}
-            roughness={world.id === 'budh' ? 0.85 : 0.55}
-            metalness={world.id === 'budh' ? 0.15 : 0.05}
-            emissive={world.glowColor}
-            emissiveIntensity={isHovered || isSelected ? 0.35 : 0.06}
-          />
-        ) : (
-          <meshStandardMaterial
-            color={world.color}
-            roughness={0.6}
-            emissive={world.glowColor}
-            emissiveIntensity={isHovered ? 0.5 : 0.2}
-          />
+      {/* Axial Tilt Orienting Group */}
+      <group rotation={[0, 0, ((world.axialTilt ?? 0) * Math.PI) / 180]}>
+        {/* Photorealistic Planetary Sphere */}
+        <mesh
+          ref={meshRef}
+          onPointerDown={handlePointerDown}
+          onPointerUp={handlePointerUp}
+          onClick={(e) => {
+            e.stopPropagation();
+            selectWorld(world.id);
+          }}
+        >
+          <sphereGeometry args={[world.radius, 64, 64]} />
+          {texture ? (
+            <meshStandardMaterial
+              map={texture}
+              roughness={world.id === 'budh' ? 0.85 : 0.55}
+              metalness={world.id === 'budh' ? 0.15 : 0.05}
+              emissive={world.glowColor}
+              emissiveIntensity={isHovered || isSelected ? 0.38 : 0.08}
+            />
+          ) : (
+            <meshStandardMaterial
+              color={world.color}
+              roughness={0.6}
+              emissive={world.glowColor}
+              emissiveIntensity={isHovered ? 0.5 : 0.2}
+            />
+          )}
+        </mesh>
+
+        {/* Concentric Differential Cloud/Atmosphere Layer */}
+        {hasAtmosphere && texture && (
+          <mesh ref={cloudsRef} scale={[1.018, 1.018, 1.018]}>
+            <sphereGeometry args={[world.radius, 48, 48]} />
+            <meshStandardMaterial
+              map={texture}
+              transparent={true}
+              opacity={world.id === 'shukra' ? 0.42 : 0.26}
+              blending={THREE.AdditiveBlending}
+              depthWrite={false}
+              roughness={0.9}
+            />
+          </mesh>
         )}
+
+        {/* Saturn's Iconic Rings with Alpha Division (tilted along Saturn's axial tilt) */}
+        {world.id === 'shani' && (
+          <mesh
+            rotation={[-Math.PI / 2, 0, 0]}
+            onPointerDown={handlePointerDown}
+            onPointerUp={handlePointerUp}
+            onClick={(e) => {
+              e.stopPropagation();
+              selectWorld(world.id);
+            }}
+          >
+            <ringGeometry args={[world.radius * 1.35, world.radius * 2.5, 64]} />
+            <meshStandardMaterial
+              map={ringTexture || undefined}
+              color="#e2d8b0"
+              side={THREE.DoubleSide}
+              transparent={true}
+              opacity={0.92}
+              roughness={0.6}
+            />
+          </mesh>
+        )}
+
+        {/* Rahu Swirling Singularity Accretion Disk */}
+        {world.id === 'rahu' && (
+          <mesh
+            rotation={[-Math.PI / 4, 0.1, 0]}
+            onPointerDown={handlePointerDown}
+            onPointerUp={handlePointerUp}
+            onClick={(e) => {
+              e.stopPropagation();
+              selectWorld(world.id);
+            }}
+          >
+            <ringGeometry args={[world.radius * 1.25, world.radius * 2.4, 48]} />
+            <meshBasicMaterial
+              color="#6366f1"
+              side={THREE.DoubleSide}
+              transparent={true}
+              opacity={0.85}
+              blending={THREE.AdditiveBlending}
+            />
+          </mesh>
+        )}
+
+        {/* Ketu Ethereal Cometary Plume */}
+        {world.id === 'ketu' && (
+          <mesh
+            scale={[1.4, 1.4, 3.0]}
+            onPointerDown={handlePointerDown}
+            onPointerUp={handlePointerUp}
+            onClick={(e) => {
+              e.stopPropagation();
+              selectWorld(world.id);
+            }}
+          >
+            <sphereGeometry args={[world.radius, 24, 24]} />
+            <meshBasicMaterial
+              color="#14b8a6"
+              transparent={true}
+              opacity={0.35}
+              blending={THREE.AdditiveBlending}
+            />
+          </mesh>
+        )}
+      </group>
+
+      {/* Atmospheric Fresnel Rim Glow on Hover/Selection */}
+      <mesh ref={glowRef}>
+        <sphereGeometry args={[world.radius, 32, 32]} />
+        <meshBasicMaterial
+          color={world.glowColor}
+          transparent={true}
+          opacity={isHovered ? 0.58 : isSelected ? 0.42 : 0.18}
+          side={THREE.BackSide}
+          blending={THREE.AdditiveBlending}
+          depthWrite={false}
+        />
       </mesh>
-
-      {/* Saturn's Iconic Rings with Alpha Division */}
-      {world.id === 'shani' && (
-        <mesh
-          rotation={[-Math.PI / 3, 0.2, 0]}
-          onPointerDown={handlePointerDown}
-          onPointerUp={handlePointerUp}
-          onClick={(e) => {
-            e.stopPropagation();
-            selectWorld(world.id);
-          }}
-        >
-          <ringGeometry args={[world.radius * 1.35, world.radius * 2.5, 64]} />
-          <meshStandardMaterial
-            map={ringTexture || undefined}
-            color="#e2d8b0"
-            side={THREE.DoubleSide}
-            transparent={true}
-            opacity={0.92}
-            roughness={0.6}
-          />
-        </mesh>
-      )}
-
-      {/* Rahu Swirling Singularity Accretion Disk */}
-      {world.id === 'rahu' && (
-        <mesh
-          rotation={[-Math.PI / 4, 0.1, 0]}
-          onPointerDown={handlePointerDown}
-          onPointerUp={handlePointerUp}
-          onClick={(e) => {
-            e.stopPropagation();
-            selectWorld(world.id);
-          }}
-        >
-          <ringGeometry args={[world.radius * 1.25, world.radius * 2.4, 48]} />
-          <meshBasicMaterial
-            color="#6366f1"
-            side={THREE.DoubleSide}
-            transparent={true}
-            opacity={0.85}
-            blending={THREE.AdditiveBlending}
-          />
-        </mesh>
-      )}
-
-      {/* Ketu Ethereal Cometary Plume */}
-      {world.id === 'ketu' && (
-        <mesh
-          scale={[1.4, 1.4, 3.0]}
-          onPointerDown={handlePointerDown}
-          onPointerUp={handlePointerUp}
-          onClick={(e) => {
-            e.stopPropagation();
-            selectWorld(world.id);
-          }}
-        >
-          <sphereGeometry args={[world.radius, 24, 24]} />
-          <meshBasicMaterial
-            color="#14b8a6"
-            transparent={true}
-            opacity={0.35}
-            blending={THREE.AdditiveBlending}
-          />
-        </mesh>
-      )}
-
-      {/* Atmospheric Rim Glow on Hover/Selection */}
-      {(isHovered || isSelected) && (
-        <mesh scale={[1.14, 1.14, 1.14]}>
-          <sphereGeometry args={[world.radius, 32, 32]} />
-          <meshBasicMaterial
-            color={world.glowColor}
-            transparent={true}
-            opacity={0.38}
-            side={THREE.BackSide}
-            blending={THREE.AdditiveBlending}
-          />
-        </mesh>
-      )}
 
       {/* 3D Contextual Label Tag - Clickable on Pointer Down & Click */}
       {!activeWorldId && (

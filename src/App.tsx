@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useUniverseStore } from './store/useUniverseStore';
+import { useKeyboardNavigation } from './hooks/useKeyboardNavigation';
 import { Header } from './components/ui/Header';
 import { LandingHero } from './components/ui/LandingHero';
 import { HUDControls } from './components/ui/HUDControls';
@@ -15,6 +16,9 @@ export const App: React.FC = () => {
     enterUniverse,
     selectWorld,
   } = useUniverseStore();
+
+  // Enable multi-modal global keyboard navigation (Arrows, Esc, Space, Enter)
+  useKeyboardNavigation();
 
   // Synchronize URL Hash navigation
   useEffect(() => {
