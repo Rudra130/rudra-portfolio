@@ -14,11 +14,14 @@ export const Header: React.FC = () => {
         onClick={() => selectWorld(null)}
         className="flex items-center gap-3 cursor-pointer pointer-events-auto group transition-transform hover:scale-[1.02]"
       >
-        {/* Golden Galaxy Swirl Icon */}
-        <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-600 via-amber-400 to-amber-200 p-[1.5px] shadow-[0_0_15px_rgba(245,158,11,0.5)] group-hover:shadow-[0_0_20px_rgba(245,158,11,0.8)] transition-all">
-          <div className="w-full h-full rounded-full bg-slate-950 flex items-center justify-center">
-            <span className="text-amber-400 text-xs font-bold">✦</span>
-          </div>
+        {/* Golden Galaxy Swirl with Rudra's Portrait */}
+        <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-600 via-amber-400 to-amber-200 p-[1.5px] shadow-[0_0_15px_rgba(245,158,11,0.5)] group-hover:shadow-[0_0_20px_rgba(245,158,11,0.8)] transition-all overflow-hidden shrink-0">
+          <img
+            src={profileData.avatarPath || '/assets/user-photos/profile/profile-main.webp'}
+            alt={profileData.name}
+            className="w-full h-full rounded-full object-cover"
+            style={{ objectPosition: 'center 20%' }}
+          />
         </div>
 
         <div className="flex flex-col">

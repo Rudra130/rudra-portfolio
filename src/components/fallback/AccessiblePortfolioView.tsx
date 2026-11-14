@@ -22,21 +22,32 @@ export const AccessiblePortfolioView: React.FC = () => {
       </div>
 
       {/* Hero Header */}
-      <section className="mb-16 text-center sm:text-left border-b border-white/10 pb-12">
-        <span className="text-xs font-mono text-cyan-400 uppercase tracking-widest block mb-2">
-          2D Accessible Portfolio
-        </span>
-        <h1 className="text-4xl sm:text-6xl font-display font-bold text-white mb-2">
-          {profileData.name}
-        </h1>
-        <p className="text-base sm:text-lg font-mono text-amber-400 mb-4">
-          {profileData.titles.join(' | ')}
-        </p>
-        <p className="text-sm text-slate-300 max-w-2xl leading-relaxed mb-6">
-          {profileData.summary}
-        </p>
+      <section className="mb-16 border-b border-white/10 pb-12 flex flex-col sm:flex-row items-center sm:items-start gap-8">
+        <div className="relative group shrink-0">
+          <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-300 opacity-40 blur-sm group-hover:opacity-75 transition duration-300" />
+          <img
+            src={profileData.avatarPath || '/assets/user-photos/profile/profile-main.webp'}
+            alt={profileData.name}
+            className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-2xl object-cover shadow-2xl border border-white/10"
+            style={{ objectPosition: 'center 20%' }}
+          />
+        </div>
 
-        <div className="flex flex-wrap items-center gap-4">
+        <div className="text-center sm:text-left flex-1">
+          <span className="text-xs font-mono text-cyan-400 uppercase tracking-widest block mb-2">
+            2D Accessible Portfolio
+          </span>
+          <h1 className="text-4xl sm:text-6xl font-display font-bold text-white mb-2">
+            {profileData.name}
+          </h1>
+          <p className="text-base sm:text-lg font-mono text-amber-400 mb-4">
+            {profileData.titles.join(' | ')}
+          </p>
+          <p className="text-sm text-slate-300 max-w-2xl leading-relaxed mb-6">
+            {profileData.summary}
+          </p>
+
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4">
           <a
             href={profileData.resumePath}
             download="Rudra_Tiwari_Resume.pdf"
@@ -53,6 +64,7 @@ export const AccessiblePortfolioView: React.FC = () => {
             <Mail className="w-4 h-4 text-amber-400" />
             <span>{profileData.email}</span>
           </a>
+        </div>
         </div>
       </section>
 

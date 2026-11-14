@@ -50,6 +50,18 @@ export const LandingHero: React.FC = () => {
 
       {/* Central Hero Block (Centered Typography) */}
       <div className="relative flex flex-col items-center text-center max-w-3xl mx-auto my-auto z-40">
+        {/* Profile Avatar Badge */}
+        <div className="relative mb-4 group">
+          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-tr from-amber-600 via-amber-400 to-amber-200 p-[2px] shadow-[0_0_25px_rgba(245,158,11,0.5)] group-hover:shadow-[0_0_35px_rgba(245,158,11,0.8)] transition-all overflow-hidden">
+            <img
+              src={profileData.avatarPath || '/assets/user-photos/profile/profile-main.webp'}
+              alt={profileData.name}
+              className="w-full h-full rounded-full object-cover"
+              style={{ objectPosition: 'center 20%' }}
+            />
+          </div>
+        </div>
+
         <span className="text-xs sm:text-sm font-mono uppercase tracking-[0.35em] text-slate-200/90 mb-4 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
           My Portfolio
         </span>

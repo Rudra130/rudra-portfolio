@@ -11,6 +11,7 @@ export const profileData: ProfileRecord = {
   githubUrl: 'https://github.com/Rudra130',
   linkedinUrl: 'https://www.linkedin.com/in/rudratiwari1306/',
   resumePath: '/assets/resume.pdf',
+  avatarPath: '/assets/user-photos/profile/profile-main.webp',
   education: {
     degree: 'B.Tech',
     major: 'Computer Science and Engineering',

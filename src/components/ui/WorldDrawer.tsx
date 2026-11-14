@@ -256,6 +256,7 @@ export const WorldDrawer: React.FC = () => {
                         src="/assets/user-photos/profile/profile-main.webp"
                         alt={profileData.name}
                         className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover border border-white/10 shadow-lg shrink-0"
+                        style={{ objectPosition: 'center 20%' }}
                         onError={(e) => {
                           (e.target as HTMLImageElement).src =
                             '/assets/user-photos/profile/profile-main.jpg';

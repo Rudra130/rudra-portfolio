@@ -51,6 +51,7 @@ export interface ProfileRecord {
   githubUrl: string;
   linkedinUrl: string;
   resumePath: string;
+  avatarPath?: string;
   education: EducationRecord;
   experience: WorkExperienceRecord;
   skills: SkillCategoryRecord[];
