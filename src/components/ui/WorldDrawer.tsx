@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Download, Mail, ExternalLink, Award, GraduationCap, Briefcase, Database, Utensils, Brain, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, Download, Mail, ExternalLink, Award, GraduationCap, Briefcase, Database, Utensils, Brain, CheckCircle2, Code } from 'lucide-react';
+import { GithubIcon } from './icons/BrandIcons';
 import { useUniverseStore } from '../../store/useUniverseStore';
 import { worldsData } from '../../data/worlds';
 import { profileData } from '../../data/profile';
+import { projectsData } from '../../data/projects';
 
 export const WorldDrawer: React.FC = () => {
   const { activeWorldId, closeDrawer, activeTab, setActiveTab } = useUniverseStore();
@@ -267,112 +269,78 @@ export const WorldDrawer: React.FC = () => {
               ))}
             </div>
 
-            {/* Project Cards (Exact View 4 3-Column Grid) */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {/* Card 1: NL2SQL */}
-              <div className="glass-card p-5 border border-white/10 flex flex-col justify-between group hover:border-red-500/40 transition-all">
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
-                      <Database className="w-4 h-4" />
+            {/* Project Cards (Grid) */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {projectsData
+                .filter((p) => {
+                  if (projectCategory === 'All') return true;
+                  return p.category.toLowerCase().includes(projectCategory.toLowerCase());
+                })
+                .map((project) => (
+                  <div
+                    key={project.id}
+                    className="glass-card p-5 border border-white/10 flex flex-col justify-between group hover:border-red-500/40 hover:bg-slate-900/80 transition-all duration-300"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="w-8 h-8 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400">
+                          {project.iconType === 'database' && <Database className="w-4 h-4" />}
+                          {project.iconType === 'brain' && <Brain className="w-4 h-4" />}
+                          {project.iconType === 'cutlery' && <Utensils className="w-4 h-4" />}
+                          {project.iconType === 'code' && <Code className="w-4 h-4" />}
+                          {!['database', 'brain', 'cutlery', 'code'].includes(project.iconType) && (
+                            <Code className="w-4 h-4" />
+                          )}
+                        </div>
+                        <a
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-slate-400 hover:text-white transition-colors p-1"
+                          title="View on GitHub"
+                        >
+                          <ExternalLink className="w-3.5 h-3.5" />
+                        </a>
+                      </div>
+                      <h4 className="text-sm font-display font-bold text-white mb-1.5 group-hover:text-amber-300 transition-colors">
+                        {project.title}
+                      </h4>
+                      <p className="text-[11px] text-slate-300 leading-relaxed mb-4">
+                        {project.tagline}
+                      </p>
                     </div>
-                    <a
-                      href="https://github.com/rudra-tiwari"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-slate-400 hover:text-white transition-colors"
-                    >
-                      <ExternalLink className="w-3.5 h-3.5" />
-                    </a>
+                    <div className="flex flex-wrap gap-1.5 pt-3 border-t border-white/5">
+                      {project.technologies.slice(0, 3).map((t) => (
+                        <span
+                          key={t}
+                          className="px-2 py-0.5 rounded-full bg-white/5 border border-white/5 text-[9px] font-mono text-slate-300"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                  <h4 className="text-sm font-display font-bold text-white mb-1.5 group-hover:text-amber-300 transition-colors">
-                    Natural Language to SQL (NL2SQL)
-                  </h4>
-                  <p className="text-[11px] text-slate-300 leading-relaxed mb-4">
-                    Convert natural language queries into executable SQL using LLMs.
-                  </p>
-                </div>
-                <div className="flex flex-wrap gap-1.5 pt-3 border-t border-white/5">
-                  {['AI', 'LLM', 'SQL'].map((t) => (
-                    <span
-                      key={t}
-                      className="px-2 py-0.5 rounded-full bg-white/5 border border-white/5 text-[9px] font-mono text-slate-300"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </div>
+                ))}
+            </div>
 
-              {/* Card 2: Food Delivery System */}
-              <div className="glass-card p-5 border border-white/10 flex flex-col justify-between group hover:border-red-500/40 transition-all">
+            {/* Direct GitHub Profile Link Banner */}
+            <div className="flex flex-wrap items-center justify-between p-4 rounded-xl bg-slate-900/70 border border-white/10 gap-3 mt-2">
+              <div className="flex items-center gap-2.5">
+                <GithubIcon className="w-5 h-5 text-amber-400" />
                 <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
-                      <Utensils className="w-4 h-4" />
-                    </div>
-                    <a
-                      href="https://github.com/rudra-tiwari"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-slate-400 hover:text-white transition-colors"
-                    >
-                      <ExternalLink className="w-3.5 h-3.5" />
-                    </a>
-                  </div>
-                  <h4 className="text-sm font-display font-bold text-white mb-1.5 group-hover:text-amber-300 transition-colors">
-                    Food Delivery System
-                  </h4>
-                  <p className="text-[11px] text-slate-300 leading-relaxed mb-4">
-                    A full-stack food ordering platform with authentication and real-time order tracking.
-                  </p>
-                </div>
-                <div className="flex flex-wrap gap-1.5 pt-3 border-t border-white/5">
-                  {['React', 'Spring Boot', 'SQL'].map((t) => (
-                    <span
-                      key={t}
-                      className="px-2 py-0.5 rounded-full bg-white/5 border border-white/5 text-[9px] font-mono text-slate-300"
-                    >
-                      {t}
-                    </span>
-                  ))}
+                  <span className="text-xs font-semibold text-white block">GitHub Repositories (@Rudra130)</span>
+                  <span className="text-[11px] text-slate-400">Browse all 26 public repositories, algorithms, and AI agent architectures.</span>
                 </div>
               </div>
-
-              {/* Card 3: AI-Powered Applications */}
-              <div className="glass-card p-5 border border-white/10 flex flex-col justify-between group hover:border-red-500/40 transition-all">
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="w-8 h-8 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400">
-                      <Brain className="w-4 h-4" />
-                    </div>
-                    <a
-                      href="https://github.com/rudra-tiwari"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-slate-400 hover:text-white transition-colors"
-                    >
-                      <ExternalLink className="w-3.5 h-3.5" />
-                    </a>
-                  </div>
-                  <h4 className="text-sm font-display font-bold text-white mb-1.5 group-hover:text-amber-300 transition-colors">
-                    AI-Powered Applications
-                  </h4>
-                  <p className="text-[11px] text-slate-300 leading-relaxed mb-4">
-                    A set of AI-based applications exploring LLMs, RAG, and intelligent agents.
-                  </p>
-                </div>
-                <div className="flex flex-wrap gap-1.5 pt-3 border-t border-white/5">
-                  {['GenAI', 'RAG', 'LLM'].map((t) => (
-                    <span
-                      key={t}
-                      className="px-2 py-0.5 rounded-full bg-white/5 border border-white/5 text-[9px] font-mono text-slate-300"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </div>
+              <a
+                href="https://github.com/Rudra130"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-semibold text-xs hover:brightness-110 shadow-lg transition-all"
+              >
+                <span>github.com/Rudra130</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
             </div>
           </div>
         )}

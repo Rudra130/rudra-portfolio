@@ -8,7 +8,7 @@ export const profileData: ProfileRecord = {
   summary:
     'A Computer Science Engineer passionate about building impactful software, solving complex problems, and exploring the evolving world of Artificial Intelligence. Experienced in production microservices, OAuth 2.0 authentication, distributed tracing, and LLM-powered agent workflows.',
   email: 'rudra.tiwari.4141@gmail.com',
-  githubUrl: 'https://github.com/rudra-tiwari',
+  githubUrl: 'https://github.com/Rudra130',
   linkedinUrl: 'https://linkedin.com/in/rudra-tiwari',
   resumePath: '/assets/resume.pdf',
   education: {
