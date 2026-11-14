@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Info, Maximize2, Minimize2, Plus, Minus } from 'lucide-react';
+import { Info, Maximize2, Minimize2, Plus, Minus, Home } from 'lucide-react';
 import { useUniverseStore } from '../../store/useUniverseStore';
 
 export const HUDControls: React.FC = () => {
@@ -7,6 +7,7 @@ export const HUDControls: React.FC = () => {
     activeWorldId,
     zoomIn,
     zoomOut,
+    returnToLanding,
   } = useUniverseStore();
 
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -27,9 +28,17 @@ export const HUDControls: React.FC = () => {
       {/* Right Vertical Tool Dock (Exact View 2 Layout) */}
       <aside className="fixed right-6 top-1/2 -translate-y-1/2 z-30 flex flex-col items-center gap-2 p-1.5 rounded-full bg-slate-950/70 backdrop-blur-md border border-white/10 shadow-2xl">
         <button
+          onClick={returnToLanding}
+          title="Return to Landing Page"
+          className="w-9 h-9 rounded-full flex items-center justify-center text-slate-300 hover:text-amber-300 hover:bg-white/10 transition-all cursor-pointer"
+        >
+          <Home className="w-4 h-4 text-amber-400" />
+        </button>
+
+        <button
           onClick={() => setShowInfoModal(true)}
           title="About Cosmic Portfolio"
-          className="w-9 h-9 rounded-full flex items-center justify-center text-slate-300 hover:text-amber-300 hover:bg-white/10 transition-all"
+          className="w-9 h-9 rounded-full flex items-center justify-center text-slate-300 hover:text-amber-300 hover:bg-white/10 transition-all cursor-pointer"
         >
           <Info className="w-4 h-4" />
         </button>

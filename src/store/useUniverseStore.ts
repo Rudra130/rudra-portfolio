@@ -18,6 +18,7 @@ interface UniverseState {
   isOrbitPaused: boolean;
 
   enterUniverse: () => void;
+  returnToLanding: () => void;
   selectWorld: (id: CelestialId | null) => void;
   setHoveredWorld: (id: CelestialId | null) => void;
   setCameraMode: (mode: CameraMode) => void;
@@ -47,6 +48,16 @@ export const useUniverseStore = create<UniverseState>((set) => ({
   enterUniverse: () => {
     set({ hasEnteredUniverse: true, cameraMode: 'OVERVIEW' });
     pushPath('/universe');
+  },
+
+  returnToLanding: () => {
+    set({
+      hasEnteredUniverse: false,
+      activeWorldId: null,
+      cameraMode: 'OVERVIEW',
+      isDrawerOpen: false,
+    });
+    pushPath('/');
   },
 
   selectWorld: (id: CelestialId | null) => {

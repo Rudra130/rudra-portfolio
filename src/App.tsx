@@ -16,6 +16,7 @@ export const App: React.FC = () => {
     hasEnteredUniverse,
     isFallback2D,
     enterUniverse,
+    returnToLanding,
     selectWorld,
     toggleFallback2D,
   } = useUniverseStore();
@@ -47,7 +48,9 @@ export const App: React.FC = () => {
 
       // 2. Parse clean URL path
       const path = window.location.pathname.replace(/\/$/, '') || '/';
-      if (path === '/universe') {
+      if (path === '/') {
+        returnToLanding();
+      } else if (path === '/universe') {
         enterUniverse();
         selectWorld(null);
       } else if (path.startsWith('/universe/')) {

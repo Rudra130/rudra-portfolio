@@ -1,18 +1,19 @@
 import React from 'react';
-import { Mail, ArrowUpRight } from 'lucide-react';
+import { Mail, ArrowUpRight, Home } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './icons/BrandIcons';
 import { useUniverseStore } from '../../store/useUniverseStore';
 import { profileData } from '../../data/profile';
 
 export const Header: React.FC = () => {
-  const { isFallback2D, toggleFallback2D, selectWorld } = useUniverseStore();
+  const { isFallback2D, toggleFallback2D, selectWorld, returnToLanding } = useUniverseStore();
 
   return (
     <header className="fixed top-0 left-0 right-0 z-40 px-6 py-4 flex items-center justify-between pointer-events-none">
       {/* Left Brand Identity */}
       <div
-        onClick={() => selectWorld(null)}
+        onClick={returnToLanding}
         className="flex items-center gap-3 cursor-pointer pointer-events-auto group transition-transform hover:scale-[1.02]"
+        title="Return to Landing Page"
       >
         {/* Golden Galaxy Swirl with Rudra's Portrait */}
         <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-600 via-amber-400 to-amber-200 p-[1.5px] shadow-[0_0_15px_rgba(245,158,11,0.5)] group-hover:shadow-[0_0_20px_rgba(245,158,11,0.8)] transition-all overflow-hidden shrink-0">
@@ -37,11 +38,20 @@ export const Header: React.FC = () => {
       {/* Right Navigation & Socials */}
       <nav className="flex items-center gap-5 pointer-events-auto bg-slate-950/40 backdrop-blur-md px-5 py-2 rounded-full border border-white/5">
         <button
+          onClick={returnToLanding}
+          className="flex items-center gap-1.5 text-xs font-medium text-slate-300 hover:text-amber-300 transition-colors cursor-pointer"
+          title="Return to Landing Page"
+        >
+          <Home className="w-3.5 h-3.5 text-amber-400" />
+          <span>Home</span>
+        </button>
+
+        <button
           onClick={() => {
             if (isFallback2D) toggleFallback2D();
             selectWorld(null);
           }}
-          className="text-xs font-medium text-slate-300 hover:text-amber-300 transition-colors"
+          className="text-xs font-medium text-slate-300 hover:text-amber-300 transition-colors cursor-pointer"
         >
           Portfolio
         </button>
