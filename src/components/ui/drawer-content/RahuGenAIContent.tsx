@@ -8,6 +8,7 @@ import {
   CheckCircle2,
   Award,
   Database,
+  ExternalLink,
 } from 'lucide-react';
 
 interface RahuGenAIContentProps {
@@ -60,19 +61,33 @@ export const RahuGenAIContent: React.FC<RahuGenAIContentProps> = ({
 
         {/* Verified Certifications */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
-          <div className="p-3 rounded-xl bg-indigo-950/40 border border-indigo-500/20 flex items-center gap-3">
-            <Award className="w-4 h-4 text-amber-400 shrink-0" />
-            <div>
-              <p className="text-xs font-semibold text-white">
-                Oracle Agentic AI Certified Foundations Associate
-              </p>
-              <p className="text-[10px] font-mono text-indigo-300">
-                Oracle University • Verified Credential
-              </p>
+          <a
+            href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=7BA8D764E39E938D6DFDD2DCAB8FB79691641BB4172B812392D5A4DDE37483AB"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group p-3 rounded-xl bg-indigo-950/40 border border-indigo-500/30 hover:border-amber-400/60 transition-all flex items-center justify-between gap-3 cursor-pointer"
+            title="View verified Oracle Agentic AI badge"
+          >
+            <div className="flex items-center gap-3">
+              <img
+                src="/assets/certifications/oracle-agentic-ai.png"
+                alt="Oracle Agentic AI Certified Foundations Associate"
+                className="w-10 h-10 object-contain shrink-0 rounded-full bg-white/5 p-0.5 border border-amber-500/40 shadow-[0_0_10px_rgba(245,158,11,0.3)] group-hover:scale-105 transition-transform"
+              />
+              <div>
+                <p className="text-xs font-semibold text-white group-hover:text-amber-300 transition-colors">
+                  Agentic AI Certified Foundations Associate
+                </p>
+                <p className="text-[10px] font-mono text-indigo-300">
+                  Oracle University • Valid to Oct 2028
+                </p>
+              </div>
             </div>
-          </div>
+            <ExternalLink className="w-3.5 h-3.5 text-amber-400 opacity-70 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all shrink-0" />
+          </a>
+
           <div className="p-3 rounded-xl bg-indigo-950/40 border border-indigo-500/20 flex items-center gap-3">
-            <Award className="w-4 h-4 text-amber-400 shrink-0" />
+            <Award className="w-5 h-5 text-amber-400 shrink-0" />
             <div>
               <p className="text-xs font-semibold text-white">
                 OCI Certified Generative AI Professional

@@ -218,6 +218,80 @@ export const AccessiblePortfolioView: React.FC = () => {
               National merit scholarship awarded in recognition of academic excellence.
             </p>
           </div>
+
+          {/* Verified Industry Certifications */}
+          <div className="space-y-4 pt-4">
+            <h3 className="text-sm font-mono uppercase tracking-wider text-amber-300">
+              Verified Industry Certifications
+            </h3>
+            {profileData.certifications.map((cert) => (
+              <div
+                key={cert.name}
+                className="glass-card p-6 border border-white/10 space-y-3 hover:border-amber-500/30 transition-colors"
+              >
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="flex items-center gap-4">
+                    {cert.badgeImage ? (
+                      <img
+                        src={cert.badgeImage}
+                        alt={cert.name}
+                        className="w-14 h-14 object-contain shrink-0 rounded-full bg-white/5 p-1 border border-amber-500/30 shadow-[0_0_15px_rgba(245,158,11,0.25)]"
+                      />
+                    ) : (
+                      <div className="w-12 h-12 rounded-full bg-amber-500/10 border border-amber-500/30 flex items-center justify-center shrink-0">
+                        <CheckCircle2 className="w-6 h-6 text-amber-400" />
+                      </div>
+                    )}
+                    <div>
+                      <h4 className="text-base font-display font-bold text-white">
+                        {cert.name}
+                      </h4>
+                      <p className="text-xs font-mono text-amber-400">
+                        {cert.issuer} {cert.issueDate && `• Issued ${cert.issueDate}`} {cert.validUntil && `• Valid until ${cert.validUntil}`}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs font-mono px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/30">
+                      ✓ {cert.status}
+                    </span>
+                    {cert.credentialUrl && (
+                      <a
+                        href={cert.credentialUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-mono bg-amber-500/10 text-amber-300 border border-amber-500/40 hover:bg-amber-500/20 hover:text-white transition-all cursor-pointer"
+                        title="Verify official Oracle University badge"
+                      >
+                        <span>Verify Badge</span>
+                        <ExternalLink className="w-3.5 h-3.5 text-amber-400" />
+                      </a>
+                    )}
+                  </div>
+                </div>
+
+                {cert.description && (
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    {cert.description}
+                  </p>
+                )}
+
+                {cert.skills && cert.skills.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 pt-1">
+                    {cert.skills.map((s) => (
+                      <span
+                        key={s}
+                        className="text-[11px] font-mono px-2.5 py-0.5 rounded bg-white/5 text-slate-300 border border-white/5"
+                      >
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

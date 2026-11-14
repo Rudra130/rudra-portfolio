@@ -87,14 +87,33 @@ export const profileData: ProfileRecord = {
   ],
   certifications: [
     {
-      name: 'Oracle Agentic AI Certified Foundations Associate',
-      issuer: 'Oracle',
+      name: 'Agentic AI Certified Foundations Associate',
+      issuer: 'Oracle University',
       status: 'Verified',
+      credentialUrl:
+        'https://catalog-education.oracle.com/ords/certview/sharebadge?id=7BA8D764E39E938D6DFDD2DCAB8FB79691641BB4172B812392D5A4DDE37483AB',
+      badgeImage: '/assets/certifications/oracle-agentic-ai.png',
+      issueDate: 'October 2026',
+      validUntil: 'October 2028',
+      description:
+        'Practical, build-it-yourself certification in autonomous AI agents from first principles using LangChain, OpenAI Agents SDK, Model Context Protocol (MCP) servers, and OCI Enterprise AI Agents.',
+      skills: [
+        'AI Agents from scratch',
+        'LangChain',
+        'OpenAI Agents SDK',
+        'Model Context Protocol (MCP)',
+        'OCI Enterprise AI Agents',
+        'Oracle AI Database',
+      ],
     },
     {
       name: 'Oracle Cloud Infrastructure Certified Generative AI Professional',
-      issuer: 'Oracle',
+      issuer: 'Oracle Cloud Infrastructure',
       status: 'Verified',
+      issueDate: '2026',
+      description:
+        'Professional certification covering Large Language Models (LLMs), fine-tuning, OCI Generative AI Service, retrieval architectures, and enterprise vector databases.',
+      skills: ['LLMs', 'Fine-Tuning', 'OCI Generative AI', 'Vector DBs', 'RAG'],
     },
   ],
   metrics: {

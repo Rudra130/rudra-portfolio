@@ -654,27 +654,73 @@ export const WorldDrawer: React.FC = () => {
 
                 <motion.div variants={itemVariants} className="space-y-3">
                   <p className="text-xs font-mono uppercase tracking-wider text-slate-400">
-                    Industry Certifications
+                    Industry Certifications & Credentials
                   </p>
                   {profileData.certifications.map((cert) => (
                     <div
                       key={cert.name}
-                      className="glass-card p-4 border border-white/10 flex items-center justify-between"
+                      className="glass-card p-5 border border-white/10 space-y-3 hover:border-amber-500/40 transition-all"
                     >
-                      <div className="flex items-center gap-3">
-                        <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
-                        <div>
-                          <p className="text-xs font-semibold text-white">
-                            {cert.name}
-                          </p>
-                          <p className="text-[10px] font-mono text-slate-400">
-                            {cert.issuer}
-                          </p>
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div className="flex items-center gap-3.5">
+                          {cert.badgeImage ? (
+                            <img
+                              src={cert.badgeImage}
+                              alt={cert.name}
+                              className="w-12 h-12 object-contain shrink-0 rounded-full bg-white/5 p-1 border border-amber-500/30 shadow-[0_0_12px_rgba(245,158,11,0.25)]"
+                            />
+                          ) : (
+                            <div className="w-10 h-10 rounded-full bg-amber-500/10 border border-amber-500/30 flex items-center justify-center shrink-0">
+                              <CheckCircle2 className="w-5 h-5 text-amber-400" />
+                            </div>
+                          )}
+                          <div>
+                            <h5 className="text-sm font-display font-bold text-white leading-snug">
+                              {cert.name}
+                            </h5>
+                            <p className="text-[11px] font-mono text-amber-400">
+                              {cert.issuer} {cert.issueDate && `• Issued ${cert.issueDate}`}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-2 self-start sm:self-center shrink-0">
+                          <span className="text-[10px] font-mono px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/30">
+                            ✓ {cert.status}
+                          </span>
+                          {cert.credentialUrl && (
+                            <a
+                              href={cert.credentialUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-mono bg-amber-500/10 text-amber-300 border border-amber-500/40 hover:bg-amber-500/20 hover:text-white transition-all cursor-pointer"
+                              title="Verify official Oracle badge"
+                            >
+                              <span>Verify Badge</span>
+                              <ExternalLink className="w-3 h-3 text-amber-400" />
+                            </a>
+                          )}
                         </div>
                       </div>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/30">
-                        {cert.status}
-                      </span>
+
+                      {cert.description && (
+                        <p className="text-xs text-slate-300 leading-relaxed pt-1">
+                          {cert.description}
+                        </p>
+                      )}
+
+                      {cert.skills && cert.skills.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 pt-1">
+                          {cert.skills.map((s) => (
+                            <span
+                              key={s}
+                              className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 text-slate-300 border border-white/5"
+                            >
+                              {s}
+                            </span>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   ))}
                 </motion.div>

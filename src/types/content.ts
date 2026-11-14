@@ -39,6 +39,12 @@ export interface CertificationRecord {
   name: string;
   issuer: string;
   status: string;
+  credentialUrl?: string;
+  badgeImage?: string;
+  issueDate?: string;
+  validUntil?: string;
+  description?: string;
+  skills?: string[];
 }
 
 export interface ProfileRecord {
