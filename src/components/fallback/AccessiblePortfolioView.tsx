@@ -197,7 +197,7 @@ export const AccessiblePortfolioView: React.FC = () => {
             <div key={w.id} className="p-3 rounded-xl bg-white/5 border border-white/5">
               <p className="text-xs font-bold text-white flex items-center gap-1.5">
                 <span style={{ color: w.color }}>{w.symbol}</span>
-                <span>{w.sanskritName}</span>
+                <span>{w.realWorldIdentity}</span>
               </p>
               <p className="text-[11px] font-mono text-slate-400">{w.theme}</p>
             </div>

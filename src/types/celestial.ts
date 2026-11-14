@@ -12,6 +12,7 @@ export type CelestialId =
 export interface CelestialBodyMeta {
   id: CelestialId;
   sanskritName: string;
+  realWorldIdentity: string; // The primary portfolio identity (e.g. "Projects & Architecture", "Work Experience")
   englishTitle: string;
   theme: string;
   tagline: string;

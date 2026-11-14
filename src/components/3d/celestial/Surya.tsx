@@ -198,10 +198,10 @@ export const Surya: React.FC = () => {
           >
             <span className="text-xs font-display font-bold tracking-wide flex items-center gap-1.5">
               <span className="text-amber-400">☀️</span>
-              <span>Surya</span>
+              <span>Core Identity & Bio</span>
             </span>
             <span className="text-[10px] font-mono text-slate-400">
-              (Core Identity)
+              (Resume & Values)
             </span>
           </div>
         </Html>

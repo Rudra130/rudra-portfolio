@@ -124,10 +124,10 @@ export const WorldDrawer: React.FC = () => {
                 </span>
                 <div>
                   <span className="text-[10px] font-mono uppercase tracking-widest text-amber-400 block">
-                    Approaching Celestial Body
+                    Approaching Celestial Dimension
                   </span>
                   <span className="text-sm font-display font-bold text-white tracking-wide">
-                    {world.sanskritName} — {world.englishTitle}
+                    {world.realWorldIdentity}
                   </span>
                 </div>
               </div>
@@ -195,7 +195,7 @@ export const WorldDrawer: React.FC = () => {
                   {world.symbol}
                 </span>
                 <h2 className="text-3xl sm:text-4xl font-display font-bold text-white tracking-tight">
-                  {world.sanskritName}
+                  {world.realWorldIdentity}
                 </h2>
               </motion.div>
 
@@ -204,7 +204,7 @@ export const WorldDrawer: React.FC = () => {
                 className="text-sm sm:text-base font-display font-medium tracking-wide mb-3"
                 style={{ color: world.color }}
               >
-                {world.englishTitle}
+                {world.theme}
               </motion.h3>
 
               <motion.p

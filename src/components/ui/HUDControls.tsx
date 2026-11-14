@@ -81,15 +81,15 @@ export const HUDControls: React.FC = () => {
               Welcome to the personal portfolio of <strong>Rudra Tiwari</strong>. This interactive 3D portfolio is inspired by the 9 Grahas of Vedic astronomy, representing distinct dimensions of his career, skills, and life.
             </p>
             <ul className="text-xs text-slate-300 space-y-1.5 mb-6 font-mono">
-              <li>• <strong>Surya (Sun)</strong>: Core Identity, Bio & Resume</li>
-              <li>• <strong>Mangal (Mars)</strong>: Software Projects (NL2SQL, Food Delivery)</li>
-              <li>• <strong>Budh (Mercury)</strong>: Tech Stack & DSA (1812 LeetCode Rating)</li>
-              <li>• <strong>Guru (Jupiter)</strong>: Education (B.Tech) & Oracle Certifications</li>
-              <li>• <strong>Shani (Saturn)</strong>: Work Experience at Salescode AI</li>
-              <li>• <strong>Rahu</strong>: Generative AI, LangGraph & AI Agents</li>
-              <li>• <strong>Chandra</strong>: College Life & Cricket Trophy</li>
-              <li>• <strong>Shukra</strong>: UI/UX & Frontend Craft</li>
-              <li>• <strong>Ketu</strong>: Philosophy & Life Reflections</li>
+              <li>• <strong>Core Identity & Bio</strong>: Professional summary, values & resume</li>
+              <li>• <strong>Projects & Architecture</strong>: Production applications (NL2SQL, BarterNow)</li>
+              <li>• <strong>Technical Skills & DSA</strong>: Java, Spring AI, Kafka & LeetCode (1812 rating)</li>
+              <li>• <strong>Work Experience</strong>: Software Engineer at Salescode AI</li>
+              <li>• <strong>Generative AI & Agents</strong>: LangGraph, RAG pipelines & LLM workflows</li>
+              <li>• <strong>Education & Certifications</strong>: B.Tech CSE (8.02 CGPA) & Oracle certified</li>
+              <li>• <strong>UI/UX & Design Systems</strong>: Cosmic design language & frontend engineering</li>
+              <li>• <strong>Personal Life & Memories</strong>: College life, athletics & cricket championship</li>
+              <li>• <strong>Philosophy & Reflection</strong>: Engineering mindset & lessons from setbacks</li>
             </ul>
             <button
               onClick={() => setShowInfoModal(false)}

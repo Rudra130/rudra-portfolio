@@ -30,6 +30,7 @@ describe('Content Architecture & Data Integrity', () => {
       expect(w.radius).toBeGreaterThan(0);
       expect(w.color).toMatch(/^#[0-9a-fA-F]{6}$/);
       expect(w.englishTitle.length).toBeGreaterThan(0);
+      expect(w.realWorldIdentity.length).toBeGreaterThan(0);
     });
   });
 

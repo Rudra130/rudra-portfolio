@@ -4,6 +4,7 @@ import { useKeyboardNavigation } from './hooks/useKeyboardNavigation';
 import { Header } from './components/ui/Header';
 import { LandingHero } from './components/ui/LandingHero';
 import { HUDControls } from './components/ui/HUDControls';
+import { PlanetNavList } from './components/ui/PlanetNavList';
 import { WorldDrawer } from './components/ui/WorldDrawer';
 import { CanvasContainer } from './components/3d/CanvasContainer';
 import { AccessiblePortfolioView } from './components/fallback/AccessiblePortfolioView';
@@ -56,6 +57,9 @@ export const App: React.FC = () => {
         <>
           {/* Main Top Header (In Portfolio View) */}
           <Header />
+
+          {/* Left Vertical Navigation List */}
+          <PlanetNavList />
 
           {/* Active Portfolio HUD Tools */}
           <HUDControls />

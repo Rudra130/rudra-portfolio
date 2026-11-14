@@ -4,6 +4,7 @@ export const worldsData: CelestialBodyMeta[] = [
   {
     id: 'surya',
     sanskritName: 'Surya',
+    realWorldIdentity: 'Core Identity & Bio',
     englishTitle: 'The Core Identity',
     theme: 'Core Identity',
     tagline: 'Introduction, Values, Resume & Contact',
@@ -25,6 +26,7 @@ export const worldsData: CelestialBodyMeta[] = [
   {
     id: 'budh',
     sanskritName: 'Budh',
+    realWorldIdentity: 'Technical Skills & DSA',
     englishTitle: 'The Intelligence Network',
     theme: 'Intelligence Network',
     tagline: 'Technical Skills, System Design & DSA (1812 Rating)',
@@ -46,6 +48,7 @@ export const worldsData: CelestialBodyMeta[] = [
   {
     id: 'shukra',
     sanskritName: 'Shukra',
+    realWorldIdentity: 'UI/UX & Design Systems',
     englishTitle: 'Creativity and Aesthetics',
     theme: 'Creativity & Aesthetics',
     tagline: 'UI/UX Design Systems, Cosmic Aesthetics & Frontend Craft',
@@ -68,6 +71,7 @@ export const worldsData: CelestialBodyMeta[] = [
   {
     id: 'chandra',
     sanskritName: 'Chandra',
+    realWorldIdentity: 'Personal Life & Memories',
     englishTitle: 'The Inner Universe',
     theme: 'Inner Universe',
     tagline: 'Personal Life, College Memories & Cricket Trophy',
@@ -90,6 +94,7 @@ export const worldsData: CelestialBodyMeta[] = [
   {
     id: 'mangal',
     sanskritName: 'Mangal',
+    realWorldIdentity: 'Projects & Architecture',
     englishTitle: 'The World of Action',
     theme: 'World of Action',
     tagline: 'Software Projects, Architectures & GitHub Repos',
@@ -111,6 +116,7 @@ export const worldsData: CelestialBodyMeta[] = [
   {
     id: 'guru',
     sanskritName: 'Guru',
+    realWorldIdentity: 'Education & Certifications',
     englishTitle: 'Knowledge and Wisdom',
     theme: 'Knowledge & Wisdom',
     tagline: 'B.Tech CSE (8.02 CGPA), National Scholarship & Oracle Certifications',
@@ -133,6 +139,7 @@ export const worldsData: CelestialBodyMeta[] = [
   {
     id: 'shani',
     sanskritName: 'Shani',
+    realWorldIdentity: 'Work Experience',
     englishTitle: 'The Timeline of Karma',
     theme: 'Timeline of Karma',
     tagline: 'Software Engineer at Salescode AI (Auth, SSO across 10 Services)',
@@ -154,6 +161,7 @@ export const worldsData: CelestialBodyMeta[] = [
   {
     id: 'rahu',
     sanskritName: 'Rahu',
+    realWorldIdentity: 'Generative AI & Agents',
     englishTitle: 'The Frontier of Innovation',
     theme: 'Frontier of Innovation',
     tagline: 'LangGraph Agents, NVIDIA NIM, RAG & Vector Systems',
@@ -175,6 +183,7 @@ export const worldsData: CelestialBodyMeta[] = [
   {
     id: 'ketu',
     sanskritName: 'Ketu',
+    realWorldIdentity: 'Philosophy & Reflection',
     englishTitle: 'The Space of Reflection',
     theme: 'Space of Reflection',
     tagline: 'Personal Philosophy, Resilience & Lessons from Setbacks',

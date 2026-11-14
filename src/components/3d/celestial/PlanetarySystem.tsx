@@ -310,7 +310,7 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
           >
             <span className="text-[12px] font-display font-semibold tracking-wide flex items-center gap-1.5">
               <span style={{ color: world.color }}>{world.symbol}</span>
-              <span>{world.sanskritName}</span>
+              <span>{world.realWorldIdentity}</span>
             </span>
             <span className="text-[10px] font-mono text-slate-400">
               ({world.theme})
