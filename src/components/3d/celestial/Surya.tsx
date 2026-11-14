@@ -18,15 +18,15 @@ export const Surya: React.FC = () => {
   sunTexture.wrapS = THREE.RepeatWrapping;
   sunTexture.wrapT = THREE.ClampToEdgeWrapping;
 
-  // Prominent solar flare prominence configurations
+  // Prominent solar flare prominence configurations (scaled proportionally to Sun radius 0.85)
   const flareConfigs = useMemo(() => {
     return [
-      { angle: 0.2, tilt: 0.1, radius: 4.8, tube: 0.45, speed: 1.2 },
-      { angle: 1.3, tilt: -0.4, radius: 5.6, tube: 0.5, speed: 0.9 },
-      { angle: 2.5, tilt: 0.3, radius: 4.2, tube: 0.4, speed: 1.4 },
-      { angle: 3.7, tilt: -0.2, radius: 6.0, tube: 0.55, speed: 1.0 },
-      { angle: 4.8, tilt: 0.5, radius: 4.6, tube: 0.42, speed: 1.3 },
-      { angle: 5.8, tilt: -0.3, radius: 5.2, tube: 0.48, speed: 1.1 },
+      { angle: 0.2, tilt: 0.1, radius: 0.21, tube: 0.02, speed: 1.2 },
+      { angle: 1.3, tilt: -0.4, radius: 0.25, tube: 0.022, speed: 0.9 },
+      { angle: 2.5, tilt: 0.3, radius: 0.19, tube: 0.018, speed: 1.4 },
+      { angle: 3.7, tilt: -0.2, radius: 0.27, tube: 0.024, speed: 1.0 },
+      { angle: 4.8, tilt: 0.5, radius: 0.20, tube: 0.019, speed: 1.3 },
+      { angle: 5.8, tilt: -0.3, radius: 0.23, tube: 0.021, speed: 1.1 },
     ];
   }, []);
 
@@ -102,11 +102,11 @@ export const Surya: React.FC = () => {
           selectWorld('surya');
         }}
       >
-        <sphereGeometry args={[25.0, 16, 16]} />
+        <sphereGeometry args={[1.15, 16, 16]} />
         <meshBasicMaterial transparent opacity={0} depthWrite={false} />
       </mesh>
 
-      {/* Photorealistic Sun Sphere (Enlarged to Radius 20.0 with Pulsing Core) */}
+      {/* Photorealistic Sun Sphere (Proportionally scaled to 0.85 Three.js units with Pulsing Core) */}
       <mesh
         ref={meshRef}
         onPointerDown={handlePointerDown}
@@ -116,7 +116,7 @@ export const Surya: React.FC = () => {
           selectWorld('surya');
         }}
       >
-        <sphereGeometry args={[20.0, 64, 64]} />
+        <sphereGeometry args={[0.85, 64, 64]} />
         <meshStandardMaterial
           map={sunTexture}
           emissiveMap={sunTexture}
@@ -128,7 +128,7 @@ export const Surya: React.FC = () => {
 
       {/* Inner Fiery Solar Corona Shell (Counter-Rotating) */}
       <mesh ref={innerCoronaRef}>
-        <sphereGeometry args={[22.5, 36, 36]} />
+        <sphereGeometry args={[0.96, 36, 36]} />
         <meshBasicMaterial
           color="#ea580c"
           transparent={true}
@@ -140,7 +140,7 @@ export const Surya: React.FC = () => {
 
       {/* Outer Ethereal Atmosphere Aura (Forward-Rotating) */}
       <mesh ref={outerCoronaRef}>
-        <sphereGeometry args={[26.5, 36, 36]} />
+        <sphereGeometry args={[1.14, 36, 36]} />
         <meshBasicMaterial
           color="#fef08a"
           transparent={true}
@@ -153,9 +153,9 @@ export const Surya: React.FC = () => {
       {/* Animated Coronal Solar Flare Prominence Arcs */}
       <group ref={flaresGroupRef}>
         {flareConfigs.map((cfg, idx) => {
-          const posX = Math.cos(cfg.angle) * 19.5;
-          const posZ = Math.sin(cfg.angle) * 19.5;
-          const posY = Math.sin(cfg.tilt) * 12.0;
+          const posX = Math.cos(cfg.angle) * 0.83;
+          const posZ = Math.sin(cfg.angle) * 0.83;
+          const posY = Math.sin(cfg.tilt) * 0.52;
 
           return (
             <mesh

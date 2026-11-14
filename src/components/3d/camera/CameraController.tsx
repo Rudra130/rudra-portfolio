@@ -20,8 +20,8 @@ export const CameraController: React.FC = () => {
   const { activeWorldId, cameraMode, setCameraMode, zoomLevel } = useUniverseStore();
 
   // Overview camera: high top-down vantage point looking down at the Sun with all planets revolving around it
-  const overviewPos = useRef(new THREE.Vector3(0, 700, 60));
-  const sunCenter = useRef(new THREE.Vector3(0, 0, 15));
+  const overviewPos = useRef(new THREE.Vector3(0, 29.0, 2.6));
+  const sunCenter = useRef(new THREE.Vector3(0, 0, 0.65));
 
   // Synchronize button zoom changes from HUD relative to current control target
   const prevZoomLevel = useRef(zoomLevel);
@@ -153,7 +153,7 @@ export const CameraController: React.FC = () => {
     // Fail-safe frame check: ensures transition to INSPECTING completes smoothly
     if (cameraMode === 'APPROACHING' && activeWorldId && approachStartTime.current > 0) {
       const elapsed = (performance.now() - approachStartTime.current) / 1000;
-      if (elapsed > 1.85 || camera.position.distanceTo(destCamRef.current) < 0.6) {
+      if (elapsed > 1.85 || camera.position.distanceTo(destCamRef.current) < 0.05) {
         if (tweenRef.current) {
           tweenRef.current.kill();
           tweenRef.current = null;
@@ -168,7 +168,7 @@ export const CameraController: React.FC = () => {
       }
     } else if (cameraMode === 'RETURNING' && returnStartTime.current > 0) {
       const elapsed = (performance.now() - returnStartTime.current) / 1000;
-      if (elapsed > 1.65 || camera.position.distanceTo(overviewPos.current) < 1.5) {
+      if (elapsed > 1.65 || camera.position.distanceTo(overviewPos.current) < 0.1) {
         if (tweenRef.current) {
           tweenRef.current.kill();
           tweenRef.current = null;
@@ -199,14 +199,14 @@ export const CameraController: React.FC = () => {
   return (
     <OrbitControls
       ref={controlsRef}
-      target={[0, 0, 15]}
+      target={[0, 0, 0.65]}
       enablePan={true}
       enableZoom={true}
       zoomSpeed={1.2}
       rotateSpeed={0.8}
       enableRotate={true}
-      minDistance={15}
-      maxDistance={900}
+      minDistance={0.8}
+      maxDistance={45}
       maxPolarAngle={Math.PI / 2 - 0.05} // prevent clipping through ground plane
       minPolarAngle={Math.PI / 16}
       enableDamping={true}

@@ -27,7 +27,7 @@ export const Starfield: React.FC = () => {
     ];
 
     for (let i = 0; i < count; i++) {
-      const radius = 450 + Math.random() * 400;
+      const radius = 35 + Math.random() * 35;
       const theta = Math.random() * Math.PI * 2;
       const phi = Math.acos(2 * Math.random() - 1);
 
@@ -99,7 +99,7 @@ export const Starfield: React.FC = () => {
     <group>
       {/* Deep Space Milky Way Skybox Sphere */}
       <mesh ref={skyboxRef}>
-        <sphereGeometry args={[1200, 48, 48]} />
+        <sphereGeometry args={[120, 48, 48]} />
         <meshBasicMaterial
           map={bgTexture}
           side={THREE.BackSide}
@@ -125,7 +125,7 @@ export const Starfield: React.FC = () => {
           />
         </bufferGeometry>
         <pointsMaterial
-          size={1.2}
+          size={0.12}
           sizeAttenuation={true}
           vertexColors={true}
           transparent={true}

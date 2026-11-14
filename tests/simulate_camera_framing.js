@@ -63,7 +63,8 @@ const viewports = [
   { width: 1366, height: 768 },
 ];
 
-// Let's test several parameter candidates
-simulate([0, 680, 70], [0, 0, 20], 240, viewports);
-simulate([0, 700, 60], [0, 0, 15], 240, viewports);
-simulate([0, 720, 60], [0, 0, 15], 240, viewports);
+// Let's test several parameter candidates for the new scale (Ketu radius 9.9)
+simulate([0, 28.8, 2.5], [0, 0, 0.62], 9.9, viewports);
+simulate([0, 29.0, 2.6], [0, 0, 0.65], 9.9, viewports);
+simulate([0, 30.0, 2.5], [0, 0, 0.65], 9.9, viewports);
+simulate([0, 31.0, 2.6], [0, 0, 0.68], 9.9, viewports);

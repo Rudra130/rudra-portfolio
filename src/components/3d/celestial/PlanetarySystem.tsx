@@ -4,18 +4,19 @@ import * as THREE from 'three';
 import { worldsData } from '../../../data/worlds';
 import { useUniverseStore } from '../../../store/useUniverseStore';
 import { CelestialBodyMeta } from '../../../types/celestial';
-import { computeEllipticalPosition } from '../../../utils/math';
+import { computeEllipticalPosition, computeKeplerianVelocityMultiplier } from '../../../utils/math';
+import { SPEC_SEMI_MAJOR_RADII } from '../../../config/orbitalConfig';
 
 // Shared live coordinate registry for 100% accurate camera tracking
 export const celestialPositions: Record<string, [number, number, number]> = {
   surya: [0, 0, 0],
-  budh: [40, 0, 0],
-  shukra: [70, 0, 0],
-  mangal: [104, 0, 0],
-  guru: [138, 0, 0],
-  shani: [172, 0, 0],
-  rahu: [206, 0, 0],
-  ketu: [240, 0, 0],
+  budh: [SPEC_SEMI_MAJOR_RADII[0], 0, 0], // 2.0
+  shukra: [SPEC_SEMI_MAJOR_RADII[1], 0, 0], // 3.1
+  mangal: [SPEC_SEMI_MAJOR_RADII[3], 0, 0], // 4.5
+  guru: [SPEC_SEMI_MAJOR_RADII[4], 0, 0], // 6.7
+  shani: [SPEC_SEMI_MAJOR_RADII[5], 0, 0], // 7.8
+  rahu: [SPEC_SEMI_MAJOR_RADII[6], 0, 0], // 9.1
+  ketu: [SPEC_SEMI_MAJOR_RADII[7], 0, 0], // 9.9
 };
 
 interface PlanetProps {
@@ -83,11 +84,17 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
   }, [initialAngle, world.id, world.orbitRadius, world.eccentricity, world.inclination, tempPos]);
 
   useFrame((_, delta) => {
-    // 1. Continuous Elliptical Revolution (Increased revolving speed)
+    // 1. Continuous Keplerian Elliptical Revolution
+    // Planets move faster near perihelion and slower near aphelion (Kepler's Second Law)
     // If global pause is active or this specific world is selected, orbital revolution is halted
     if (!isOrbitPaused && !isSelected) {
       const speedMultiplier = activeWorldId ? 0.25 : 1.0;
-      angleRef.current += delta * world.orbitSpeed * 0.32 * speedMultiplier;
+      const keplerFactor = computeKeplerianVelocityMultiplier(
+        world.orbitRadius,
+        world.eccentricity ?? 0.05,
+        angleRef.current
+      );
+      angleRef.current += delta * world.orbitSpeed * keplerFactor * speedMultiplier;
     }
 
     computeEllipticalPosition(
