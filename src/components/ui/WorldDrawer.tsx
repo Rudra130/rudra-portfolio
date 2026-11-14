@@ -97,11 +97,17 @@ export const WorldDrawer: React.FC = () => {
 
   return (
     <>
-      {/* 1. Prominent Top-Left Back Button */}
-      <div className="fixed top-6 left-6 z-50">
+      {/* 1. Prominent Top-Left Back Button (Cleanly aligned below profile brand header) */}
+      <motion.div
+        initial={{ opacity: 0, x: -16 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: -16 }}
+        transition={{ duration: 0.25, ease: 'easeOut' }}
+        className="fixed top-20 sm:top-[76px] left-6 z-50"
+      >
         <button
           onClick={closeDrawer}
-          className="group flex items-center gap-2.5 px-4 sm:px-5 py-2.5 rounded-full bg-slate-950/85 backdrop-blur-md border border-amber-500/40 text-amber-200 hover:text-white hover:border-amber-400 hover:bg-slate-900 shadow-[0_0_20px_rgba(245,158,11,0.35)] transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
+          className="group flex items-center gap-2.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-slate-950/85 backdrop-blur-md border border-amber-500/40 text-amber-200 hover:text-white hover:border-amber-400 hover:bg-slate-900 shadow-[0_0_20px_rgba(245,158,11,0.35)] transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
           title="Return to Solar System Overview (Esc)"
         >
           <ArrowLeft className="w-4 h-4 text-amber-400 group-hover:-translate-x-1 transition-transform" />
@@ -109,18 +115,7 @@ export const WorldDrawer: React.FC = () => {
             Back to Overview
           </span>
         </button>
-      </div>
-
-      {/* 3. Floating Return Button at Bottom-Left */}
-      <div className="fixed bottom-6 left-6 z-40">
-        <button
-          onClick={closeDrawer}
-          className="group flex items-center gap-2 px-4 py-2 rounded-full bg-slate-950/80 backdrop-blur-md border border-white/10 text-slate-300 hover:text-white hover:border-amber-400/50 hover:bg-slate-900/90 shadow-2xl transition-all cursor-pointer"
-        >
-          <ArrowLeft className="w-3.5 h-3.5 text-slate-300 group-hover:-translate-x-0.5 transition-transform" />
-          <span className="text-xs font-body tracking-wide">Back to Overview</span>
-        </button>
-      </div>
+      </motion.div>
 
       {/* 4. Main Right-Side Glassmorphic Panel with Staggered Framer Motion Animations */}
       <AnimatePresence mode="wait">
