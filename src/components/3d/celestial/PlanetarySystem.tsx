@@ -9,13 +9,13 @@ import { computeEllipticalPosition } from '../../../utils/math';
 // Shared live coordinate registry for 100% accurate camera tracking
 export const celestialPositions: Record<string, [number, number, number]> = {
   surya: [0, 0, 0],
-  budh: [46, 0, 0],
-  shukra: [76, 0, 0],
-  mangal: [142, 0, 0],
-  guru: [188, 0, 0],
-  shani: [242, 0, 0],
-  rahu: [300, 0, 0],
-  ketu: [358, 0, 0],
+  budh: [40, 0, 0],
+  shukra: [70, 0, 0],
+  mangal: [104, 0, 0],
+  guru: [138, 0, 0],
+  shani: [172, 0, 0],
+  rahu: [206, 0, 0],
+  ketu: [240, 0, 0],
 };
 
 interface PlanetProps {

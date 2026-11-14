@@ -33,7 +33,7 @@ export const worldsData: CelestialBodyMeta[] = [
     description:
       'The swift messenger of computation. Represents programming mastery, problem-solving speed, and algorithmic rigor across 1,200+ solved challenges.',
     radius: 5.5,
-    orbitRadius: 46,
+    orbitRadius: 40,
     orbitSpeed: 0.22,
     eccentricity: 0.08,
     inclination: 3.2,
@@ -55,7 +55,7 @@ export const worldsData: CelestialBodyMeta[] = [
     description:
       'Where engineering rigor meets visual elegance. Crafts tactile claymorphic surfaces, cinematic 3D GSAP camera animations, glassmorphic design systems, and responsive WebGL micro-interactions.',
     radius: 7.5,
-    orbitRadius: 76,
+    orbitRadius: 70,
     orbitSpeed: 0.17,
     eccentricity: 0.04,
     inclination: 2.1,
@@ -78,7 +78,7 @@ export const worldsData: CelestialBodyMeta[] = [
     description:
       'My projects, engineering work, and hands-on creations that turn ideas into reality.',
     radius: 6.8,
-    orbitRadius: 142,
+    orbitRadius: 104,
     orbitSpeed: 0.10,
     eccentricity: 0.07,
     inclination: 1.85,
@@ -100,7 +100,7 @@ export const worldsData: CelestialBodyMeta[] = [
     description:
       'The expansive titan of learning and mentorship. Houses formal computer science foundations, national academic honors, and certified AI proficiencies.',
     radius: 14.0,
-    orbitRadius: 188,
+    orbitRadius: 138,
     orbitSpeed: 0.07,
     eccentricity: 0.048,
     inclination: 1.3,
@@ -123,7 +123,7 @@ export const worldsData: CelestialBodyMeta[] = [
     description:
       'The ringed master of discipline and time. Chronicles production engineering triumphs, distributed tracing, and enterprise authorization architectures.',
     radius: 11.5,
-    orbitRadius: 242,
+    orbitRadius: 172,
     orbitSpeed: 0.05,
     eccentricity: 0.056,
     inclination: 2.49,
@@ -145,7 +145,7 @@ export const worldsData: CelestialBodyMeta[] = [
     description:
       'Pioneering autonomous intelligence. Architecting cyclic multi-agent graphs with LangGraph, hybrid RAG pipelines, safety guardrails, Model Context Protocol (MCP) tool integration, OpenAI SDK tool use, and Google Agentic workflows.',
     radius: 9.0,
-    orbitRadius: 300,
+    orbitRadius: 206,
     orbitSpeed: 0.035,
     eccentricity: 0.065,
     inclination: 3.8,
@@ -167,7 +167,7 @@ export const worldsData: CelestialBodyMeta[] = [
     description:
       'The cometary nebula and space of quiet contemplation. The distilled wisdom derived from setbacks, debugging under pressure, and enduring values beyond code.',
     radius: 8.0,
-    orbitRadius: 358,
+    orbitRadius: 240,
     orbitSpeed: 0.025,
     eccentricity: 0.085,
     inclination: 4.2,
