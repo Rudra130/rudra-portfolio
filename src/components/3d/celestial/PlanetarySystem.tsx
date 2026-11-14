@@ -19,18 +19,107 @@ export const celestialPositions: Record<string, [number, number, number]> = {
   ketu: [SPEC_SEMI_MAJOR_RADII[7], 0, 0], // 9.9
 };
 
+/**
+ * Creates a dedicated cylindrical UV-mapped ring geometry for Saturn.
+ * U coordinates map strictly to the radial distance [0.0 = inner, 1.0 = outer],
+ * ensuring high-fidelity Cassini division and multi-ringlet banding around 360 degrees.
+ */
+function createSaturnRingGeometry(
+  innerRadius: number,
+  outerRadius: number,
+  thetaSegments: number = 128
+): THREE.BufferGeometry {
+  const geo = new THREE.BufferGeometry();
+  const positions: number[] = [];
+  const uvs: number[] = [];
+  const indices: number[] = [];
+
+  for (let i = 0; i <= thetaSegments; i++) {
+    const theta = (i / thetaSegments) * Math.PI * 2;
+    const cosT = Math.cos(theta);
+    const sinT = Math.sin(theta);
+
+    // Inner vertex: u = 0.0
+    positions.push(innerRadius * cosT, innerRadius * sinT, 0);
+    uvs.push(0.0, i / thetaSegments);
+
+    // Outer vertex: u = 1.0
+    positions.push(outerRadius * cosT, outerRadius * sinT, 0);
+    uvs.push(1.0, i / thetaSegments);
+  }
+
+  for (let i = 0; i < thetaSegments; i++) {
+    const p1 = i * 2;
+    const p2 = p1 + 1;
+    const p3 = p1 + 2;
+    const p4 = p1 + 3;
+
+    indices.push(p1, p2, p3);
+    indices.push(p2, p4, p3);
+  }
+
+  geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  geo.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+  geo.setIndex(indices);
+  geo.computeVertexNormals();
+  return geo;
+}
+
+/**
+ * Generates an authentic optical Cassini-banded Saturn ring texture.
+ * Features: C Ring, high-reflectance B Ring, prominent dark Cassini Division, A Ring, and Encke Gap.
+ */
+function createSaturnRingTexture(): THREE.CanvasTexture {
+  const canvas = document.createElement('canvas');
+  canvas.width = 1024;
+  canvas.height = 32;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return new THREE.CanvasTexture(canvas);
+
+  const grad = ctx.createLinearGradient(0, 0, 1024, 0);
+  grad.addColorStop(0.00, 'rgba(160, 145, 120, 0.0)');
+  grad.addColorStop(0.05, 'rgba(180, 165, 135, 0.45)'); // C Ring inner
+  grad.addColorStop(0.24, 'rgba(195, 180, 150, 0.65)'); // C Ring outer
+  grad.addColorStop(0.26, 'rgba(242, 226, 188, 0.95)'); // B Ring inner edge
+  grad.addColorStop(0.44, 'rgba(255, 242, 210, 0.98)'); // B Ring brightest core
+  grad.addColorStop(0.56, 'rgba(246, 232, 194, 0.95)'); // B Ring middle
+  grad.addColorStop(0.64, 'rgba(232, 214, 174, 0.92)'); // B Ring outer
+  grad.addColorStop(0.66, 'rgba(15, 12, 10, 0.06)');    // Cassini Division
+  grad.addColorStop(0.72, 'rgba(15, 12, 10, 0.06)');    // Cassini Division
+  grad.addColorStop(0.74, 'rgba(228, 208, 172, 0.90)'); // A Ring inner
+  grad.addColorStop(0.86, 'rgba(238, 218, 184, 0.88)'); // A Ring middle
+  grad.addColorStop(0.92, 'rgba(218, 198, 164, 0.82)'); // A Ring outer
+  grad.addColorStop(0.94, 'rgba(25, 20, 15, 0.12)');    // Encke Gap
+  grad.addColorStop(0.96, 'rgba(222, 202, 168, 0.80)'); // F Ring
+  grad.addColorStop(1.00, 'rgba(180, 160, 130, 0.0)');  // Outer fade
+
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, 1024, 32);
+
+  // Micro-grooves
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.07)';
+  for (let x = 270; x < 950; x += 5) {
+    if ((x < 670 || x > 740) && (x < 940 || x > 960)) {
+      ctx.fillRect(x, 0, 2, 32);
+    }
+  }
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.wrapS = THREE.ClampToEdgeWrapping;
+  texture.wrapT = THREE.ClampToEdgeWrapping;
+  return texture;
+}
+
 interface PlanetProps {
   world: CelestialBodyMeta;
   initialAngle: number;
   texture: THREE.Texture | null;
-  ringTexture?: THREE.Texture | null;
 }
 
 const IndividualPlanet: React.FC<PlanetProps> = ({
   world,
   initialAngle,
   texture,
-  ringTexture,
 }) => {
   const groupRef = useRef<THREE.Group>(null);
   const meshRef = useRef<THREE.Mesh>(null);
@@ -42,6 +131,17 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
 
   // Preallocated vector for zero allocation in useFrame
   const tempPos = useMemo(() => ({ x: 0, y: 0, z: 0 }), []);
+
+  // Dedicated radial UV ring geometry and authentic Cassini-banded texture for Saturn
+  const saturnRingGeo = useMemo(() => {
+    if (world.id !== 'shani') return null;
+    return createSaturnRingGeometry(world.radius * 1.3, world.radius * 2.65, 128);
+  }, [world.id, world.radius]);
+
+  const saturnRingTexMemo = useMemo(() => {
+    if (world.id !== 'shani') return null;
+    return createSaturnRingTexture();
+  }, [world.id]);
 
   const { selectWorld, setHoveredWorld, hoveredWorldId, activeWorldId, isOrbitPaused } =
     useUniverseStore();
@@ -210,9 +310,10 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
           </mesh>
         )}
 
-        {/* Saturn's Iconic Rings with Alpha Division (tilted along Saturn's axial tilt) */}
-        {world.id === 'shani' && (
+        {/* Saturn's Iconic Rings (Photorealistic radial bands with Cassini Division) */}
+        {world.id === 'shani' && saturnRingGeo && (
           <mesh
+            geometry={saturnRingGeo}
             rotation={[-Math.PI / 2, 0, 0]}
             onPointerDown={handlePointerDown}
             onPointerUp={handlePointerUp}
@@ -221,14 +322,17 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
               selectWorld(world.id);
             }}
           >
-            <ringGeometry args={[world.radius * 1.35, world.radius * 2.5, 64]} />
             <meshStandardMaterial
-              map={ringTexture || undefined}
-              color="#e2d8b0"
+              map={saturnRingTexMemo || undefined}
+              emissiveMap={saturnRingTexMemo || undefined}
+              emissive="#e5ce98"
+              emissiveIntensity={isHovered ? 0.75 : isSelected ? 0.65 : 0.45}
+              color="#fff8e7"
               side={THREE.DoubleSide}
               transparent={true}
-              opacity={0.92}
-              roughness={0.6}
+              opacity={0.96}
+              roughness={0.35}
+              metalness={0.1}
             />
           </mesh>
         )}
@@ -301,7 +405,6 @@ export const PlanetarySystem: React.FC = () => {
     marsTex,
     jupiterTex,
     saturnTex,
-    saturnRingTex,
     rahuTex,
     ketuTex,
   ] = useLoader(THREE.TextureLoader, [
@@ -310,7 +413,6 @@ export const PlanetarySystem: React.FC = () => {
     '/textures/planets/mars.jpg',
     '/textures/planets/jupiter.jpg',
     '/textures/planets/saturn.jpg',
-    '/textures/planets/saturn_ring_alpha.png',
     '/textures/planets/rahu.jpg',
     '/textures/planets/ketu.jpg',
   ]);
@@ -337,7 +439,6 @@ export const PlanetarySystem: React.FC = () => {
             world={world}
             initialAngle={initialAngle}
             texture={textureMap[world.id] || null}
-            ringTexture={world.id === 'shani' ? saturnRingTex : undefined}
           />
         );
       })}
