@@ -33,15 +33,15 @@ async function run() {
     if (btn) btn.click();
   });
   await new Promise((r) => setTimeout(r, 600));
-  const universeUrl = page.url();
-  console.log('2. Universe URL after Enter:', universeUrl);
-  if (universeUrl.includes('#')) {
-    throw new Error(`FAIL: Universe URL contains #: ${universeUrl}`);
+  const portfolioUrl = page.url();
+  console.log('2. Portfolio URL after Enter:', portfolioUrl);
+  if (portfolioUrl.includes('#')) {
+    throw new Error(`FAIL: Portfolio URL contains #: ${portfolioUrl}`);
   }
-  if (!universeUrl.endsWith('/universe')) {
-    throw new Error(`FAIL: Expected /universe, got: ${universeUrl}`);
+  if (!portfolioUrl.endsWith('/portfolio')) {
+    throw new Error(`FAIL: Expected /portfolio, got: ${portfolioUrl}`);
   }
-  console.log('PASS: Clean /universe URL verified without #!');
+  console.log('PASS: Clean /portfolio URL verified without #!');
 
   // 3. Click Projects & Architecture
   await page.evaluate(() => {
@@ -53,10 +53,10 @@ async function run() {
   await new Promise((r) => setTimeout(r, 600));
   const projectsUrl = page.url();
   console.log('3. Projects URL:', projectsUrl);
-  if (projectsUrl.includes('#') || !projectsUrl.endsWith('/universe/projects')) {
-    throw new Error(`FAIL: Expected /universe/projects, got: ${projectsUrl}`);
+  if (projectsUrl.includes('#') || !projectsUrl.endsWith('/portfolio/projects')) {
+    throw new Error(`FAIL: Expected /portfolio/projects, got: ${projectsUrl}`);
   }
-  console.log('PASS: Clean /universe/projects URL verified without #!');
+  console.log('PASS: Clean /portfolio/projects URL verified without #!');
 
   // 4. Click Work Experience
   await page.evaluate(() => {
@@ -68,10 +68,10 @@ async function run() {
   await new Promise((r) => setTimeout(r, 600));
   const workUrl = page.url();
   console.log('4. Work Experience URL:', workUrl);
-  if (workUrl.includes('#') || !workUrl.endsWith('/universe/work-experience')) {
-    throw new Error(`FAIL: Expected /universe/work-experience, got: ${workUrl}`);
+  if (workUrl.includes('#') || !workUrl.endsWith('/portfolio/work-experience')) {
+    throw new Error(`FAIL: Expected /portfolio/work-experience, got: ${workUrl}`);
   }
-  console.log('PASS: Clean /universe/work-experience URL verified without #!');
+  console.log('PASS: Clean /portfolio/work-experience URL verified without #!');
 
   // 5. Click Back to Overview
   await page.evaluate(() => {
@@ -83,14 +83,14 @@ async function run() {
   await new Promise((r) => setTimeout(r, 600));
   const backUrl = page.url();
   console.log('5. Back to Overview URL:', backUrl);
-  if (backUrl.includes('#') || !backUrl.endsWith('/universe')) {
-    throw new Error(`FAIL: Expected /universe, got: ${backUrl}`);
+  if (backUrl.includes('#') || !backUrl.endsWith('/portfolio')) {
+    throw new Error(`FAIL: Expected /portfolio, got: ${backUrl}`);
   }
-  console.log('PASS: Clean return to /universe verified without #!');
+  console.log('PASS: Clean return to /portfolio verified without #!');
 
-  // 6. Direct deep-link navigation to /universe/skills
-  console.log('6. Testing direct deep link to /universe/skills ...');
-  await page.goto('http://localhost:5174/universe/skills', { waitUntil: 'networkidle0' });
+  // 6. Direct deep-link navigation to /portfolio/skills
+  console.log('6. Testing direct deep link to /portfolio/skills ...');
+  await page.goto('http://localhost:5174/portfolio/skills', { waitUntil: 'networkidle0' });
   await new Promise((r) => setTimeout(r, 1200));
   const directUrl = page.url();
   console.log('Direct URL loaded:', directUrl);
@@ -101,18 +101,40 @@ async function run() {
   if (activeTitle !== 'Technical Skills & DSA') {
     throw new Error(`FAIL: Expected Technical Skills & DSA, got: ${activeTitle}`);
   }
-  console.log('PASS: Direct deep link /universe/skills loaded correctly!');
+  console.log('PASS: Direct deep link /portfolio/skills loaded correctly!');
 
-  // 7. Legacy hash backward compatibility test (#/universe)
-  console.log('7. Testing legacy hash upgrade from #/universe ...');
-  await page.goto('http://localhost:5174/#/universe', { waitUntil: 'networkidle0' });
+  // 7. Backward compatibility redirect: /universe -> /portfolio
+  console.log('7. Testing backward compatibility redirect from /universe to /portfolio ...');
+  await page.goto('http://localhost:5174/universe', { waitUntil: 'networkidle0' });
+  await new Promise((r) => setTimeout(r, 600));
+  const redirectedUrl = page.url();
+  console.log('Redirected from /universe:', redirectedUrl);
+  if (!redirectedUrl.endsWith('/portfolio')) {
+    throw new Error(`FAIL: Expected /portfolio redirect, got: ${redirectedUrl}`);
+  }
+  console.log('PASS: /universe successfully redirected to /portfolio!');
+
+  // 8. Backward compatibility redirect: /universe/about -> /portfolio/about
+  console.log('8. Testing backward compatibility redirect from /universe/about to /portfolio/about ...');
+  await page.goto('http://localhost:5174/universe/about', { waitUntil: 'networkidle0' });
+  await new Promise((r) => setTimeout(r, 600));
+  const redirectedAboutUrl = page.url();
+  console.log('Redirected from /universe/about:', redirectedAboutUrl);
+  if (!redirectedAboutUrl.endsWith('/portfolio/about')) {
+    throw new Error(`FAIL: Expected /portfolio/about redirect, got: ${redirectedAboutUrl}`);
+  }
+  console.log('PASS: /universe/about successfully redirected to /portfolio/about!');
+
+  // 9. Legacy hash backward compatibility test (#/portfolio)
+  console.log('9. Testing legacy hash upgrade from #/portfolio ...');
+  await page.goto('http://localhost:5174/#/portfolio', { waitUntil: 'networkidle0' });
   await new Promise((r) => setTimeout(r, 600));
   const upgradedUrl = page.url();
   console.log('Upgraded legacy URL:', upgradedUrl);
-  if (upgradedUrl.includes('#')) {
-    throw new Error(`FAIL: Legacy hash was not stripped: ${upgradedUrl}`);
+  if (upgradedUrl.includes('#') || !upgradedUrl.endsWith('/portfolio')) {
+    throw new Error(`FAIL: Legacy hash was not stripped to /portfolio: ${upgradedUrl}`);
   }
-  console.log('PASS: Legacy hash upgrade stripped # cleanly!');
+  console.log('PASS: Legacy hash upgrade stripped # cleanly to /portfolio!');
 
   await browser.close();
   console.log('\nALL CLEAN URL VERIFICATION CHECKS PASSED PERFECTLY!');

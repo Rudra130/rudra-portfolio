@@ -26,8 +26,8 @@ async function run() {
   const page = await browser.newPage();
 
   // 1. Navigate to Surya (Core Identity / About)
-  console.log('1. Navigating to http://localhost:5174/universe/about...');
-  await page.goto('http://localhost:5174/universe/about', { waitUntil: 'networkidle2' });
+  console.log('1. Navigating to http://localhost:5174/portfolio/about...');
+  await page.goto('http://localhost:5174/portfolio/about', { waitUntil: 'networkidle2' });
   await new Promise((r) => setTimeout(r, 2500));
 
   // Check positions of Profile Brand vs Back to Overview button

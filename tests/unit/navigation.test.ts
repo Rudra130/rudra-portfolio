@@ -29,13 +29,13 @@ describe('Navigation & Clean URL Routing', () => {
   });
 
   it('should generate proper clean URL paths for overview and planet pages', () => {
-    expect(getPathForWorld(null)).toBe('/universe');
-    expect(getPathForWorld('mangal')).toBe('/universe/projects');
-    expect(getPathForWorld('shani')).toBe('/universe/work-experience');
-    expect(getPathForWorld('surya')).toBe('/universe/about');
-    expect(getPathForWorld('budh')).toBe('/universe/skills');
-    expect(getPathForWorld('guru')).toBe('/universe/education');
-    expect(getPathForWorld('rahu')).toBe('/universe/generative-ai');
+    expect(getPathForWorld(null)).toBe('/portfolio');
+    expect(getPathForWorld('mangal')).toBe('/portfolio/projects');
+    expect(getPathForWorld('shani')).toBe('/portfolio/work-experience');
+    expect(getPathForWorld('surya')).toBe('/portfolio/about');
+    expect(getPathForWorld('budh')).toBe('/portfolio/skills');
+    expect(getPathForWorld('guru')).toBe('/portfolio/education');
+    expect(getPathForWorld('rahu')).toBe('/portfolio/generative-ai');
   });
 
   it('should bidirectionally resolve both semantic slugs and direct IDs', () => {

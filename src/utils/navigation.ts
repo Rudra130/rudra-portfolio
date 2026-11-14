@@ -62,9 +62,9 @@ export const SLUG_TO_WORLD: Record<string, CelestialId> = {
  * Returns the clean path for a given world ID (or overview).
  */
 export function getPathForWorld(worldId: CelestialId | null): string {
-  if (!worldId) return '/universe';
+  if (!worldId) return '/portfolio';
   const slug = WORLD_TO_SLUG[worldId] || worldId;
-  return `/universe/${slug}`;
+  return `/portfolio/${slug}`;
 }
 
 /**

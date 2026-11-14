@@ -35,12 +35,17 @@ export const App: React.FC = () => {
           const rawId = hash.replace('#/world/', '').replace(/\/$/, '');
           const targetWorld = SLUG_TO_WORLD[rawId] || (rawId as CelestialId);
           const slug = WORLD_TO_SLUG[targetWorld] || targetWorld;
-          replacePath(`/universe/${slug}`);
+          replacePath(`/portfolio/${slug}`);
           enterUniverse();
           selectWorld(targetWorld);
           return;
-        } else if (hash === '#/universe' || hash === '#/universe/') {
-          replacePath('/universe');
+        } else if (
+          hash === '#/portfolio' ||
+          hash === '#/portfolio/' ||
+          hash === '#/universe' ||
+          hash === '#/universe/'
+        ) {
+          replacePath('/portfolio');
           enterUniverse();
           selectWorld(null);
           return;
@@ -51,11 +56,11 @@ export const App: React.FC = () => {
       const path = window.location.pathname.replace(/\/$/, '') || '/';
       if (path === '/') {
         returnToLanding();
-      } else if (path === '/universe') {
+      } else if (path === '/portfolio') {
         enterUniverse();
         selectWorld(null);
-      } else if (path.startsWith('/universe/')) {
-        const slug = path.replace('/universe/', '');
+      } else if (path.startsWith('/portfolio/')) {
+        const slug = path.replace('/portfolio/', '');
         const targetWorld = SLUG_TO_WORLD[slug];
         if (targetWorld) {
           enterUniverse();
@@ -64,15 +69,38 @@ export const App: React.FC = () => {
           enterUniverse();
           selectWorld(null);
         }
+      } else if (path === '/universe') {
+        // Backward compatibility: redirect /universe to clean /portfolio
+        replacePath('/portfolio');
+        enterUniverse();
+        selectWorld(null);
+      } else if (path.startsWith('/universe/')) {
+        // Backward compatibility: redirect /universe/:slug to clean /portfolio/:slug
+        const slug = path.replace('/universe/', '');
+        const targetWorld = SLUG_TO_WORLD[slug];
+        if (targetWorld) {
+          const canonicalSlug = WORLD_TO_SLUG[targetWorld] || targetWorld;
+          replacePath(`/portfolio/${canonicalSlug}`);
+          enterUniverse();
+          selectWorld(targetWorld);
+        } else {
+          replacePath('/portfolio');
+          enterUniverse();
+          selectWorld(null);
+        }
       } else if (path.startsWith('/world/')) {
-        // Direct /world/:slug redirect to clean /universe/:slug
+        // Backward compatibility: redirect /world/:slug to clean /portfolio/:slug
         const slug = path.replace('/world/', '');
         const targetWorld = SLUG_TO_WORLD[slug];
         if (targetWorld) {
           const canonicalSlug = WORLD_TO_SLUG[targetWorld] || targetWorld;
-          replacePath(`/universe/${canonicalSlug}`);
+          replacePath(`/portfolio/${canonicalSlug}`);
           enterUniverse();
           selectWorld(targetWorld);
+        } else {
+          replacePath('/portfolio');
+          enterUniverse();
+          selectWorld(null);
         }
       } else if (path === '/2d' || path === '/accessible') {
         setFallback2D(true);

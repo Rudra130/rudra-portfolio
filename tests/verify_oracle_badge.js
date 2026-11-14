@@ -28,7 +28,7 @@ async function run() {
 
   // 1. Check Guru (Education & Certifications in 3D Universe)
   console.log('1. Checking Guru (Education & Certifications)...');
-  await page.goto('http://localhost:5174/universe/education', { waitUntil: 'networkidle0' });
+  await page.goto('http://localhost:5174/portfolio/education', { waitUntil: 'networkidle0' });
   await new Promise((r) => setTimeout(r, 2000));
 
   const guruBadgeCheck = await page.evaluate(() => {
@@ -51,7 +51,7 @@ async function run() {
 
   // 2. Check Rahu (Generative AI & Agents in 3D Universe)
   console.log('2. Checking Rahu (Generative AI & Agents)...');
-  await page.goto('http://localhost:5174/universe/generative-ai', { waitUntil: 'networkidle0' });
+  await page.goto('http://localhost:5174/portfolio/generative-ai', { waitUntil: 'networkidle0' });
   await new Promise((r) => setTimeout(r, 2000));
 
   const rahuBadgeCheck = await page.evaluate(() => {

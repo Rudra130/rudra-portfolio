@@ -48,7 +48,7 @@ export const useUniverseStore = create<UniverseState>((set) => ({
 
   enterUniverse: () => {
     set({ hasEnteredUniverse: true, cameraMode: 'OVERVIEW' });
-    pushPath('/universe');
+    pushPath('/portfolio');
   },
 
   returnToLanding: () => {
@@ -68,7 +68,7 @@ export const useUniverseStore = create<UniverseState>((set) => ({
         cameraMode: 'RETURNING',
         isDrawerOpen: false,
       });
-      pushPath('/universe');
+      pushPath('/portfolio');
     } else {
       set({
         activeWorldId: id,
@@ -94,7 +94,7 @@ export const useUniverseStore = create<UniverseState>((set) => ({
       cameraMode: 'RETURNING',
       isDrawerOpen: false,
     });
-    pushPath('/universe');
+    pushPath('/portfolio');
   },
 
   setActiveTab: (tab: string) => {

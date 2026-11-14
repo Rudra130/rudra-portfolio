@@ -28,7 +28,7 @@ async function run() {
 
   // 1. Check Shukra (UI/UX & Design Systems)
   console.log('1. Checking Shukra (UI/UX Design Systems)...');
-  await page.goto('http://localhost:5174/universe/design', { waitUntil: 'networkidle0' });
+  await page.goto('http://localhost:5174/portfolio/design', { waitUntil: 'networkidle0' });
   await new Promise((r) => setTimeout(r, 1500));
 
   const shukraContent = await page.evaluate(() => {
@@ -58,7 +58,7 @@ async function run() {
 
   // 2. Check Rahu (Generative AI & Agents)
   console.log('2. Checking Rahu (Generative AI & Agents)...');
-  await page.goto('http://localhost:5174/universe/generative-ai', { waitUntil: 'networkidle0' });
+  await page.goto('http://localhost:5174/portfolio/generative-ai', { waitUntil: 'networkidle0' });
   await new Promise((r) => setTimeout(r, 1500));
 
   const rahuContent = await page.evaluate(() => {
