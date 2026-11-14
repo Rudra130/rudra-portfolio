@@ -5,8 +5,8 @@ import * as THREE from 'three';
 export const Starfield: React.FC = () => {
   const count = 3500;
 
-  // Load authentic 4K deep space universe background map
-  const bgTexture = useLoader(THREE.TextureLoader, '/textures/backgrounds/realistic_universe_4k.jpg');
+  // Load cosmic deep space nebula background map (matching UI reference view 2)
+  const bgTexture = useLoader(THREE.TextureLoader, '/textures/backgrounds/cosmic_nebula_bg.jpg');
 
   const [positions, colors] = useMemo(() => {
     const pos = new Float32Array(count * 3);
@@ -40,14 +40,14 @@ export const Starfield: React.FC = () => {
 
   return (
     <group>
-      {/* Deep Space Celestial Skybox Sphere */}
+      {/* Deep Space Milky Way Skybox Sphere */}
       <mesh>
-        <sphereGeometry args={[600, 48, 48]} />
+        <sphereGeometry args={[500, 48, 48]} />
         <meshBasicMaterial
           map={bgTexture}
           side={THREE.BackSide}
           transparent={true}
-          opacity={0.95}
+          opacity={0.85}
         />
       </mesh>
 
