@@ -21,7 +21,7 @@ import { profileData } from '../../data/profile';
 import { projectsData } from '../../data/projects';
 
 export const WorldDrawer: React.FC = () => {
-  const { activeWorldId, cameraMode, closeDrawer, activeTab, setActiveTab } =
+  const { activeWorldId, closeDrawer, activeTab, setActiveTab } =
     useUniverseStore();
   const [projectCategory, setProjectCategory] = useState<string>('All');
 
@@ -97,49 +97,7 @@ export const WorldDrawer: React.FC = () => {
 
   return (
     <>
-      {/* 1. Cinematic Approach Telemetry Overlay (Requirement 8) */}
-      <AnimatePresence>
-        {cameraMode === 'APPROACHING' && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0, transition: { duration: 0.15 } }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 pointer-events-none flex flex-col justify-between items-center"
-          >
-            {/* Top Letterbox Bar */}
-            <div className="w-full h-8 sm:h-12 bg-slate-950/85 backdrop-blur-sm border-b border-white/10" />
-
-            {/* Central Navigation Telemetry Banner */}
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0, y: 10 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 1.05, opacity: 0 }}
-              transition={{ duration: 0.35 }}
-              className="flex flex-col items-center gap-2 px-6 py-3 rounded-2xl bg-slate-950/85 backdrop-blur-md border border-amber-500/40 shadow-[0_0_30px_rgba(245,158,11,0.35)] mb-14"
-            >
-              <div className="flex items-center gap-3">
-                <span className="text-2xl animate-pulse" style={{ color: world.color }}>
-                  {world.symbol}
-                </span>
-                <div>
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-amber-400 block">
-                    Approaching Celestial Dimension
-                  </span>
-                  <span className="text-sm font-display font-bold text-white tracking-wide">
-                    {world.realWorldIdentity}
-                  </span>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Bottom Letterbox Bar */}
-            <div className="w-full h-8 sm:h-12 bg-slate-950/85 backdrop-blur-sm border-t border-white/10" />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* 2. Prominent Top-Left Back Button */}
+      {/* 1. Prominent Top-Left Back Button */}
       <div className="fixed top-6 left-6 z-50">
         <button
           onClick={closeDrawer}
