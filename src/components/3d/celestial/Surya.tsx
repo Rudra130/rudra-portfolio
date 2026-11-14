@@ -52,32 +52,32 @@ export const Surya: React.FC = () => {
   useFrame((state, delta) => {
     const time = state.clock.getElapsedTime();
 
-    // 1. Subtle, natural harmonic Sun core pulsation
+    // 1. Increased Sun core rotating speed & breathing pulsation
     if (meshRef.current) {
-      meshRef.current.rotation.y += delta * 0.015;
-      const pulse = 1.0 + 0.012 * Math.sin(time * 1.6) + 0.006 * Math.cos(time * 2.8);
+      meshRef.current.rotation.y += delta * 0.055;
+      const pulse = 1.0 + 0.015 * Math.sin(time * 2.2) + 0.008 * Math.cos(time * 3.5);
       meshRef.current.scale.set(pulse, pulse, pulse);
     }
 
-    // 2. Dual counter-rotating corona shells
+    // 2. Dual counter-rotating corona shells (increased rotation speed)
     if (innerCoronaRef.current) {
-      innerCoronaRef.current.rotation.z -= delta * 0.018;
-      innerCoronaRef.current.rotation.y += delta * 0.012;
-      const innerPulse = 1.0 + 0.02 * Math.sin(time * 2.0);
+      innerCoronaRef.current.rotation.z -= delta * 0.06;
+      innerCoronaRef.current.rotation.y += delta * 0.045;
+      const innerPulse = 1.0 + 0.025 * Math.sin(time * 2.5);
       innerCoronaRef.current.scale.set(innerPulse, innerPulse, innerPulse);
     }
 
     if (outerCoronaRef.current) {
-      outerCoronaRef.current.rotation.z += delta * 0.022;
-      outerCoronaRef.current.rotation.x -= delta * 0.015;
-      const outerPulse = 1.0 + 0.028 * Math.cos(time * 1.4);
+      outerCoronaRef.current.rotation.z += delta * 0.07;
+      outerCoronaRef.current.rotation.x -= delta * 0.045;
+      const outerPulse = 1.0 + 0.032 * Math.cos(time * 2.0);
       outerCoronaRef.current.scale.set(outerPulse, outerPulse, outerPulse);
     }
 
-    // 3. Dynamic solar flare prominence pulsation
+    // 3. Dynamic solar flare prominence rotation and pulsation
     if (flaresGroupRef.current) {
-      flaresGroupRef.current.rotation.y += delta * 0.015;
-      const flareScale = 1.0 + 0.06 * Math.sin(time * 2.5);
+      flaresGroupRef.current.rotation.y += delta * 0.055;
+      const flareScale = 1.0 + 0.08 * Math.sin(time * 3.0);
       flaresGroupRef.current.scale.set(1.0, flareScale, 1.0);
     }
   });

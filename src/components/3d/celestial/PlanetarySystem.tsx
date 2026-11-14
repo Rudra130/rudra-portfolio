@@ -85,11 +85,11 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
   }, [initialAngle, world.id, world.orbitRadius, world.eccentricity, world.inclination, tempPos]);
 
   useFrame((_, delta) => {
-    // 1. Continuous Elliptical Revolution
+    // 1. Continuous Elliptical Revolution (Increased revolving speed)
     // If global pause is active or this specific world is selected, orbital revolution is halted
     if (!isOrbitPaused && !isSelected) {
-      const speedMultiplier = activeWorldId ? 0.2 : 1.0;
-      angleRef.current += delta * world.orbitSpeed * 0.08 * speedMultiplier;
+      const speedMultiplier = activeWorldId ? 0.25 : 1.0;
+      angleRef.current += delta * world.orbitSpeed * 0.32 * speedMultiplier;
     }
 
     computeEllipticalPosition(
@@ -105,15 +105,15 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
       groupRef.current.position.set(tempPos.x, tempPos.y, tempPos.z);
     }
 
-    // 2. Independent Axial Rotation (Rotates continuously, even when selected!)
+    // 2. Independent Axial Rotation (Increased rotating speed ~3.5x for visible, living spin)
     if (meshRef.current) {
-      meshRef.current.rotation.y += delta * (world.rotationSpeed ?? 0.05);
+      meshRef.current.rotation.y += delta * (world.rotationSpeed ?? 0.05) * 3.5;
     }
 
     // 3. Differential Cloud Layer Rotation
     if (cloudsRef.current) {
       const cloudSpeed = world.cloudSpeed ?? (world.rotationSpeed ?? 0.05) * 1.35;
-      cloudsRef.current.rotation.y += delta * cloudSpeed;
+      cloudsRef.current.rotation.y += delta * cloudSpeed * 3.5;
     }
 
     // 4. Smooth Atmospheric Glow Lerp on Hover/Selection
