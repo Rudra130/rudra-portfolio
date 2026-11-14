@@ -9,14 +9,14 @@ import { CelestialBodyMeta } from '../../../types/celestial';
 // Shared live coordinate registry for 100% accurate camera tracking
 export const celestialPositions: Record<string, [number, number, number]> = {
   surya: [0, 0, 0],
-  budh: [16, 0, 0],
-  shukra: [24, 0, 0],
-  chandra: [33, 0, 0],
-  mangal: [42, 0, 0],
-  guru: [53, 0, 0],
-  shani: [66, 0, 0],
-  rahu: [80, 0, 0],
-  ketu: [94, 0, 0],
+  budh: [26, 0, 0],
+  shukra: [42, 0, 0],
+  chandra: [58, 0, 0],
+  mangal: [76, 0, 0],
+  guru: [98, 0, 0],
+  shani: [122, 0, 0],
+  rahu: [148, 0, 0],
+  ketu: [176, 0, 0],
 };
 
 interface PlanetProps {
@@ -51,10 +51,10 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
   }, [initialAngle, world.id, world.orbitRadius]);
 
   useFrame((_, delta) => {
-    // When this planet is selected, freeze its orbital revolution so it stays fixed for camera focus!
+    // When this planet is selected, freeze its orbital revolution so it stays fixed in frame!
     if (!isSelected) {
-      const speedMultiplier = activeWorldId ? 0.2 : 1.0;
-      angleRef.current += delta * world.orbitSpeed * 0.16 * speedMultiplier;
+      const speedMultiplier = activeWorldId ? 0.15 : 1.0;
+      angleRef.current += delta * world.orbitSpeed * 0.10 * speedMultiplier;
     }
 
     const x = Math.cos(angleRef.current) * world.orbitRadius;
@@ -65,9 +65,9 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
       groupRef.current.position.set(x, 0, z);
     }
 
-    // Always rotate planet on its own Y-axis for realistic 3D appearance
+    // Slow, serene planetary axial rotation (0.08 rad/s)
     if (meshRef.current) {
-      meshRef.current.rotation.y += delta * 0.35;
+      meshRef.current.rotation.y += delta * 0.08;
     }
   });
 
@@ -88,12 +88,18 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
         document.body.style.cursor = 'auto';
       }}
     >
-      {/* Inspection Keylight: Illuminates the planet brilliantly when selected */}
+      {/* Invisible Expanded Click Hitbox for instant, effortless clicking */}
+      <mesh visible={false}>
+        <sphereGeometry args={[world.radius * 1.5, 16, 16]} />
+        <meshBasicMaterial />
+      </mesh>
+
+      {/* Dedicated Inspection Keylight */}
       {isSelected && (
         <directionalLight
-          position={[2.5, 3.5, 5.0]}
-          intensity={3.2}
-          color="#fff8ee"
+          position={[3.0, 4.0, 6.0]}
+          intensity={3.5}
+          color="#fffaf0"
         />
       )}
 
@@ -106,7 +112,7 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
             roughness={world.id === 'budh' ? 0.85 : 0.55}
             metalness={world.id === 'budh' ? 0.15 : 0.05}
             emissive={world.glowColor}
-            emissiveIntensity={isHovered || isSelected ? 0.3 : 0.05}
+            emissiveIntensity={isHovered || isSelected ? 0.35 : 0.06}
           />
         ) : (
           <meshStandardMaterial
@@ -162,7 +168,7 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
 
       {/* Atmospheric Rim Glow on Hover/Selection */}
       {(isHovered || isSelected) && (
-        <mesh scale={[1.16, 1.16, 1.16]}>
+        <mesh scale={[1.15, 1.15, 1.15]}>
           <sphereGeometry args={[world.radius, 32, 32]} />
           <meshBasicMaterial
             color={world.glowColor}
@@ -174,19 +180,23 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
         </mesh>
       )}
 
-      {/* 3D Contextual Label Tag (Identical to View 2 reference) */}
+      {/* 3D Contextual Label Tag - Clickable */}
       {!activeWorldId && (
         <Html
-          position={[0, world.radius + 1.3, 0]}
+          position={[0, world.radius + 1.8, 0]}
           center
-          distanceFactor={60}
-          className="pointer-events-none select-none transition-all duration-300"
+          distanceFactor={70}
+          className="select-none transition-all duration-300"
         >
           <div
-            className={`flex flex-col items-center whitespace-nowrap px-3 py-1 rounded-full text-center transition-all ${
+            onClick={(e) => {
+              e.stopPropagation();
+              selectWorld(world.id);
+            }}
+            className={`flex flex-col items-center whitespace-nowrap px-3.5 py-1.5 rounded-full text-center transition-all cursor-pointer pointer-events-auto ${
               isHovered
-                ? 'bg-slate-900/90 border border-amber-400 text-amber-300 scale-110 shadow-[0_0_15px_rgba(245,158,11,0.5)]'
-                : 'bg-slate-950/60 text-slate-200 border border-white/10 opacity-90'
+                ? 'bg-slate-900/90 border border-amber-400 text-amber-300 scale-110 shadow-[0_0_20px_rgba(245,158,11,0.6)]'
+                : 'bg-slate-950/65 text-slate-200 border border-white/10 opacity-90 hover:border-amber-400 hover:text-amber-300'
             }`}
           >
             <span className="text-[11px] font-display font-semibold tracking-wide flex items-center gap-1.5">

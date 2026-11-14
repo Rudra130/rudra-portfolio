@@ -14,22 +14,44 @@ export const WorldDrawer: React.FC = () => {
 
   return (
     <>
-      {/* Floating Return Button at Bottom-Left (Exact View 3 & 4 layout) */}
+      {/* Prominent Top-Left Back Button (Always visible when inspecting a planet) */}
+      <div className="fixed top-6 left-6 z-50">
+        <button
+          onClick={closeDrawer}
+          className="group flex items-center gap-2.5 px-4 sm:px-5 py-2.5 rounded-full bg-slate-950/85 backdrop-blur-md border border-amber-500/40 text-amber-200 hover:text-white hover:border-amber-400 hover:bg-slate-900 shadow-[0_0_20px_rgba(245,158,11,0.35)] transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
+          title="Return to Solar System Overview"
+        >
+          <ArrowLeft className="w-4 h-4 text-amber-400 group-hover:-translate-x-1 transition-transform" />
+          <span className="text-xs sm:text-sm font-display font-medium tracking-wide">
+            Back to Overview
+          </span>
+        </button>
+      </div>
+
+      {/* Floating Return Button at Bottom-Left */}
       <div className="fixed bottom-6 left-6 z-40">
         <button
           onClick={closeDrawer}
-          className="group flex items-center gap-2 px-4 py-2 rounded-full bg-slate-950/80 backdrop-blur-md border border-white/10 text-slate-300 hover:text-white hover:border-amber-400/50 hover:bg-slate-900/90 shadow-2xl transition-all"
+          className="group flex items-center gap-2 px-4 py-2 rounded-full bg-slate-950/80 backdrop-blur-md border border-white/10 text-slate-300 hover:text-white hover:border-amber-400/50 hover:bg-slate-900/90 shadow-2xl transition-all cursor-pointer"
         >
           <ArrowLeft className="w-3.5 h-3.5 text-slate-300 group-hover:-translate-x-0.5 transition-transform" />
-          <span className="text-xs font-body tracking-wide">Back to Portfolio</span>
+          <span className="text-xs font-body tracking-wide">Back to Overview</span>
         </button>
       </div>
 
       {/* Main Right-Side Glassmorphic Panel (Exact View 3 & 4 layout: ~60% width) */}
       <div className="fixed right-0 top-0 bottom-0 z-30 w-full lg:w-[62%] xl:w-[58%] glass-panel overflow-y-auto px-6 sm:px-12 py-20 flex flex-col justify-start animate-fade-in border-l border-white/10">
         {/* World Header */}
-        <div className="mb-6">
-          <div className="flex items-center gap-3 mb-1">
+        <div className="mb-6 relative">
+          <button
+            onClick={closeDrawer}
+            className="absolute top-0 right-0 p-2 rounded-full text-slate-400 hover:text-white hover:bg-white/10 transition-all cursor-pointer"
+            title="Close and return to overview"
+          >
+            <span className="text-xl leading-none">✕</span>
+          </button>
+
+          <div className="flex items-center gap-3 mb-1 pr-10">
             <span className="text-2xl" style={{ color: world.color }}>
               {world.symbol}
             </span>

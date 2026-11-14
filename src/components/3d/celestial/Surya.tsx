@@ -20,15 +20,15 @@ export const Surya: React.FC = () => {
 
   useFrame((_, delta) => {
     if (meshRef.current) {
-      meshRef.current.rotation.y += delta * 0.05;
+      meshRef.current.rotation.y += delta * 0.03;
     }
     if (coronaRef.current) {
-      coronaRef.current.rotation.z -= delta * 0.03;
-      const pulse = 1 + Math.sin(Date.now() * 0.002) * 0.025;
+      coronaRef.current.rotation.z -= delta * 0.02;
+      const pulse = 1 + Math.sin(Date.now() * 0.0015) * 0.02;
       coronaRef.current.scale.set(pulse, pulse, pulse);
     }
     if (outerGlowRef.current) {
-      outerGlowRef.current.rotation.y += delta * 0.02;
+      outerGlowRef.current.rotation.y += delta * 0.015;
     }
   });
 
@@ -49,21 +49,27 @@ export const Surya: React.FC = () => {
         document.body.style.cursor = 'auto';
       }}
     >
-      {/* Photorealistic Sun Sphere */}
+      {/* Generous Click Hitbox */}
+      <mesh visible={false}>
+        <sphereGeometry args={[11.0, 16, 16]} />
+        <meshBasicMaterial />
+      </mesh>
+
+      {/* Photorealistic Sun Sphere (Enlarged) */}
       <mesh ref={meshRef}>
-        <sphereGeometry args={[6.0, 64, 64]} />
+        <sphereGeometry args={[9.0, 64, 64]} />
         <meshStandardMaterial
           map={sunTexture}
           emissiveMap={sunTexture}
           emissive="#f59e0b"
-          emissiveIntensity={isHovered ? 2.6 : 1.9}
+          emissiveIntensity={isHovered ? 2.5 : 1.9}
           roughness={0.4}
         />
       </mesh>
 
       {/* Fiery Solar Corona Shell */}
       <mesh ref={coronaRef}>
-        <sphereGeometry args={[6.7, 36, 36]} />
+        <sphereGeometry args={[10.3, 36, 36]} />
         <meshBasicMaterial
           color="#ea580c"
           transparent={true}
@@ -75,31 +81,35 @@ export const Surya: React.FC = () => {
 
       {/* Outer Ethereal Atmosphere Aura */}
       <mesh ref={outerGlowRef}>
-        <sphereGeometry args={[7.8, 36, 36]} />
+        <sphereGeometry args={[12.2, 36, 36]} />
         <meshBasicMaterial
           color="#fef08a"
           transparent={true}
-          opacity={0.12}
+          opacity={0.14}
           side={THREE.BackSide}
           blending={THREE.AdditiveBlending}
         />
       </mesh>
 
-      {/* Surya Contextual Label (matches View 2 reference) */}
+      {/* Surya Contextual Label */}
       {!activeWorldId && (
-        <Html position={[0, -7.5, 0]} center distanceFactor={60} className="pointer-events-none select-none">
+        <Html position={[0, -11.5, 0]} center distanceFactor={65} className="select-none">
           <div
-            className={`flex flex-col items-center whitespace-nowrap px-3 py-1 rounded-full text-center transition-all ${
+            onClick={(e) => {
+              e.stopPropagation();
+              selectWorld('surya');
+            }}
+            className={`flex flex-col items-center whitespace-nowrap px-3.5 py-1.5 rounded-full text-center transition-all cursor-pointer pointer-events-auto ${
               isHovered || isSelected
                 ? 'bg-slate-900/90 border border-amber-400 text-amber-300 scale-110 shadow-[0_0_20px_rgba(245,158,11,0.6)]'
-                : 'bg-slate-950/60 text-slate-200 border border-amber-500/20 shadow-md'
+                : 'bg-slate-950/60 text-slate-200 border border-amber-500/20 shadow-md hover:border-amber-400 hover:text-amber-300'
             }`}
           >
             <span className="text-xs font-display font-bold tracking-wide flex items-center gap-1.5">
               <span className="text-amber-400">☀️</span>
               <span>Surya</span>
             </span>
-            <span className="text-[10px] font-mono text-amber-300/80 tracking-wider">
+            <span className="text-[10px] font-mono text-slate-400">
               (Core Identity)
             </span>
           </div>

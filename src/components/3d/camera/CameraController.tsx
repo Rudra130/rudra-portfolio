@@ -12,7 +12,8 @@ export const CameraController: React.FC = () => {
 
   const { activeWorldId, cameraMode, setCameraMode, zoomLevel } = useUniverseStore();
 
-  const overviewPos = useRef(new THREE.Vector3(0, 48, 110));
+  // Overview camera: elevated vantage point encompassing the expanded planetary system
+  const overviewPos = useRef(new THREE.Vector3(0, 75, 175));
   const sunCenter = useRef(new THREE.Vector3(0, 0, 0));
 
   // Synchronize button zoom changes from HUD relative to current control target
@@ -41,33 +42,33 @@ export const CameraController: React.FC = () => {
 
         const dist = world.cameraDistance;
 
-        // Frame planet on the LEFT side of the screen (~25-30% from left edge)
-        // by placing look-at target to the right of the planet
+        // Target is shifted to the RIGHT of the planet (+0.45 * dist)
+        // so the planet is squarely projected in the LEFT ~25-30% of the screen
         const targetVec = new THREE.Vector3(
-          px + dist * 0.42,
+          px + dist * 0.45,
           py,
           pz
         );
 
-        // Position camera in front of the target with slight elevation
+        // Position camera in front of the target with slight vertical elevation
         const camVec = new THREE.Vector3(
           px + dist * 0.40,
           py + dist * 0.12,
-          pz + dist * 1.08
+          pz + dist * 1.15
         );
 
         if (cameraMode === 'APPROACHING') {
-          camera.position.lerp(camVec, delta * 3.8);
+          camera.position.lerp(camVec, delta * 4.2);
           if (controlsRef.current) {
-            controlsRef.current.target.lerp(targetVec, delta * 3.8);
+            controlsRef.current.target.lerp(targetVec, delta * 4.2);
             controlsRef.current.update();
           }
 
-          if (camera.position.distanceTo(camVec) < 0.15) {
+          if (camera.position.distanceTo(camVec) < 0.35) {
             setCameraMode('INSPECTING');
           }
         } else if (cameraMode === 'INSPECTING') {
-          // Lock target so planet stays anchored on the left frame
+          // Lock target so the planet stays solidly framed on the left
           if (controlsRef.current) {
             controlsRef.current.target.copy(targetVec);
           }
@@ -78,17 +79,22 @@ export const CameraController: React.FC = () => {
       if (cameraMode === 'RETURNING') {
         const currentOverview = overviewPos.current;
 
-        camera.position.lerp(currentOverview, delta * 3.2);
+        camera.position.lerp(currentOverview, delta * 3.8);
         if (controlsRef.current) {
-          controlsRef.current.target.lerp(sunCenter.current, delta * 3.2);
+          controlsRef.current.target.lerp(sunCenter.current, delta * 3.8);
           controlsRef.current.update();
         }
 
-        if (camera.position.distanceTo(currentOverview) < 0.5) {
+        if (camera.position.distanceTo(currentOverview) < 0.8) {
+          camera.position.copy(currentOverview);
+          if (controlsRef.current) {
+            controlsRef.current.target.copy(sunCenter.current);
+            controlsRef.current.update();
+          }
           setCameraMode('OVERVIEW');
         }
       }
-      // When in 'OVERVIEW', never modify camera or target so mouse wheel zoom & orbit drag are 100% smooth!
+      // When in 'OVERVIEW', never modify camera or target so mouse wheel zoom & orbit drag are 100% natural!
     }
   });
 
@@ -101,7 +107,7 @@ export const CameraController: React.FC = () => {
       rotateSpeed={0.8}
       enableRotate={true}
       minDistance={15}
-      maxDistance={350}
+      maxDistance={450}
       maxPolarAngle={Math.PI / 2 - 0.05} // prevent clipping through ground plane
       minPolarAngle={Math.PI / 16}
       dampingFactor={0.06}
