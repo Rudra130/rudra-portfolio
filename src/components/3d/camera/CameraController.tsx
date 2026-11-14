@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
@@ -11,53 +11,70 @@ export const CameraController: React.FC = () => {
 
   const { activeWorldId, cameraMode, setCameraMode, zoomLevel } = useUniverseStore();
 
-  const overviewPos = useRef(new THREE.Vector3(0, 50, 115));
+  const overviewPos = useRef(new THREE.Vector3(0, 48, 110));
+  const isTransitioning = useRef(false);
+
+  // Synchronize button zoom changes from HUD
+  const prevZoomLevel = useRef(zoomLevel);
+  useEffect(() => {
+    if (controlsRef.current && prevZoomLevel.current !== zoomLevel) {
+      const factor = prevZoomLevel.current / zoomLevel;
+      camera.position.multiplyScalar(factor);
+      controlsRef.current.update();
+      prevZoomLevel.current = zoomLevel;
+    }
+  }, [zoomLevel, camera]);
 
   useFrame((_, delta) => {
     if (activeWorldId) {
       const world = worldsData.find((w) => w.id === activeWorldId);
       if (world) {
-        // Find world's approximate current position
         let targetX = 0;
         let targetZ = 0;
         if (world.orbitRadius > 0) {
-          // Frame the inspected body in the left half of the screen
           targetX = world.orbitRadius * 0.7;
           targetZ = world.orbitRadius * 0.7;
         }
 
         const worldCenter = new THREE.Vector3(targetX, 0, targetZ);
-        // Position camera to frame the planet on the left side (x offset + distance)
+        // Position camera to frame the planet on the left side
         const targetCam = new THREE.Vector3(
           targetX + world.cameraDistance * 0.6,
           world.cameraDistance * 0.35,
           targetZ + world.cameraDistance * 1.2
         );
 
-        camera.position.lerp(targetCam, delta * 3.5);
-        if (controlsRef.current) {
-          controlsRef.current.target.lerp(worldCenter, delta * 3.5);
-          controlsRef.current.update();
-        }
+        if (cameraMode === 'APPROACHING') {
+          camera.position.lerp(targetCam, delta * 3.5);
+          if (controlsRef.current) {
+            controlsRef.current.target.lerp(worldCenter, delta * 3.5);
+            controlsRef.current.update();
+          }
 
-        if (camera.position.distanceTo(targetCam) < 0.5 && cameraMode === 'APPROACHING') {
-          setCameraMode('INSPECTING');
+          if (camera.position.distanceTo(targetCam) < 0.4) {
+            setCameraMode('INSPECTING');
+          }
         }
       }
     } else {
       // Returning to Overview
-      const currentOverview = overviewPos.current.clone().multiplyScalar(1 / zoomLevel);
-      const sunCenter = new THREE.Vector3(0, 0, 0);
+      if (cameraMode === 'RETURNING') {
+        isTransitioning.current = true;
+        const currentOverview = overviewPos.current.clone();
+        const sunCenter = new THREE.Vector3(0, 0, 0);
 
-      camera.position.lerp(currentOverview, delta * 3.0);
-      if (controlsRef.current) {
-        controlsRef.current.target.lerp(sunCenter, delta * 3.0);
-        controlsRef.current.update();
-      }
+        camera.position.lerp(currentOverview, delta * 3.0);
+        if (controlsRef.current) {
+          controlsRef.current.target.lerp(sunCenter, delta * 3.0);
+          controlsRef.current.update();
+        }
 
-      if (camera.position.distanceTo(currentOverview) < 1.0 && cameraMode === 'RETURNING') {
-        setCameraMode('OVERVIEW');
+        if (camera.position.distanceTo(currentOverview) < 0.8) {
+          setCameraMode('OVERVIEW');
+          isTransitioning.current = false;
+        }
       }
+      // When in 'OVERVIEW', do NOT overwrite camera position so mouse wheel zoom & drag work 100% naturally!
     }
   });
 
@@ -66,13 +83,15 @@ export const CameraController: React.FC = () => {
       ref={controlsRef}
       enablePan={true}
       enableZoom={true}
+      zoomSpeed={1.2}
+      rotateSpeed={0.8}
       enableRotate={true}
-      minDistance={18}
-      maxDistance={250}
-      maxPolarAngle={Math.PI / 2 - 0.05} // prevent going underneath ground plane
-      minPolarAngle={Math.PI / 12}
+      minDistance={10}
+      maxDistance={320}
+      maxPolarAngle={Math.PI / 2 - 0.05} // prevent clipping through ground
+      minPolarAngle={Math.PI / 16}
       dampingFactor={0.06}
-      enabled={!activeWorldId} // allow free orbit when in overview
+      enabled={!isTransitioning.current}
     />
   );
 };

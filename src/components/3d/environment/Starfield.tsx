@@ -1,8 +1,12 @@
 import React, { useMemo } from 'react';
+import { useLoader } from '@react-three/fiber';
 import * as THREE from 'three';
 
 export const Starfield: React.FC = () => {
   const count = 3500;
+
+  // Load Milky Way space background map
+  const bgTexture = useLoader(THREE.TextureLoader, '/textures/backgrounds/stars_milky_way.jpg');
 
   const [positions, colors] = useMemo(() => {
     const pos = new Float32Array(count * 3);
@@ -17,8 +21,7 @@ export const Starfield: React.FC = () => {
     ];
 
     for (let i = 0; i < count; i++) {
-      // Distribute points on a spherical shell of radius 280 to 450
-      const radius = 280 + Math.random() * 180;
+      const radius = 220 + Math.random() * 200;
       const theta = Math.random() * Math.PI * 2;
       const phi = Math.acos(2 * Math.random() - 1);
 
@@ -36,25 +39,39 @@ export const Starfield: React.FC = () => {
   }, [count]);
 
   return (
-    <points>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          args={[positions, 3]}
+    <group>
+      {/* Deep Space Milky Way Skybox Sphere */}
+      <mesh>
+        <sphereGeometry args={[420, 48, 48]} />
+        <meshBasicMaterial
+          map={bgTexture}
+          side={THREE.BackSide}
+          transparent={true}
+          opacity={0.4}
         />
-        <bufferAttribute
-          attach="attributes-color"
-          args={[colors, 3]}
+      </mesh>
+
+      {/* Instanced 3D Starfield Particles */}
+      <points>
+        <bufferGeometry>
+          <bufferAttribute
+            attach="attributes-position"
+            args={[positions, 3]}
+          />
+          <bufferAttribute
+            attach="attributes-color"
+            args={[colors, 3]}
+          />
+        </bufferGeometry>
+        <pointsMaterial
+          size={1.6}
+          sizeAttenuation={true}
+          vertexColors={true}
+          transparent={true}
+          opacity={0.9}
+          depthWrite={false}
         />
-      </bufferGeometry>
-      <pointsMaterial
-        size={1.6}
-        sizeAttenuation={true}
-        vertexColors={true}
-        transparent={true}
-        opacity={0.85}
-        depthWrite={false}
-      />
-    </points>
+      </points>
+    </group>
   );
 };
