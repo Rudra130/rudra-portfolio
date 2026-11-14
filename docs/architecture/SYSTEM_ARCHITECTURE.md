@@ -8,7 +8,7 @@
 
 ## 1. System Overview
 
-**Cosmic Portfolio** is architected as an interactive, GPU-accelerated client-side web application built on modern web standards (WebGL 2.0, HTML5, ECMAScript 2024). The system models Rudra Tiwari's professional and personal journey as an autonomous celestial system with nine interactive worlds (inspired by the Vedic Grahas), governed by real-time orbital calculations, volumetric shaders, and a synchronized glassmorphic UI presentation layer.
+**Cosmic Portfolio** is architected as an interactive, GPU-accelerated client-side web application built on modern web standards (WebGL 2.0, HTML5, ECMAScript 2024). The system models Rudra Tiwari's professional and personal journey as an autonomous celestial system with eight interactive worlds (inspired by the Vedic Grahas), governed by real-time Keplerian orbital calculations, volumetric shaders, and a synchronized glassmorphic UI presentation layer.
 
 The architecture prioritizes:
 1. **Low Latency & High Frame Rates**: 60 FPS rendering on modern desktop and 30-60 FPS on mobile devices.
@@ -46,8 +46,8 @@ graph TB
             
             subgraph Celestial_Entities [Celestial Entity Nodes]
                 SuryaNode[Surya - Sun & Corona]
-                InnerWorlds[Budh, Shukra, Chandra, Mangal]
-                OuterWorlds[Guru, Shani Ring System]
+                InnerWorlds[Budh, Shukra, Mangal]
+                OuterWorlds[Guru, Shani Cassini Rings]
                 ShadowNodes[Rahu Accretion & Ketu Cometary Trail]
             end
             

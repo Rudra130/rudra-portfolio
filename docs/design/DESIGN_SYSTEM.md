@@ -32,7 +32,6 @@ graph LR
 
     subgraph Celestial_Accents [Graha Signatures]
         SuryaGold["#f59e0b (Surya Solar Gold)"]
-        ChandraSilver["#cbd5e1 (Chandra Lunar Silver)"]
         MangalCrimson["#ef4444 (Mangal Mars Crimson)"]
         BudhQuicksilver["#06b6d4 (Budh Mercury Cyan)"]
         GuruAmber["#d97706 (Guru Jupiter Amber)"]
@@ -53,7 +52,6 @@ graph LR
 | **Starlight White** | `#f8fafc` | `text-slate-50` | Primary headlines, active tab labels |
 | **Starlight Muted** | `#94a3b8` | `text-slate-400` | Secondary copy, body text, metadata timestamps |
 | **Surya Gold** | `#f59e0b` | `accent-surya` | Primary CTAs, solar corona, bio highlights |
-| **Chandra Silver** | `#cbd5e1` | `accent-chandra` | Lunar glow, personal life highlights, memories |
 | **Mangal Crimson** | `#ef4444` | `accent-mangal` | Software project tags, GitHub links, action badges |
 | **Budh Quicksilver**| `#06b6d4` | `accent-budh` | Technical skills, DSA milestones, system design |
 | **Guru Amber** | `#d97706` | `accent-guru` | Education tags, Oracle certifications, academic honors |
@@ -130,7 +128,7 @@ The typographic stack conveys high-tech precision paired with warm readability:
 * **Bottom Action Indicator**:
   * `Click on a planet to explore` (centered telemetry instruction text in `text-xs tracking-widest text-slate-400 uppercase`).
 * **Return Navigation Button**:
-  * Positioned floating in the bottom-left during world inspection: `← Back to Universe` (glassmorphic pill button `px-4 py-2 rounded-full border border-white/10 bg-slate-900/60 hover:bg-slate-800/80`).
+  * Integrated into the top header row next to the profile avatar (`Header.tsx`): `← Back to Overview` (glassmorphic pill button `px-3 sm:px-4 py-1.5 rounded-full border border-amber-500/40 bg-slate-950/90 text-amber-200 hover:text-white hover:border-amber-400 hover:bg-slate-900 shadow-[0_0_15px_rgba(245,158,11,0.35)]`), maintaining > 50px clearance above the left navigation dock.
 
 ### 3. Primary & Action Buttons
 * **Landing CTA**: `Enter Universe →` (pill button `rounded-full border border-amber-500/40 bg-amber-500/10 hover:bg-amber-500/20 text-amber-200 px-6 py-2.5 transition-all`).

@@ -42,7 +42,7 @@ To present **Rudra Tiwari's** software engineering capabilities, academic achiev
 ```mermaid
 graph LR
     subgraph In_Scope [In-Scope: Version 1.0.0]
-        S1[Interactive 3D Solar System with 9 Worlds]
+        S1[Interactive 3D Solar System with 8 Worlds]
         S2[Smooth Slerp Camera Transitions]
         S3[Glassmorphic Detail HUD Drawers]
         S4[2D Accessible Full-Portfolio Fallback]
@@ -89,7 +89,7 @@ graph LR
 * **Flow**:
   1. Visitor presses `[ 2D Fallback View ]` button or has `prefers-reduced-motion` enabled.
   2. 3D canvas is unmounted or paused; clean vertical semantic HTML layout renders.
-  3. Visitor smoothly scrolls through all 9 worlds, reads content, and uses the contact form.
+  3. Visitor smoothly scrolls through all 8 worlds, reads content, and uses the contact form.
 * **Postconditions**: Universal access guaranteed without graphics barriers.
 
 ---

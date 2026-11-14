@@ -1,26 +1,27 @@
-# CELESTIAL_DESIGN_GUIDE.md — Detailed Specification for the Nine Celestial Worlds
+# CELESTIAL_DESIGN_GUIDE.md — Detailed Specification for the Eight Celestial Worlds
 
-> **PROJECT**: Cosmic Portfolio — Rudra Tiwari  
-> **DOCUMENT**: Celestial Design Specification (9 Grahas)  
-> **VERSION**: 1.0.0
+> **PROJECT**: Rudra Tiwari - Cosmic portfolio  
+> **DOCUMENT**: Celestial Design Specification (8 Grahas)  
+> **VERSION**: 2.0.0
 
 ---
 
 ## 1. Cosmic Conceptual Framework
 
-The portfolio interprets the nine Grahas of Vedic cosmology as **creative allegorical lenses** to showcase Rudra Tiwari's life and engineering career. They do not present astrological predictions, but rather establish a unified, culturally rooted narrative architecture.
+The portfolio interprets the Grahas of Vedic cosmology as **creative allegorical lenses** to showcase Rudra Tiwari's life, engineering career, and technological depth. They do not present astrological predictions, but rather establish a unified, culturally rooted narrative architecture:
 
 ```mermaid
 graph TD
-    Surya[1. Surya - Central Sun] --- Budh[4. Budh - Mercury]
-    Surya --- Shukra[6. Shukra - Venus]
-    Surya --- Chandra[2. Chandra - Moon/Earth]
-    Surya --- Mangal[3. Mangal - Mars]
+    Surya[1. Surya - Central Sun] --- Budh[2. Budh - Mercury]
+    Surya --- Shukra[3. Shukra - Venus]
+    Surya --- Mangal[4. Mangal - Mars]
     Surya --- Guru[5. Guru - Jupiter]
-    Surya --- Shani[7. Shani - Saturn]
-    Surya -.- Rahu[8. Rahu - Shadow Singularity]
-    Surya -.- Ketu[9. Ketu - Cometary Nebula]
+    Surya --- Shani[6. Shani - Saturn]
+    Surya -.- Rahu[7. Rahu - Shadow Singularity]
+    Surya -.- Ketu[8. Ketu - Cometary Nebula]
 ```
+
+*Note: Chandra (Moon / Personal Life) was decommissioned to streamline the portfolio focus entirely on engineering excellence, technical architecture, and verified career milestones.*
 
 ---
 
@@ -31,7 +32,7 @@ graph TD
 ### 1. SURYA — The Core Identity
 * **Astronomical Analog**: Central Sun (G-type main-sequence star).
 * **Vedic Allegory**: Atman (The Self), vital energy, source of light, core identity.
-* **Portfolio Representation**: Biography, engineering identity, foundational values, ambitions, resume gateway, and contact.
+* **Portfolio Representation**: Biography, engineering identity, foundational values, ambitions, resume gateway, and direct contact (`rudra.tiwari.4141@gmail.com`).
 * **Surface & Visual Appearance**:
   * Intense emissive core sphere with an animated multi-frequency procedural GLSL corona.
   * Solar flare prominences arching outward using additive particle sprites.
@@ -40,182 +41,135 @@ graph TD
   * Primary Corona: Solar Gold (`#f59e0b`)
   * Outer Flare: Ember Orange (`#ea580c`)
 * **Lighting Role**: Central `PointLight` (800 lumens) casting physical shadows across the entire planetary system.
-* **Orbital Coordinates**: Center of universe `(0, 0, 0)`. Stationary with slow axial rotation.
-* **Hover Behavior**: Corona expands by 15%, flares accelerate in speed, floating HUD tag reads `SURYA — Core Identity`.
-* **Selection / Travel**: Camera glides to `(0, 15, 35)`, facing the sun with a subtle bloom lens-flare shader.
+* **Orbital Position**: Focus of the universe `(0, 0, 0)`. Stationary with slow axial rotation.
 * **Information Panel Content**:
-  * Full developer biography and introduction.
-  * Core engineering values: Clean architecture, reliability, continuous learning.
+  * Full developer biography, tagline (*"Engineer. Explorer. Creator."*), and quote.
+  * Core values: Clean architecture, reliability, continuous learning.
   * Downloadable Resume button (PDF).
   * Direct contact modal and social links (GitHub, LinkedIn).
 
 ---
 
-### 2. CHANDRA — The Inner Universe
-* **Astronomical Analog**: The Moon / Earth System.
-* **Vedic Allegory**: Manas (The Mind), emotions, memory, inner tranquility, community.
-* **Portfolio Representation**: Personal life, hobbies, college experiences, cricket championship victory, memories, and reflections.
-* **Surface & Visual Appearance**:
-  * Cratered silver-slate topography with high-contrast basalt maria and fine lunar dust specular highlights.
-  * Faint cool-blue atmospheric fringe shader.
-* **Color Palette**:
-  * Surface: Silver Slate (`#cbd5e1` / `#94a3b8`)
-  * Atmospheric Haze: Soft Azure (`#38bdf8`, 25% opacity)
-* **Orbital Parameters**: Semi-major axis $48.0$, period $38s$, inclination $2.2^\circ$.
-* **Hover Behavior**: Lunar maria emit a subtle pearlescent shimmer; HUD tag reads `CHANDRA — Inner Universe`.
-* **Selection / Travel**: Camera orbits to an oblique angle capturing the illuminated crescent and soft shadow falloff.
-* **Information Panel Content**:
-  * College life at ABES Engineering College beyond academics.
-  * Sports triumph: College Cricket Tournament Winner (teamwork, strategy, and pressure management).
-  * Hobbies, reading, tech explorations, and personal inspirations.
-  * Photo gallery placeholders: `assets/user-photos/college/` and `achievements/`.
-
----
-
-### 3. MANGAL — The World of Action
-* **Astronomical Analog**: Mars (The Red Planet).
-* **Vedic Allegory**: Tejas / Shakti (Drive, energy, courage, execution, tangible action).
-* **Portfolio Representation**: Production software projects, engineering accomplishments, architecture blueprints, coding demonstrations, and GitHub repositories.
-* **Surface & Visual Appearance**:
-  * High-relief iron oxide rust-red topography with deep rift canyons (Valles Marineris analog) and Olympus-scale volcanic plateaus.
-  * Faint reddish-amber dust storm haze.
-* **Color Palette**:
-  * Surface: Crimson Terracotta (`#dc2626` / `#b91c1c`)
-  * Shadow Valleys: Deep Burnt Ochre (`#7f1d1d`)
-* **Orbital Parameters**: Semi-major axis $62.0$, period $48s$, inclination $1.8^\circ$.
-* **Hover Behavior**: Canyon crevices glow with vibrant crimson data-circuit lines; HUD tag reads `MANGAL — World of Action`.
-* **Selection / Travel**: Camera swoops close to the canyon rim.
-* **Information Panel Content**:
-  * **NL-2-DB: Natural Language to Database Query System**: Python, FastAPI, NVIDIA NIM, LangChain, LangGraph, RAG, SQL. Multi-stage query orchestration and SELECT-only security proxy.
-  * **AI-Powered Log Investigation System (Salescode AI)**: Java, Spring Boot, Spring AI, LangGraph, SQL. Contextual failure analysis and root-cause summarization.
-  * **BarterNow: AI-Powered Sponsorship Platform**: Python, FastAPI, React, Express.js, Prisma, Razorpay. Two-sided AI recommendation engine and real-time ROI analytics.
-  * **Food Delivery System**: React, Spring Boot, SQL full-stack ordering platform with real-time tracking.
-
----
-
-### 4. BUDH — The Intelligence Network
+### 2. BUDH — The Intelligence Network
 * **Astronomical Analog**: Mercury (The Swift Messenger).
-* **Vedic Allegory**: Buddhi (Intellect, analytical reasoning, communication, rapid agility).
-* **Portfolio Representation**: Programming languages, frameworks, system design, data structures & algorithms (~600+ LeetCode, Rating: 1812, ~1,200 total solved), and technical problem-solving.
+* **Vedic Allegory**: Buddhi (Intellect), analytical agility, communication, computational logic.
+* **Portfolio Representation**: Technical skills, programming languages, backend frameworks, data structures & algorithms (**1,200+ solved**, **600+ LeetCode**, **Rating: 1812**).
 * **Surface & Visual Appearance**:
-  * Heavily cratered silvery-bronze metallic crust with high specular reflectivity.
-  * Fast axial spin and rapid orbital velocity.
+  * Gray basalt surface with high specular sharpness and impact crater normal maps.
+  * Rapid axial spin and swift orbital velocity.
 * **Color Palette**:
-  * Surface: Quicksilver Cyan (`#06b6d4`) & Polished Graphite (`#475569`)
-  * Data Pulses: Neon Teal (`#22d3ee`)
-* **Orbital Parameters**: Semi-major axis $22.0$ (closest orbit), period $18s$, inclination $4.0^\circ$.
-* **Hover Behavior**: Orbit trajectory pulses with neon blue data packets; HUD tag reads `BUDH — Intelligence Network`.
-* **Selection / Travel**: Camera glides into close proximity, matching its swift orbital velocity.
+  * Surface: Cool Basalt Gray (`#94a3b8`)
+  * Data Matrix Accent: Electric Cyan (`#06b6d4`)
+* **Orbital Parameters**: Semi-major axis $a = 2.0$, semi-minor axis $b = 1.996$, eccentricity $e = 0.06$.
 * **Information Panel Content**:
-  * Languages: Java, Python, SQL, JavaScript, TypeScript.
-  * Backend & Architecture: Spring Boot, Spring AI, FastAPI, Microservices, Kafka, Node.js.
-  * Observability: OpenTelemetry, Distributed Tracing, Structured Logging.
-  * Databases: MySQL, PostgreSQL, MongoDB, Redis.
-  * DSA Milestones: 600+ LeetCode problems solved (Rating: 1812), 1,200+ problems across competitive platforms.
-  * Developer Tools: Claude Code, Cursor, GitHub Copilot.
+  * Core languages: Java, Python, SQL, JavaScript, TypeScript.
+  * Frameworks & Systems: Spring Boot, Spring AI, FastAPI, Kafka, Microservices.
+  * Competitive Programming achievements: LeetCode contest rating 1812, 1,200+ total problems solved across platforms.
 
 ---
 
-### 5. GURU — Knowledge and Wisdom
-* **Astronomical Analog**: Jupiter (The King of Planets).
-* **Vedic Allegory**: Brihaspati (The Guru, mentor, higher wisdom, formal knowledge, expansion).
-* **Portfolio Representation**: Academic foundation, university degree, Oracle certifications, national scholarship honors, and continuous learning.
+### 3. SHUKRA — Creativity & Aesthetics
+* **Astronomical Analog**: Venus (The Morning & Evening Star).
+* **Vedic Allegory**: Shukra (Beauty, art, refinement, sensory grace).
+* **Portfolio Representation**: Visual engineering, UI/UX design systems, Claymorphism, glassmorphism, 3D GSAP animations, WCAG AAA accessibility contrast, and BarterNow analytics dashboards.
 * **Surface & Visual Appearance**:
-  * Immense gas giant scale (largest planetary body).
-  * Complex atmospheric bands swirling in opposite directions via a procedural flow shader.
-  * Prominent storm vortex (Great Red Spot analog).
+  * Dense swirling golden atmosphere with iridescent Fresnel rim glow.
+  * Differential atmosphere cloud rotation and slow retrograde spin.
 * **Color Palette**:
-  * Atmospheric Bands: Saffron Amber (`#d97706`), Warm Gold (`#f59e0b`), Sandstone Cream (`#fde68a`)
-* **Orbital Parameters**: Semi-major axis $82.0$, period $68s$, inclination $1.3^\circ$.
-* **Hover Behavior**: Atmospheric bands accelerate differential rotation; HUD tag reads `GURU — Knowledge & Wisdom`.
-* **Selection / Travel**: Wide-angle camera view capturing the majestic curvature of the massive gas giant.
+  * Atmospheric Base: Pale Amber (`#fbbf24`)
+  * Rim Glow: Iridescent Honey Gold (`#fef08a`)
+* **Orbital Parameters**: Semi-major axis $a = 3.1$, semi-minor axis $b = 3.097$, eccentricity $e = 0.04$.
 * **Information Panel Content**:
-  * **Formal Education**: B.Tech in Computer Science and Engineering from Dr. A.P.J. Abdul Kalam Technical University (AKTU) / ABES Engineering College, Ghaziabad (2022–2026, CGPA 8.02/10).
-  * **National Honors**: Recipient of the **National Means-cum-Merit Scholarship** (prestigious merit-based national scholarship for academic excellence).
-  * **Industry Certifications**:
-    * Oracle Agentic AI Certified Foundations Associate
-    * Oracle Cloud Infrastructure Certified Generative AI Professional
-  * Lifelong learning philosophy, technical books, and academic milestones.
+  * Interactive design system showcase (`ShukraDesignContent.tsx`).
+  * Claymorphism & glassmorphism component breakdowns.
+  * 3D GSAP animation controls and accessibility compliance metrics.
 
 ---
 
-### 6. SHUKRA — Creativity and Aesthetics
-* **Astronomical Analog**: Venus (The Morning Star).
-* **Vedic Allegory**: Shukra (Beauty, refined craft, artistic vision, sensory elegance).
-* **Portfolio Representation**: UI/UX design experiments, interactive frontend design systems, creative coding, and aesthetic engineering.
+### 4. MANGAL — The World of Action
+* **Astronomical Analog**: Mars (The Red Planet).
+* **Vedic Allegory**: Mangala (Energy, courage, execution, tangible accomplishment).
+* **Portfolio Representation**: Software engineering projects, technical demonstrations, system architecture breakdowns, and GitHub repositories.
 * **Surface & Visual Appearance**:
-  * Shimmering, dense sulfuric cloud canopy with iridescent Fresnel limb scattering.
-  * Soft golden-rose radiance illuminating surrounding space.
+  * Iron oxide rust-red terrain with canyon relief, basalt highlands, and subtle atmospheric dust haze.
 * **Color Palette**:
-  * Cloud Canopy: Radiant Dawn Rose (`#ec4899`), Opalescent Peach (`#f472b6`), Sunset Champagne (`#fbcfe8`)
-* **Orbital Parameters**: Semi-major axis $34.0$, period $28s$, inclination $3.4^\circ$.
-* **Hover Behavior**: Cloud canopy shifts colors through a subtle chromatic dispersion shader; HUD tag reads `SHUKRA — Creativity & Aesthetics`.
-* **Selection / Travel**: Camera drifts slowly alongside the shimmering cloud layer.
+  * Primary Surface: Rust Red (`#ef4444` / `#b91c1c`)
+  * Canyon Shadow: Dark Mahogany (`#450a0a`)
+* **Orbital Parameters**: Semi-major axis $a = 3.8$, semi-minor axis $b = 3.791$, eccentricity $e = 0.07$.
 * **Information Panel Content**:
-  * Design system philosophy (Cosmic Minimalist design tokens).
-  * UI/UX experimentation, micro-animations, glassmorphism principles.
-  * Creative coding demonstrations and interactive canvas components.
+  * **NL-2-DB**: NVIDIA NIM + LangGraph multi-stage SQL pipeline with SELECT-only security guardrails.
+  * **AI Log Investigator**: Spring AI error analysis platform triaging production exceptions with root-cause summaries.
+  * **BarterNow**: AI-driven two-sided marketplace matching brands with event organizers.
+  * **Food Delivery System**: Concurrency-tested ordering platform with distributed caching.
 
 ---
 
-### 7. SHANI — The Timeline of Karma
-* **Astronomical Analog**: Saturn (The Ringed Wonder).
-* **Vedic Allegory**: Shani (Karma, discipline, time, patience, enduring effort, professional mastery).
-* **Portfolio Representation**: Professional engineering experience (~10 months in production), enterprise workflows, career timeline, engineering rigor, and lessons learned.
+### 5. GURU — Knowledge & Wisdom
+* **Astronomical Analog**: Jupiter (The Gas Giant).
+* **Vedic Allegory**: Guru/Brihaspati (Wisdom, higher learning, scholarship, institutional mentorship).
+* **Portfolio Representation**: Academic foundation (**B.Tech CSE, AKTU / ABES Engineering College, 8.02 CGPA**), National Means-cum-Merit Scholarship, and official Oracle certifications.
 * **Surface & Visual Appearance**:
-  * Banded pale-gold gas surface surrounded by an extensive, high-resolution concentric ring system.
-  * Ring system casts realistic volumetric shadows onto the planet's northern hemisphere.
+  * Massive scale ($0.52$ units base radius) with turbulent parallel cloud belts and rotating Great Red Spot storm vortex.
 * **Color Palette**:
-  * Planet: Muted Bronze (`#a8a29e`), Golden Sand (`#d97706`)
-  * Rings: Translucent Ice-Dust & Carbon Charcoal (`#e2e8f0` / `#475569`)
-* **Orbital Parameters**: Semi-major axis $104.0$, period $92s$, inclination $2.5^\circ$.
-* **Hover Behavior**: Ring particles shimmer with golden glints; HUD tag reads `SHANI — Timeline of Karma`.
-* **Selection / Travel**: Cinematic oblique camera angle looking across the planar expanse of the rings.
+  * Jovian Belts: Cream Gold (`#fde047` / `#ca8a04`)
+  * Storm Vortex: Ocher Amber (`#b45309`)
+* **Orbital Parameters**: Semi-major axis $a = 4.5$, semi-minor axis $b = 4.494$, eccentricity $e = 0.05$.
 * **Information Panel Content**:
-  * **Role**: Software Engineer at **Salescode AI** (Gurugram, India, Oct 2025 – Sept 2026).
-  * **Production Microservices**: Java/Spring Boot services and REST APIs for authentication, onboarding, password recovery, and loyalty workflows.
-  * **SSO & OAuth 2.0**: Reusable token issuance, refresh/revocation, and session validation layer adopted across 10 services.
-  * **OpenTelemetry Observability**: Structured logging, distributed tracing, and automated onboarding for 7 clients/LOBs reducing setup to ~2 hours.
-  * **Authentication Configuration Portal**: Proactively engineered self-service portal adopted by 10 LOBs with zero backend code changes.
-  * **Multi-Device Login & Session Security**: Concurrent session management, per-device token issuance, and device-level revocation across web, mobile, and tablet.
+  * Academic tenure: B.Tech CSE at ABES Engineering College (8.02 CGPA, graduating July 2026).
+  * National Means-cum-Merit Scholarship.
+  * Official Oracle Certifications:
+    - **Oracle Certified Associate Cloud Infrastructure 2025 Agentic AI** (Badge ID: `7BA8D764E39E938D6DFDD2DCAB8FB79691641BB4172B812392D5A4DDE37483AB`).
+    - **Oracle Cloud Infrastructure 2024 Generative AI Certified Professional** (Cert ID: `100785002OCI24GAIOCP`).
 
 ---
 
-### 8. RAHU — The Frontier of Innovation
-* **Astronomical Analog**: Lunar North Node (Shadow Node / Non-physical Astronomical Crossing).
-* **Vedic Allegory**: Rahu (Ambition, the unconventional, technological obsession, future frontiers).
-* **Portfolio Representation**: Generative AI, autonomous AI agents, Retrieval-Augmented Generation (RAG), vector databases, and bleeding-edge tech experiments.
+### 6. SHANI — The Timeline of Karma
+* **Astronomical Analog**: Saturn (The Ringed Titan).
+* **Vedic Allegory**: Shani (Discipline, persistence, time, responsibility, professional duty).
+* **Portfolio Representation**: Professional software engineering work experience at **Salescode AI**, enterprise auth architectures, OpenTelemetry observability, and key career milestones.
 * **Surface & Visual Appearance**:
-  * **Not a physical planet**: Rendered as a mysterious cosmic singularity / gravitational lensing black hole.
-  * Pure pitch-black event horizon surrounded by a rapidly rotating, ultraviolet-indigo accretion disc.
+  * Pale golden banded sphere with custom radial UV Cassini rings ($u \in [0, 1]$ from inner to outer ring) with high-reflectance B-ring, dark Cassini gap, and warm emissive glow (`#e5ce98`).
 * **Color Palette**:
-  * Event Horizon: Void Black (`#020205`)
-  * Accretion Disc: Electric Indigo (`#6366f1`), Deep Violet (`#4f46e5`), Singularity Blue (`#38bdf8`)
-* **Orbital Parameters**: Semi-major axis $126.0$, period $115s$, inclination $5.1^\circ$.
-* **Hover Behavior**: Accretion disc emits relativistic light distortion rings; HUD tag reads `RAHU — Frontier of Innovation`.
-* **Selection / Travel**: Camera locks into a stable orbit around the event horizon.
+  * Planet Body: Warm Ochre (`#f59e0b` / `#d97706`)
+  * Cassini Rings: Luminous Champagne Gold (`#e5ce98`)
+* **Orbital Parameters**: Semi-major axis $a = 6.7$, semi-minor axis $b = 6.691$, eccentricity $e = 0.05$.
 * **Information Panel Content**:
-  * **Agentic Workflows**: LangGraph multi-stage query generation, schema validation, and controlled execution.
-  * **NVIDIA NIM & LLM Integration**: Fast inference with FastAPI for natural language to database translation (NL-2-DB).
-  * **Spring AI Log Investigation**: Contextual root-cause summarization and failure analysis using Spring AI with SQL proxy security.
-  * **Two-Sided AI Recommendation Systems**: BarterNow AI matchmaker engine connecting brands with event organizers.
+  * Production software engineering tenure at Salescode AI.
+  * Enterprise SSO & OAuth 2.0 authentication adopted across 10 microservices.
+  * OpenTelemetry distributed tracing and client onboarding automation for 7 LOBs (~2 hour setup).
+  * Self-service Authentication Configuration Portal adopted across 10 business lines.
+  * Multi-device login support with concurrent session management and device-level revocation.
 
 ---
 
-### 9. KETU — The Space of Reflection
-* **Astronomical Analog**: Lunar South Node (Cometary / Nebular Celestial Anomaly).
-* **Vedic Allegory**: Ketu (Moksha, introspection, spiritual liberation, wisdom derived from detachment and setbacks).
-* **Portfolio Representation**: Personal philosophy, resilience through setbacks, ethical engineering, life principles beyond technical metrics.
+### 7. RAHU — The Frontier of Innovation
+* **Astronomical Analog**: Shadow Singularity / Gravitational Anomaly.
+* **Vedic Allegory**: Rahu (Ambition, disruption, unconventional boundaries, the technological frontier).
+* **Portfolio Representation**: Generative AI, autonomous multi-agent workflows (LangGraph), Retrieval-Augmented Generation (RAG), vector databases, and AI security guardrails.
 * **Surface & Visual Appearance**:
-  * **Not a physical planet**: Rendered as an ethereal glowing cometary nucleus trailing a long, luminous particle nebula.
-  * Wisp-like smoke luminescence drifting across the starfield.
+  * Pitch-black spherical event horizon absorbing all light, surrounded by a swirling violet-cyan relativistic accretion disk.
 * **Color Palette**:
-  * Nucleus: Mystic Emerald Teal (`#14b8a6`)
-  * Cometary Plume: Ethereal Cyan (`#0d9488`), Ghostly Jade (`#042f2e`)
-* **Orbital Parameters**: Semi-major axis $148.0$ (outermost orbit), period $140s$, inclination $6.2^\circ$.
-* **Hover Behavior**: Nebula particles disperse and reform in gentle swirling waves; HUD tag reads `KETU — Space of Reflection`.
-* **Selection / Travel**: Camera floats alongside the undulating cometary tail.
+  * Horizon Core: Absolute Void (`#020205`)
+  * Accretion Swirl: Deep Violet (`#6366f1` / `#4f46e5`) & Neon Cyan (`#06b6d4`)
+* **Orbital Parameters**: Semi-major axis $a = 7.8$, semi-minor axis $b = 7.780$, eccentricity $e = 0.07$.
 * **Information Panel Content**:
-  * Personal reflections: Values that guide engineering decisions beyond mere code output.
-  * Resilience: How setbacks, bugs, and failures sharpen architectural discipline.
-  * Long-term perspective: Building technology that serves genuine human value.
+  * Interactive LangGraph multi-agent orchestration architecture (`RahuGenAIContent.tsx`).
+  * Vector retrieval pipelines (embeddings, hybrid search, reranking).
+  * LLM guardrails and prompt safety enforcement.
+
+---
+
+### 8. KETU — The Space of Reflection
+* **Astronomical Analog**: Cometary Nebula / Ethereal Plume.
+* **Vedic Allegory**: Ketu (Liberation, introspection, inner wisdom, non-attachment, resilience).
+* **Portfolio Representation**: Engineering philosophy, resilience through setbacks, root-cause learning, and personal principles beyond code.
+* **Surface & Visual Appearance**:
+  * Ethereal cometary nucleus trailing an expansive, translucent particle plume in mystic teal and smoky cyan.
+* **Color Palette**:
+  * Cometary Nucleus: Bright Mystic Teal (`#14b8a6`)
+  * Trailing Plume: Deep Smoky Cyan (`#042f2e` / `#0f766e`)
+* **Orbital Parameters**: Semi-major axis $a = 9.1$, semi-minor axis $b = 9.071$, eccentricity $e = 0.08$.
+* **Information Panel Content**:
+  * Lessons learned from production incidents, failed prototypes, and architectural refactoring.
+  * Core engineering principles: Simplicity, resilience, clarity over cleverness.
+  * Values beyond technology: Integrity, persistence, long-term craftsmanship.

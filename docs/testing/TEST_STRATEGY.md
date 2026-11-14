@@ -36,52 +36,27 @@ graph TD
 ## 3. Test Categories & Implementation Details
 
 ### 1. Unit Tests (Vitest)
-* **Scope**: Pure logic, orbital positioning algorithms, string formatters, and data integrity.
+* **Scope**: Pure logic, orbital positioning algorithms, deep-linking routing, and data integrity.
 * **Key Test Suites**:
-  * `tests/unit/math.test.ts`: Verifies Keplerian orbit calculations, distance functions, and spherical interpolation bounds.
-  * `tests/unit/contentSchema.test.ts`: Asserts that all data objects in `src/data/` adhere to TypeScript interfaces, have non-empty titles, valid URLs (or explicit placeholder notices), and proper media tags.
-  * `tests/unit/store.test.ts`: Validates Zustand universe store transitions (`selectWorld`, `setCameraMode`, `toggleAudio`, `toggleFallback2D`).
-* **Execution Command**: `npm run test:unit`
+  * `tests/unit/math.test.ts`: Verifies Keplerian orbit calculations, semi-minor axes ($b = a\sqrt{1-e^2}$), focus offsets ($c = a \times e$), and Keplerian speed factors.
+  * `tests/unit/navigation.test.ts`: Verifies deep-linking routes (`/portfolio/about`, `/portfolio/projects`, etc.) and backward-compatible redirects from `/universe`.
+  * `tests/unit/contentSchema.test.ts`: Asserts that all data objects in `src/data/` adhere to TypeScript interfaces, have non-empty titles, valid URLs, and proper media tags.
+* **Execution Command**: `npm run test`
 
-### 2. Component Tests (React Testing Library + Vitest)
-* **Scope**: Individual DOM and UI overlay components in isolation.
-* **Key Test Suites**:
-  * `tests/components/WorldDrawer.test.tsx`: Verifies drawer rendering, tab switching, and project detail display for each of the 9 worlds.
-  * `tests/components/NavigationHUD.test.tsx`: Tests HUD action clicks, search modal toggle, and resume download triggers.
-  * `tests/components/AccessiblePortfolioView.test.tsx`: Confirms that all 9 worlds render semantic headings (`<h2>`, `<h3>`) and readable content in 2D mode.
-* **Execution Command**: `npm run test:components`
+### 2. Automated Headless Browser Verification (Puppeteer)
+* **Scope**: Real browser verification of WebGL rendering, layout boundaries, responsive navigation, and document metadata in Chrome.
+* **Key Verification Scripts**:
+  * `tests/verify_orbital_geometry.js`: Validates all 8 orbits render completely inside the viewport without edge clipping, with > 75px clearance.
+  * `tests/verify_nav_collapsed_default.js`: Asserts that the left vertical navigation dock initializes in a collapsed state by default.
+  * `tests/verify_tab_clearance.js`: Verifies that the contextual "Back to Overview" button maintains > 50px vertical clearance above the navigation dock without visual collisions.
+  * `tests/verify_head_title.js`: Validates `<title>Rudra Tiwari - Cosmic portfolio</title>` and header branding.
 
-### 3. 3D Interaction & WebGL Tests
-* **Scope**: Verifying 3D canvas lifecycle, raycast handling, and camera transitions without requiring a physical GPU in CI.
-* **Strategy**:
-  * Mock WebGL context using `gl` or `headless-gl` during unit/component tests.
-  * Verify that `CameraController` calculates correct target coordinates when a world is selected.
-  * Ensure `ErrorBoundary3D` intercepts WebGL context loss cleanly and triggers fallback mode.
-* **Execution Command**: `npm run test:3d`
-
-### 4. Integration Tests
-* **Scope**: Verifying that user actions in the DOM layer correctly update the 3D scene parameters and vice-versa.
+### 3. Integration & Accessibility
+* **Scope**: Verifying that user actions in the DOM layer correctly update the 3D scene parameters and vice-versa, and confirming 2D mode accessibility.
 * **Key Test Scenarios**:
-  * Selecting a world from the bottom celestial dock -> Updates store -> Camera controller begins slerp travel -> Drawer opens with matching world metadata.
+  * Selecting a world from the left dock or clicking in 3D -> Updates store -> Camera controller approaches planet -> Drawer opens with matching world metadata.
   * Closing drawer or pressing `Escape` -> Updates store -> Camera controller returns to solar overview -> Drawer unmounts.
-
-### 5. Accessibility & a11y Tests (axe-core)
-* **Scope**: WCAG 2.1 Level AA compliance verification.
-* **Key Checks**:
-  * Automated `axe` scanner running against both the 3D HUD overlay and the 2D Fallback View.
-  * Color contrast ratios evaluated on glassmorphic backgrounds.
-  * ARIA live region announcements for world changes.
-  * Focus trapping inside open drawers.
-* **Execution Command**: `npm run test:a11y`
-
-### 6. Browser & End-to-End Tests (Playwright)
-* **Scope**: Automated real-browser testing across Chromium, WebKit (Safari), and Firefox.
-* **Key Test Scenarios (`tests/e2e/visitor-journey.spec.ts`)**:
-  1. **Landing & Enter Universe Flow**: Opens homepage -> Waits for hero text -> Clicks "Enter Universe" -> Verifies HUD renders.
-  2. **Planet Inspection Flow**: Clicks "Mangal" -> Verifies camera transition completes -> Asserts drawer displays NL2SQL and Food Delivery System projects -> Clicks "Return to Universe".
-  3. **2D Fallback Toggle Flow**: Clicks "2D Fallback View" -> Verifies full-page vertical scroll view mounts -> Verifies all 9 world sections are readable.
-  4. **Contact Modal Submission**: Opens contact form -> Enters test data -> Validates client validation and honeypot -> Submits form.
-* **Execution Command**: `npm run test:e2e`
+  * **2D Fallback Toggle**: Clicks "Portfolio" or hotkey `M` -> Toggles 2D accessible view -> All 8 world sections render semantically with zero WebGL dependency.
 
 ### 7. Performance & WebGL Benchmarking
 * **Tools**: Google Lighthouse CI and Chrome DevTools profiling.

@@ -12,8 +12,8 @@ This skill defines the technical rules, architecture guidelines, and standards f
 
 ## 1. Project Context
 
-* **Product**: An immersive, interactive 3D personal universe inspired by the nine Grahas of Vedic astronomy.
-* **Owner**: Rudra Tiwari (B.Tech CSE, ABES Engineering College, July 2026, 8.02 CGPA; ~10 months software engineering experience).
+* **Product**: An immersive, interactive 3D personal universe inspired by the 8 Grahas of Vedic astronomy (Surya, Budh, Shukra, Mangal, Guru, Shani, Rahu, Ketu).
+* **Owner**: Rudra Tiwari (B.Tech CSE, ABES Engineering College, July 2026, 8.02 CGPA; Software Engineer at Salescode AI).
 * **Core Philosophy**: *"The universe should attract attention. My story should create curiosity. My engineering work should earn credibility."*
 
 ---
@@ -84,8 +84,8 @@ This skill defines the technical rules, architecture guidelines, and standards f
 Follow the 8-milestone roadmap defined in `IMPLEMENTATION.md`:
 * Milestone 1: Project Foundation (Vite, React 19, TypeScript, Tailwind, Zustand)
 * Milestone 2: Cosmic Environment (Starfield, Volumetric Nebula, Surya Glow, Camera Rig)
-* Milestone 3: Celestial Objects (9 Vedic worlds, textures, Saturn rings, Rahu/Ketu shaders)
-* Milestone 4: Interactions (Raycasting, hover cues, camera slerp transitions, orbit controls)
+* Milestone 3: Celestial Objects (8 Vedic worlds, textures, Cassini Saturn rings, Rahu/Ketu shaders)
+* Milestone 4: Keplerian Orbits (Logarithmic radii [2.0, 3.1, 3.8, 4.5, 6.7, 7.8, 9.1, 9.9], focus-centered ellipses, velocity modulation)
 * Milestone 5: Individual Worlds (Glassmorphic HUD panels, project breakdowns, skills)
 * Milestone 6: Personal Assets (Real photographs, screenshots, certificate badges)
 * Milestone 7: Optimization (Draw call batching, LOD, mobile performance, 2D fallback)

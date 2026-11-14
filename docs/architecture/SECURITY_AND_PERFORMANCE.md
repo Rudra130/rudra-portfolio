@@ -71,7 +71,7 @@ graph TD
 1. **Resolution Budget**:
    * Surya (Sun): $2048 \times 1024$ equirectangular emissive noise map.
    * Large Worlds (Guru, Shani): $2048 \times 1024$ diffuse and ring alpha PNG.
-   * Medium Worlds (Mangal, Chandra, Shukra): $1024 \times 512$ diffuse and normal maps.
+   * Medium Worlds (Mangal, Shukra): $1024 \times 512$ diffuse and normal maps.
    * Small Worlds (Budh, Rahu, Ketu): $512 \times 512$ or procedural shaders requiring zero texture downloads.
 2. **Format Selection**:
    * All standard photographic and planetary surface assets are encoded as modern **WebP** images at $85\%$ quality, reducing transfer weight by $60-70\%$ compared to uncompressed JPEG/PNG.

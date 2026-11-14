@@ -16,6 +16,11 @@
 * [ADR-006: Stylized Ergonomic Orbits vs. Astronomical Scale Accuracy](#adr-006-stylized-ergonomic-orbits-vs-astronomical-scale-accuracy)
 * [ADR-007: Dual-Paradigm Navigation Architecture (3D Space + 2D Accessible Mode)](#adr-007-dual-paradigm-navigation-architecture-3d-space--2d-accessible-mode)
 * [ADR-008: Styling Engine & UI Layer (Tailwind CSS + Framer Motion)](#adr-008-styling-engine--ui-layer-tailwind-css--framer-motion)
+* [ADR-009: Streamlining to 8 Celestial Worlds (Removal of Chandra / Personal Life)](#adr-009-streamlining-to-8-celestial-worlds-removal-of-chandra--personal-life)
+* [ADR-010: Visually Compressed Logarithmic Elliptical Orbits & Focus-Centered Keplerian Motion](#adr-010-visually-compressed-logarithmic-elliptical-orbits--focus-centered-keplerian-motion)
+* [ADR-011: Saturn (Shani) Radial UV Geometry & Cassini Division Visibility](#adr-011-saturn-shani-radial-uv-geometry--cassini-division-visibility)
+* [ADR-012: Collapsible Vertical Navigation Dock & Header Back Button Integration](#adr-012-collapsible-vertical-navigation-dock--header-back-button-integration)
+* [ADR-013: Primary Route Migration to /portfolio with Backward-Compatible Redirects](#adr-013-primary-route-migration-to-portfolio-with-backward-compatible-redirects)
 
 ---
 
@@ -132,3 +137,58 @@
 * **Consequences**:
   * *Positive*: Zero runtime styling overhead, instant utility prototyping, highly customizable cosmic tokens, and buttery-smooth spring physics in Framer Motion.
   * *Negative*: Requires disciplined class organization and utility extraction for common glassmorphic surfaces.
+
+---
+
+### ADR-009: Streamlining to 8 Celestial Worlds (Removal of Chandra / Personal Life)
+
+* **Status**: Accepted
+* **Context**: The portfolio originally mapped all 9 Vedic Grahas, including Chandra (Moon / Personal life, college memories, hobbies). To maximize professional impact for software engineering recruiters and tech leads, personal trivia needed to be removed in favor of direct engineering credibility.
+* **Decision**: Decommission Chandra completely from the 3D scene, navigation dock, drawer, and 2D accessible view, establishing an 8-world system centered on engineering, AI systems, architecture, and professional milestones.
+* **Consequences**:
+  * *Positive*: Leaner, high-signal portfolio focusing on production software engineering, DSA (1200+ solved), AI agents, and Salescode AI tenure. Reduced 3D scene geometry and asset overhead.
+  * *Negative*: Personal hobbies and college memories are omitted, placing 100% emphasis on technical capability and engineering mindset.
+
+---
+
+### ADR-010: Visually Compressed Logarithmic Elliptical Orbits & Focus-Centered Keplerian Motion
+
+* **Status**: Accepted
+* **Context**: Physically to-scale planetary orbits are impossible to navigate on desktop/mobile viewports. Previous linear or arbitrary radii caused either orbital line crowding or screen-edge clipping.
+* **Decision**: Adopt visually compressed logarithmic semi-major radii `[2.0, 3.1, 3.8, 4.5, 6.7, 7.8, 9.1, 9.9]` centralized in `src/config/orbitalConfig.ts`. Compute true focus-centered ellipses ($b = a\sqrt{1-e^2}$, $c = a\cdot e$) with Sun at $(0, 0, 0)$, rendering orbits shifted by $-c$ along the major axis. Apply Kepler's Second Law velocity factor $(a/r)^2\sqrt{1-e^2}$ for realistic orbital acceleration at perihelion.
+* **Consequences**:
+  * *Positive*: Mathematically consistent orbital spacing, zero orbit overlap, realistic planetary acceleration, and guaranteed viewport containment with > 75px clearance.
+  * *Negative*: Requires explicit Keplerian anomaly integration in `useFrame` (optimized to zero-allocation module vector math).
+
+---
+
+### ADR-011: Saturn (Shani) Radial UV Geometry & Cassini Division Visibility
+
+* **Status**: Accepted
+* **Context**: Default Three.js `RingGeometry` uses planar UV coordinates, causing planar texture distortion and near-total transparency when mapped with standard Saturn ring textures.
+* **Decision**: Implement `createSaturnRingGeometry` with true cylindrical radial UV coordinates ($u \in [0, 1]$ from inner to outer radius, $v \in [0, 1]$ around azimuth). Generate a high-resolution radial ring texture featuring the Cassini division, dense B-ring, translucent A-ring, and warm emissive glow (`#e5ce98`, intensity 0.45 - 0.75).
+* **Consequences**:
+  * *Positive*: Distinct, photorealistic Saturn rings visible against dark space without requiring external texture downloads.
+  * *Negative*: Minor initial procedural texture generation on application bootstrap.
+
+---
+
+### ADR-012: Collapsible Vertical Navigation Dock & Header Back Button Integration
+
+* **Status**: Accepted
+* **Context**: The left vertical navigation dock and the "Back to Overview" button originally collided visually when inspecting celestial bodies.
+* **Decision**: Initialize `PlanetNavList` in a collapsed state by default with glowing tooltips on hover, and integrate the contextual "Back to Overview" button into the top header row next to the profile avatar with > 50px vertical clearance.
+* **Consequences**:
+  * *Positive*: Clean, unobstructed celestial overview; zero component collisions; responsive across mobile and desktop.
+  * *Negative*: Users must hover or click the expand toggle to view full world labels in the vertical dock.
+
+---
+
+### ADR-013: Primary Route Migration to /portfolio with Backward-Compatible Redirects
+
+* **Status**: Accepted
+* **Context**: The original route `/universe` did not clearly communicate the product identity in shared URLs and bookmarks.
+* **Decision**: Migrate the primary route to `/portfolio` and deep-link world endpoints (`/portfolio/about`, `/portfolio/projects`, etc.), while maintaining automatic, transparent redirects from `/universe`.
+* **Consequences**:
+  * *Positive*: Professional URL structure, intuitive deep links, and zero broken links for existing visitors.
+  * *Negative*: None.

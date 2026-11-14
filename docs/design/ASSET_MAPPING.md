@@ -39,9 +39,7 @@ graph LR
     subgraph Photo_Assets [Personal Photograph Directory: assets/user-photos/]
         P1["profile/profile-main.webp"] --> SuryaWorld[Surya: Core Identity]
         P2["profile/profile-professional.webp"] --> ShaniWorld[Shani: Career Timeline]
-        P3["personal/profile-personal.webp"] --> ChandraWorld[Chandra: Inner Universe]
         P4["college/college-memory-01.webp"] --> GuruWorld[Guru: College Education]
-        P5["achievements/achievement-cricket.webp"] --> ChandraWorld2[Chandra: Sports Triumph]
         P6["personal/personal-gallery-01.webp"] --> KetuWorld[Ketu: Life Reflection]
     end
 ```
@@ -52,9 +50,7 @@ graph LR
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | `profile-main.webp` | `assets/user-photos/profile/` | **Surya** (Core Identity) | $800 \times 800\text{ px}$ | $1:1$ Square | WebP | $120\text{ KB}$ | "Professional portrait of Rudra Tiwari, Software Engineer" | **Extracted & Ready** |
 | `profile-professional.webp` | `assets/user-photos/profile/` | **Shani** (Career Timeline) | $1200 \times 800\text{ px}$ | $3:2$ Landscape | WebP | $160\text{ KB}$ | "Rudra Tiwari working at software engineering workstation" | *Placeholder Created* |
-| `profile-personal.webp` | `assets/user-photos/personal/` | **Chandra** (Inner Universe) | $800 \times 1000\text{ px}$ | $4:5$ Portrait | WebP | $140\text{ KB}$ | "Casual photograph of Rudra Tiwari outdoors" | *Placeholder Created* |
 | `college-memory-01.webp` | `assets/user-photos/college/` | **Guru** (Education & Academics) | $1200 \times 800\text{ px}$ | $3:2$ Landscape | WebP | $180\text{ KB}$ | "Rudra Tiwari on campus at ABES Engineering College" | *Placeholder Created* |
-| `achievement-cricket.webp` | `assets/user-photos/achievements/` | **Chandra** (Sports Triumph) | $1200 \times 800\text{ px}$ | $3:2$ Landscape | WebP | $190\text{ KB}$ | "Rudra Tiwari celebrating college cricket tournament championship victory" | *Placeholder Created* |
 | `personal-gallery-01.webp` | `assets/user-photos/personal/` | **Ketu** (Space of Reflection) | $1200 \times 800\text{ px}$ | $3:2$ Landscape | WebP | $170\text{ KB}$ | "Scenic exploration and personal moment of reflection" | *Placeholder Created* |
 
 ---
@@ -66,11 +62,10 @@ graph LR
 | **Surya** | `sun_surface.webp` | `assets/textures/planets/` | $2048 \times 1024$ | WebP | Procedural GLSL Simplex Noise Shader + Emissive Map (NASA SDO reference) | *Shader Defined* |
 | **Budh** | `mercury_surface.webp` | `assets/textures/planets/` | $1024 \times 512$ | WebP | NASA Messenger open-source planetary elevation map | *Configured* |
 | **Shukra** | `venus_atmosphere.webp` | `assets/textures/planets/` | $1024 \times 512$ | WebP | NASA Magellan cloud radar map + Custom Fresnel GLSL | *Configured* |
-| **Chandra** | `moon_surface.webp` | `assets/textures/planets/` | $1024 \times 512$ | WebP | NASA LRO (Lunar Reconnaissance Orbiter) open elevation map | *Configured* |
 | **Mangal** | `mars_surface.webp` | `assets/textures/planets/` | $1024 \times 512$ | WebP | USGS Astrogeology Mars Viking color mosaic | *Configured* |
 | **Guru** | `jupiter_surface.webp` | `assets/textures/planets/` | $2048 \times 1024$ | WebP | NASA Cassini / Juno spacecraft global mosaic | *Configured* |
 | **Shani** | `saturn_surface.webp` | `assets/textures/planets/` | $2048 \times 1024$ | WebP | NASA Cassini global map | *Configured* |
-| **Shani Rings** | `saturn_rings.png` | `assets/textures/planets/` | $1024 \times 64$ | PNG (Alpha) | High-contrast radial opacity map with Cassini Division | *Configured* |
+| **Shani Rings** | `saturn_rings.png` | `assets/textures/planets/` | $1024 \times 64$ | PNG (Alpha) | Radial UV Cassini ring geometry + luminous procedural banding | *Configured* |
 | **Rahu** | `rahu_accretion.webp` | `assets/textures/planets/` | $512 \times 512$ | WebP / GLSL | Custom procedural relativistic lensing shader | *Shader Defined* |
 | **Ketu** | `ketu_comet_sprite.webp`| `assets/textures/planets/` | $256 \times 256$ | WebP (Alpha) | Custom particle sprite with decaying exponential falloff | *Shader Defined* |
 
@@ -82,7 +77,7 @@ graph LR
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | `star_particle.webp` | `assets/textures/backgrounds/` | $64 \times 64$ | WebP | Gaussian falloff point sprite for 4,500-star instanced starfield | *Configured* |
 | `nebula_cubemap/` | `assets/textures/backgrounds/` | $6 \times (1024 \times 1024)$ | WebP | Deep space dark violet and teal background skybox | *Configured* |
-| `celestial_insignias.svg` | `assets/icons/` | Vector SVG | SVG | Custom minimalist geometric icons for the 9 Grahas | *Configured* |
+| `celestial_insignias.svg` | `assets/icons/` | Vector SVG | SVG | Custom minimalist geometric icons for the 8 Grahas | *Configured* |
 
 ---
 

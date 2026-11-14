@@ -104,16 +104,26 @@ The engineering workflow follows two strict phases:
 
 ---
 
-## 7. Celestial Mapping Reference
+## 7. Celestial Mapping Reference (The 8 Graha Worlds)
 
-| Graha (World) | Cosmic Analog | Portfolio Dimension | Key Content Focus |
-| :--- | :--- | :--- | :--- |
-| **Surya** | Central Sun | Core Identity | Introduction, Bio, Values, Resume Gateway, Contact (`rudra.tiwari.4141@gmail.com`) |
-| **Chandra** | Earth/Moon | Inner Universe | Personal Life, Hobbies, AKTU/ABES College Memories, Cricket Championship Winner |
-| **Mangal** | Mars (Red Planet) | World of Action | NL-2-DB (NVIDIA NIM/LangGraph), AI Log Investigator, BarterNow, Food Delivery |
-| **Budh** | Mercury (Swift) | Intelligence Network | Tech Stack (Java, Spring AI, FastAPI, Kafka), DSA (1200+ Solved, 600+ LeetCode, Rating: 1812) |
-| **Guru** | Jupiter (Gas Giant) | Knowledge & Wisdom | B.Tech CSE (AKTU/ABES, 8.02 CGPA), National Means-cum-Merit Scholarship, Oracle Certifications |
-| **Shukra** | Venus (Golden Haze) | Creativity & Aesthetics | Cosmic UI/UX Design System, Interactive Visual Concepts, BarterNow Analytics Dashboards |
-| **Shani** | Saturn (Ringed Titan)| Timeline of Karma | Software Engineer at Salescode AI (OAuth 2.0/SSO across 10 services, OpenTelemetry, Auth Portal) |
-| **Rahu** | Shadow Singularity | Frontier of Innovation | Generative AI, LangGraph Agents, RAG Pipelines, Vector DBs, Spring AI Log Analysis |
-| **Ketu** | Cometary Nebula | Space of Reflection | Philosophy, Resilience, Lessons from Setbacks, Values Beyond Tech |
+| Graha (World) | Cosmic Analog | Semi-Major Axis ($a$) | Portfolio Dimension | Key Content Focus |
+| :--- | :--- | :--- | :--- | :--- |
+| **Surya** | Central Sun | 0.0 (Focus) | Core Identity | Introduction, Bio, Values, Resume Gateway, Contact (`rudra.tiwari.4141@gmail.com`) |
+| **Budh** | Mercury (Swift) | 2.0 | Intelligence Network | Tech Stack (Java, Spring AI, FastAPI, Kafka), DSA (1200+ Solved, 600+ LeetCode, Rating: 1812) |
+| **Shukra** | Venus (Golden Haze) | 3.1 | Creativity & Aesthetics | Cosmic UI/UX Design System, Claymorphism, 3D GSAP, BarterNow Analytics Dashboards |
+| **Mangal** | Mars (Red Planet) | 3.8 | World of Action | NL-2-DB (NVIDIA NIM/LangGraph), AI Log Investigator, BarterNow, Food Delivery |
+| **Guru** | Jupiter (Gas Giant) | 4.5 | Knowledge & Wisdom | B.Tech CSE (AKTU/ABES, 8.02 CGPA), National Means-cum-Merit Scholarship, Oracle Certifications (Agentic AI & Gen AI) |
+| **Shani** | Saturn (Cassini Rings)| 6.7 | Timeline of Karma | Software Engineer at Salescode AI (OAuth 2.0/SSO across 10 services, OpenTelemetry, Auth Portal, Multi-device sessions) |
+| **Rahu** | Shadow Singularity | 7.8 | Frontier of Innovation | Generative AI, LangGraph Agents, RAG Pipelines, Vector DBs, Spring AI Log Analysis |
+| **Ketu** | Cometary Nebula | 9.1 | Space of Reflection | Philosophy, Resilience, Lessons from Setbacks, Values Beyond Tech |
+
+*Note: Chandra (Moon / Personal Life) was intentionally removed from the celestial system to keep the portfolio strictly focused on engineering excellence, architecture, design systems, and career achievements.*
+
+---
+
+## 8. Orbital & Camera System Rules
+* **Radii Specification**: Always use centralized radii `[2.0, 3.1, 3.8, 4.5, 6.7, 7.8, 9.1, 9.9]` from `src/config/orbitalConfig.ts`.
+* **Focus Centered Ellipses**: Sun is placed at $(0, 0, 0)$. The ellipse center is offset by $-c = -a \cdot e$.
+* **Keplerian Speed**: Modulation factor $(a/r)^2 \sqrt{1-e^2}$ governs speed at perihelion vs aphelion.
+* **Routing**: Primary portfolio route is `/portfolio`. Deep links are `/portfolio/:worldSlug`. Backward compatibility redirects `/universe` to `/portfolio`.
+* **UI Navigation**: Vertical navigation dock (`PlanetNavList`) starts collapsed by default. Contextual Back button is mounted in `Header.tsx`.

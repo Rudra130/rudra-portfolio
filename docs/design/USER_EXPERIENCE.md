@@ -72,11 +72,12 @@ journey
 ### Stage 2: The Macro Cosmos (Solar System Overview) — Reference: `assets/reference/02-universe-solar-system.jpg`
 * **Emotional State**: Immersion, playfulness, and spatial orientation.
 * **UX Flow**:
-  1. The camera sweeps into an orbital perspective overlooking the Sun and the nine Grahas along concentric elliptical orbital rings.
-  2. Persistent brand header appears: Golden swirl icon + `Rudra Tiwari` / `My Universe` (top-left); `Universe`, `About`, `Resume ↗`, GitHub, LinkedIn, Email (top-right).
-  3. All 9 bodies display contextual labels (`Guru (Knowledge)`, `Chandra (Personal Life)`, `Mangal (Projects)`, `Surya (Core Identity)`, `Budh (Skills)`, `Shukra (Creativity)`, `Rahu (Innovation)`, `Shani (Career)`, `Ketu (Reflection)`).
-  4. Bottom center telemetry prompt: `Click on a planet to explore`.
-  5. Right floating HUD tool-dock: `(i)` info, `[⛶]` fullscreen, `(+)` zoom in, `(-)` zoom out.
+  1. The camera sweeps into an orbital perspective overlooking the Sun and the eight Grahas along concentric elliptical orbital rings.
+  2. Persistent brand header appears: Golden swirl icon + `Rudra Tiwari` / `Cosmic Portfolio` (top-left); `Home`, `Portfolio`, `About`, `Resume ↗`, GitHub, LinkedIn, Email (top-right).
+  3. All 8 bodies display contextual labels (`Surya (Core Identity)`, `Budh (Skills & DSA)`, `Shukra (UI/UX Design)`, `Mangal (Projects)`, `Guru (Education & Certifications)`, `Shani (Work Experience)`, `Rahu (Generative AI & Agents)`, `Ketu (Reflection)`).
+  4. Collapsible vertical navigation dock on the left, initialized collapsed by default for zero celestial obstruction, expandable on demand with tooltips.
+  5. Bottom center telemetry prompt: `Click on a planet to explore`.
+  6. Right floating HUD tool-dock: `(i)` info, `[⛶]` fullscreen, `(+)` zoom in, `(-)` zoom out.
 
 ### Stage 3: The Approach (Planet Selection)
 * **Emotional State**: Engagement and focus.

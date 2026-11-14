@@ -99,10 +99,23 @@ export function computeEllipticalPosition(
 }
 ```
 
+### 3.1. Keplerian Elliptical Revolution with Focus Centering
+All 8 Graha worlds revolve around the Sun located at the primary focus $(0, 0, 0)$:
+
+* **Focus-Centered Ellipse**:
+  $$b = a \cdot \sqrt{1 - e^2}$$
+  $$c = a \cdot e$$
+* **Keplerian Orbital Velocity Modulation**:
+  $$\frac{d\theta}{dt} = \omega_0 \cdot \left(\frac{a}{r(\theta)}\right)^2 \cdot \sqrt{1 - e^2}$$
+  where current radial distance from the focus is:
+  $$r(\theta) = \frac{a \cdot (1 - e^2)}{1 + e \cdot \cos(\theta)}$$
+* **Visual Distance Specification**:
+  The semi-major axes $a \in [2.0, 3.1, 3.8, 4.5, 6.7, 7.8, 9.1, 9.9]$ units are centralized in `src/config/orbitalConfig.ts`.
+
 ### 3.2. Independent Axial Rotation & Cloud Drift
-* **Axial Tilt**: Each planet is mounted in an outer tilt group (`rotation.z = axialTilt`), orienting its rotational axis accurately (e.g., Chandra: 23.4°, Mangal: 25.2°, Shani: 26.7°).
+* **Axial Tilt**: Each planet is mounted in an outer tilt group (`rotation.z = axialTilt`), orienting its rotational axis accurately (e.g., Mangal: 25.2°, Shani: 26.7°, Guru: 3.1°).
 * **Independent Spin Speed**: Inner terrestrial bodies spin at distinct rates ($0.04 \text{ to } 0.08 \text{ rad/s}$), while Shukra (Venus) exhibits slow retrograde rotation ($-0.02 \text{ rad/s}$).
-* **Differential Cloud Drift**: Planets with atmospheres (Venus/Shukra, Chandra, Jupiter/Guru) feature a secondary concentric atmosphere sphere that rotates at a differential speed (`rotationSpeed * 1.25`), generating continuous cloud drift over surface terrain.
+* **Differential Cloud Drift**: Planets with atmospheres (Venus/Shukra, Jupiter/Guru) feature secondary atmospheric shaders that rotate at differential speeds, generating continuous cloud drift over surface terrain.
 
 ### 3.3. Solar Dynamics: Pulsation, Corona & Flares
 * **Breathing Pulsation**: The Sun's core sphere subtly expands and contracts using harmonic sine modulation:

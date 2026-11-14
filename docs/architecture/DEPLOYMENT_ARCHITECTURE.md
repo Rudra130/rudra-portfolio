@@ -12,7 +12,7 @@ The Cosmic Portfolio frontend is deployed to **Vercel's Edge Network**. The Edge
 
 ```mermaid
 graph TD
-    Developer[Developer / Rudra Tiwari] -->|git push main| GitHubRepo[GitHub Repository: personal-portfolio]
+    Developer[Developer / Rudra Tiwari] -->|git push main| GitHubRepo[GitHub Repository: Rudra130/rudra-portfolio]
     
     subgraph CI_CD_Pipeline [GitHub Actions CI/CD Pipeline]
         LintCheck[Code Quality & ESLint]
