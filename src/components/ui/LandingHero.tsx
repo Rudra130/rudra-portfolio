@@ -63,7 +63,7 @@ export const LandingHero: React.FC = () => {
         </div>
 
         <span className="text-xs sm:text-sm font-mono uppercase tracking-[0.35em] text-slate-200/90 mb-4 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
-          My Portfolio
+          Cosmic Portfolio
         </span>
 
         <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold uppercase tracking-tight text-white mb-4 drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]">

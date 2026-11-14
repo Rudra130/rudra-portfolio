@@ -38,7 +38,7 @@ export const Header: React.FC = () => {
               {profileData.name}
             </span>
             <span className="text-slate-400 text-[11px] font-mono tracking-wider">
-              My Portfolio
+              Cosmic Portfolio
             </span>
           </div>
         </div>
