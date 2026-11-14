@@ -26,7 +26,7 @@ export const Header: React.FC = () => {
             {profileData.name}
           </span>
           <span className="text-slate-400 text-[11px] font-mono tracking-wider">
-            My Universe
+            My Portfolio
           </span>
         </div>
       </div>
@@ -40,7 +40,7 @@ export const Header: React.FC = () => {
           }}
           className="text-xs font-medium text-slate-300 hover:text-amber-300 transition-colors"
         >
-          Universe
+          Portfolio
         </button>
 
         <button

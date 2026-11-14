@@ -35,7 +35,7 @@ export const LandingHero: React.FC = () => {
             onClick={enterUniverse}
             className="hover:text-amber-300 transition-colors"
           >
-            Universe
+            Portfolio
           </button>
           <a
             href={profileData.resumePath}
@@ -51,7 +51,7 @@ export const LandingHero: React.FC = () => {
       {/* Central Hero Block (Centered Typography) */}
       <div className="relative flex flex-col items-center text-center max-w-3xl mx-auto my-auto z-40">
         <span className="text-xs sm:text-sm font-mono uppercase tracking-[0.35em] text-slate-200/90 mb-4 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
-          My Universe
+          My Portfolio
         </span>
 
         <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold uppercase tracking-tight text-white mb-4 drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]">
@@ -66,13 +66,13 @@ export const LandingHero: React.FC = () => {
           {profileData.quote}
         </p>
 
-        {/* Enter Universe CTA (Exact View 1 design) */}
+        {/* Enter Portfolio CTA */}
         <div className="flex flex-col items-center gap-3">
           <button
             onClick={enterUniverse}
             className="group relative inline-flex items-center gap-3 px-8 py-3.5 rounded-full bg-slate-950/70 backdrop-blur-md border border-amber-500/50 text-amber-200 font-body text-xs sm:text-sm tracking-wider uppercase transition-all duration-300 hover:border-amber-400 hover:text-white hover:bg-slate-900/90 hover:shadow-[0_0_30px_rgba(245,158,11,0.5)] hover:scale-105 active:scale-95 shadow-xl"
           >
-            <span>Enter Universe</span>
+            <span>Enter Portfolio</span>
             <ArrowRight className="w-4 h-4 text-amber-400 group-hover:translate-x-1 transition-transform" />
           </button>
 
@@ -89,7 +89,7 @@ export const LandingHero: React.FC = () => {
       <div
         onClick={enterUniverse}
         className="relative z-40 flex flex-col items-center gap-2 cursor-pointer group pb-2 transition-transform hover:translate-y-1"
-        title="Enter Universe"
+        title="Enter Portfolio"
       >
         <div className="w-9 h-9 rounded-full border border-white/20 bg-slate-900/40 backdrop-blur-md flex items-center justify-center text-slate-300 group-hover:border-amber-400/60 group-hover:text-amber-300 transition-all shadow-lg">
           <ChevronDown className="w-4 h-4 animate-bounce" />

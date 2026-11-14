@@ -28,7 +28,7 @@ export const HUDControls: React.FC = () => {
       <aside className="fixed right-6 top-1/2 -translate-y-1/2 z-30 flex flex-col items-center gap-2 p-1.5 rounded-full bg-slate-950/70 backdrop-blur-md border border-white/10 shadow-2xl">
         <button
           onClick={() => setShowInfoModal(true)}
-          title="About Cosmic Universe"
+          title="About Cosmic Portfolio"
           className="w-9 h-9 rounded-full flex items-center justify-center text-slate-300 hover:text-amber-300 hover:bg-white/10 transition-all"
         >
           <Info className="w-4 h-4" />
@@ -78,7 +78,7 @@ export const HUDControls: React.FC = () => {
               <span className="text-amber-400">✦</span> The Cosmic Concept
             </h3>
             <p className="text-sm text-slate-300 leading-relaxed mb-4">
-              Welcome to the personal universe of <strong>Rudra Tiwari</strong>. This interactive 3D universe is inspired by the 9 Grahas of Vedic astronomy, representing distinct dimensions of his career, skills, and life.
+              Welcome to the personal portfolio of <strong>Rudra Tiwari</strong>. This interactive 3D portfolio is inspired by the 9 Grahas of Vedic astronomy, representing distinct dimensions of his career, skills, and life.
             </p>
             <ul className="text-xs text-slate-300 space-y-1.5 mb-6 font-mono">
               <li>• <strong>Surya (Sun)</strong>: Core Identity, Bio & Resume</li>

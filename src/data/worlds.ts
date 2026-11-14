@@ -8,7 +8,7 @@ export const worldsData: CelestialBodyMeta[] = [
     theme: 'Core Identity',
     tagline: 'Introduction, Values, Resume & Contact',
     description:
-      'The center of my universe. It represents who I am, what I do, what I believe in, and where I am headed.',
+      'The center of my portfolio. It represents who I am, what I do, what I believe in, and where I am headed.',
     radius: 6.0,
     orbitRadius: 0,
     orbitSpeed: 0,

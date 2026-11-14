@@ -45,15 +45,15 @@ export const App: React.FC = () => {
       {/* 3D WebGL Canvas Layer */}
       <CanvasContainer />
 
-      {/* Header Overlay */}
-      <Header />
-
       {/* Landing Experience */}
       {!hasEnteredUniverse ? (
         <LandingHero />
       ) : (
         <>
-          {/* Active Universe HUD Tools */}
+          {/* Main Top Header (In Portfolio View) */}
+          <Header />
+
+          {/* Active Portfolio HUD Tools */}
           <HUDControls />
 
           {/* World Deep-Dive Drawer */}

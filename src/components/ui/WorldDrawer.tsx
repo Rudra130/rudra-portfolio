@@ -21,7 +21,7 @@ export const WorldDrawer: React.FC = () => {
           className="group flex items-center gap-2 px-4 py-2 rounded-full bg-slate-950/80 backdrop-blur-md border border-white/10 text-slate-300 hover:text-white hover:border-amber-400/50 hover:bg-slate-900/90 shadow-2xl transition-all"
         >
           <ArrowLeft className="w-3.5 h-3.5 text-slate-300 group-hover:-translate-x-0.5 transition-transform" />
-          <span className="text-xs font-body tracking-wide">Back to Universe</span>
+          <span className="text-xs font-body tracking-wide">Back to Portfolio</span>
         </button>
       </div>
 

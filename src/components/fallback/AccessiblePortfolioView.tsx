@@ -17,7 +17,7 @@ export const AccessiblePortfolioView: React.FC = () => {
           className="flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-200 text-xs font-mono uppercase tracking-wider hover:bg-amber-500/30 shadow-xl transition-all"
         >
           <Eye className="w-4 h-4" />
-          <span>Switch to 3D Universe</span>
+          <span>Switch to 3D Portfolio</span>
         </button>
       </div>
 
