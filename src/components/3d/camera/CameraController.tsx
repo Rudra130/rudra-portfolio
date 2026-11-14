@@ -4,6 +4,7 @@ import { OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 import { useUniverseStore } from '../../../store/useUniverseStore';
 import { worldsData } from '../../../data/worlds';
+import { celestialPositions } from '../celestial/PlanetarySystem';
 
 export const CameraController: React.FC = () => {
   const { camera } = useThree();
@@ -12,14 +13,17 @@ export const CameraController: React.FC = () => {
   const { activeWorldId, cameraMode, setCameraMode, zoomLevel } = useUniverseStore();
 
   const overviewPos = useRef(new THREE.Vector3(0, 48, 110));
-  const isTransitioning = useRef(false);
+  const sunCenter = useRef(new THREE.Vector3(0, 0, 0));
 
-  // Synchronize button zoom changes from HUD
+  // Synchronize button zoom changes from HUD relative to current control target
   const prevZoomLevel = useRef(zoomLevel);
   useEffect(() => {
     if (controlsRef.current && prevZoomLevel.current !== zoomLevel) {
       const factor = prevZoomLevel.current / zoomLevel;
-      camera.position.multiplyScalar(factor);
+      const target = controlsRef.current.target as THREE.Vector3;
+      const offset = new THREE.Vector3().subVectors(camera.position, target);
+      offset.multiplyScalar(factor);
+      camera.position.copy(target).add(offset);
       controlsRef.current.update();
       prevZoomLevel.current = zoomLevel;
     }
@@ -29,52 +33,62 @@ export const CameraController: React.FC = () => {
     if (activeWorldId) {
       const world = worldsData.find((w) => w.id === activeWorldId);
       if (world) {
-        let targetX = 0;
-        let targetZ = 0;
-        if (world.orbitRadius > 0) {
-          targetX = world.orbitRadius * 0.7;
-          targetZ = world.orbitRadius * 0.7;
-        }
+        // Read accurate live 3D coordinate of the focused celestial body
+        const pos = celestialPositions[activeWorldId] || [0, 0, 0];
+        const px = pos[0];
+        const py = pos[1];
+        const pz = pos[2];
 
-        const worldCenter = new THREE.Vector3(targetX, 0, targetZ);
-        // Position camera to frame the planet on the left side
-        const targetCam = new THREE.Vector3(
-          targetX + world.cameraDistance * 0.6,
-          world.cameraDistance * 0.35,
-          targetZ + world.cameraDistance * 1.2
+        const dist = world.cameraDistance;
+
+        // Frame planet on the LEFT side of the screen (~25-30% from left edge)
+        // by placing look-at target to the right of the planet
+        const targetVec = new THREE.Vector3(
+          px + dist * 0.42,
+          py,
+          pz
+        );
+
+        // Position camera in front of the target with slight elevation
+        const camVec = new THREE.Vector3(
+          px + dist * 0.40,
+          py + dist * 0.12,
+          pz + dist * 1.08
         );
 
         if (cameraMode === 'APPROACHING') {
-          camera.position.lerp(targetCam, delta * 3.5);
+          camera.position.lerp(camVec, delta * 3.8);
           if (controlsRef.current) {
-            controlsRef.current.target.lerp(worldCenter, delta * 3.5);
+            controlsRef.current.target.lerp(targetVec, delta * 3.8);
             controlsRef.current.update();
           }
 
-          if (camera.position.distanceTo(targetCam) < 0.4) {
+          if (camera.position.distanceTo(camVec) < 0.15) {
             setCameraMode('INSPECTING');
+          }
+        } else if (cameraMode === 'INSPECTING') {
+          // Lock target so planet stays anchored on the left frame
+          if (controlsRef.current) {
+            controlsRef.current.target.copy(targetVec);
           }
         }
       }
     } else {
       // Returning to Overview
       if (cameraMode === 'RETURNING') {
-        isTransitioning.current = true;
-        const currentOverview = overviewPos.current.clone();
-        const sunCenter = new THREE.Vector3(0, 0, 0);
+        const currentOverview = overviewPos.current;
 
-        camera.position.lerp(currentOverview, delta * 3.0);
+        camera.position.lerp(currentOverview, delta * 3.2);
         if (controlsRef.current) {
-          controlsRef.current.target.lerp(sunCenter, delta * 3.0);
+          controlsRef.current.target.lerp(sunCenter.current, delta * 3.2);
           controlsRef.current.update();
         }
 
-        if (camera.position.distanceTo(currentOverview) < 0.8) {
+        if (camera.position.distanceTo(currentOverview) < 0.5) {
           setCameraMode('OVERVIEW');
-          isTransitioning.current = false;
         }
       }
-      // When in 'OVERVIEW', do NOT overwrite camera position so mouse wheel zoom & drag work 100% naturally!
+      // When in 'OVERVIEW', never modify camera or target so mouse wheel zoom & orbit drag are 100% smooth!
     }
   });
 
@@ -86,12 +100,12 @@ export const CameraController: React.FC = () => {
       zoomSpeed={1.2}
       rotateSpeed={0.8}
       enableRotate={true}
-      minDistance={10}
-      maxDistance={320}
-      maxPolarAngle={Math.PI / 2 - 0.05} // prevent clipping through ground
+      minDistance={15}
+      maxDistance={350}
+      maxPolarAngle={Math.PI / 2 - 0.05} // prevent clipping through ground plane
       minPolarAngle={Math.PI / 16}
       dampingFactor={0.06}
-      enabled={!isTransitioning.current}
+      enabled={cameraMode === 'OVERVIEW'}
     />
   );
 };

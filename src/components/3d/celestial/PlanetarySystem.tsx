@@ -1,10 +1,23 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useFrame, useLoader } from '@react-three/fiber';
 import { Html } from '@react-three/drei';
 import * as THREE from 'three';
 import { worldsData } from '../../../data/worlds';
 import { useUniverseStore } from '../../../store/useUniverseStore';
 import { CelestialBodyMeta } from '../../../types/celestial';
+
+// Shared live coordinate registry for 100% accurate camera tracking
+export const celestialPositions: Record<string, [number, number, number]> = {
+  surya: [0, 0, 0],
+  budh: [16, 0, 0],
+  shukra: [24, 0, 0],
+  chandra: [33, 0, 0],
+  mangal: [42, 0, 0],
+  guru: [53, 0, 0],
+  shani: [66, 0, 0],
+  rahu: [80, 0, 0],
+  ketu: [94, 0, 0],
+};
 
 interface PlanetProps {
   world: CelestialBodyMeta;
@@ -27,19 +40,34 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
   const isHovered = hoveredWorldId === world.id;
   const isSelected = activeWorldId === world.id;
 
+  // Initialize starting coordinate
+  useEffect(() => {
+    const initX = Math.cos(initialAngle) * world.orbitRadius;
+    const initZ = Math.sin(initialAngle) * world.orbitRadius;
+    celestialPositions[world.id] = [initX, 0, initZ];
+    if (groupRef.current) {
+      groupRef.current.position.set(initX, 0, initZ);
+    }
+  }, [initialAngle, world.id, world.orbitRadius]);
+
   useFrame((_, delta) => {
-    // Decelerate orbits during close inspection
-    const speed = activeWorldId ? 0.08 : 0.8;
-    angleRef.current += delta * world.orbitSpeed * 0.18 * speed;
+    // When this planet is selected, freeze its orbital revolution so it stays fixed for camera focus!
+    if (!isSelected) {
+      const speedMultiplier = activeWorldId ? 0.2 : 1.0;
+      angleRef.current += delta * world.orbitSpeed * 0.16 * speedMultiplier;
+    }
+
+    const x = Math.cos(angleRef.current) * world.orbitRadius;
+    const z = Math.sin(angleRef.current) * world.orbitRadius;
+    celestialPositions[world.id] = [x, 0, z];
 
     if (groupRef.current) {
-      const x = Math.cos(angleRef.current) * world.orbitRadius;
-      const z = Math.sin(angleRef.current) * world.orbitRadius;
       groupRef.current.position.set(x, 0, z);
     }
 
+    // Always rotate planet on its own Y-axis for realistic 3D appearance
     if (meshRef.current) {
-      meshRef.current.rotation.y += delta * 0.45;
+      meshRef.current.rotation.y += delta * 0.35;
     }
   });
 
@@ -60,33 +88,32 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
         document.body.style.cursor = 'auto';
       }}
     >
+      {/* Inspection Keylight: Illuminates the planet brilliantly when selected */}
+      {isSelected && (
+        <directionalLight
+          position={[2.5, 3.5, 5.0]}
+          intensity={3.2}
+          color="#fff8ee"
+        />
+      )}
+
       {/* Photorealistic Planetary Sphere */}
       <mesh ref={meshRef}>
-        <sphereGeometry args={[world.radius, 48, 48]} />
+        <sphereGeometry args={[world.radius, 64, 64]} />
         {texture ? (
           <meshStandardMaterial
             map={texture}
-            roughness={world.id === 'budh' ? 0.8 : 0.55}
-            metalness={world.id === 'budh' ? 0.2 : 0.05}
+            roughness={world.id === 'budh' ? 0.85 : 0.55}
+            metalness={world.id === 'budh' ? 0.15 : 0.05}
             emissive={world.glowColor}
-            emissiveIntensity={isHovered || isSelected ? 0.35 : 0.05}
-          />
-        ) : world.id === 'rahu' ? (
-          // Rahu: Shadow Singularity Core
-          <meshStandardMaterial
-            color="#020204"
-            roughness={0.9}
-            metalness={0.8}
-            emissive="#4338ca"
-            emissiveIntensity={isHovered ? 0.6 : 0.2}
+            emissiveIntensity={isHovered || isSelected ? 0.3 : 0.05}
           />
         ) : (
-          // Ketu: Cometary Nucleus
           <meshStandardMaterial
-            color="#0d9488"
-            roughness={0.4}
-            emissive="#14b8a6"
-            emissiveIntensity={isHovered ? 0.8 : 0.4}
+            color={world.color}
+            roughness={0.6}
+            emissive={world.glowColor}
+            emissiveIntensity={isHovered ? 0.5 : 0.2}
           />
         )}
       </mesh>
@@ -94,27 +121,27 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
       {/* Saturn's Iconic Rings with Alpha Division */}
       {world.id === 'shani' && (
         <mesh rotation={[-Math.PI / 3, 0.2, 0]}>
-          <ringGeometry args={[world.radius * 1.35, world.radius * 2.45, 64]} />
+          <ringGeometry args={[world.radius * 1.35, world.radius * 2.5, 64]} />
           <meshStandardMaterial
             map={ringTexture || undefined}
             color="#e2d8b0"
             side={THREE.DoubleSide}
             transparent={true}
-            opacity={0.9}
+            opacity={0.92}
             roughness={0.6}
           />
         </mesh>
       )}
 
-      {/* Rahu Swirling Ultraviolet Accretion Disk */}
+      {/* Rahu Swirling Singularity Accretion Disk */}
       {world.id === 'rahu' && (
         <mesh rotation={[-Math.PI / 4, 0.1, 0]}>
-          <ringGeometry args={[world.radius * 1.25, world.radius * 2.3, 48]} />
+          <ringGeometry args={[world.radius * 1.25, world.radius * 2.4, 48]} />
           <meshBasicMaterial
             color="#6366f1"
             side={THREE.DoubleSide}
             transparent={true}
-            opacity={0.8}
+            opacity={0.85}
             blending={THREE.AdditiveBlending}
           />
         </mesh>
@@ -122,12 +149,12 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
 
       {/* Ketu Ethereal Cometary Plume */}
       {world.id === 'ketu' && (
-        <mesh scale={[1.4, 1.4, 3.2]}>
+        <mesh scale={[1.4, 1.4, 3.0]}>
           <sphereGeometry args={[world.radius, 24, 24]} />
           <meshBasicMaterial
             color="#14b8a6"
             transparent={true}
-            opacity={0.3}
+            opacity={0.35}
             blending={THREE.AdditiveBlending}
           />
         </mesh>
@@ -135,12 +162,12 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
 
       {/* Atmospheric Rim Glow on Hover/Selection */}
       {(isHovered || isSelected) && (
-        <mesh scale={[1.18, 1.18, 1.18]}>
+        <mesh scale={[1.16, 1.16, 1.16]}>
           <sphereGeometry args={[world.radius, 32, 32]} />
           <meshBasicMaterial
             color={world.glowColor}
             transparent={true}
-            opacity={0.35}
+            opacity={0.38}
             side={THREE.BackSide}
             blending={THREE.AdditiveBlending}
           />
@@ -157,9 +184,9 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
         >
           <div
             className={`flex flex-col items-center whitespace-nowrap px-3 py-1 rounded-full text-center transition-all ${
-              isHovered || isSelected
+              isHovered
                 ? 'bg-slate-900/90 border border-amber-400 text-amber-300 scale-110 shadow-[0_0_15px_rgba(245,158,11,0.5)]'
-                : 'bg-slate-950/50 text-slate-200 border border-white/5 opacity-85'
+                : 'bg-slate-950/60 text-slate-200 border border-white/10 opacity-90'
             }`}
           >
             <span className="text-[11px] font-display font-semibold tracking-wide flex items-center gap-1.5">
@@ -186,6 +213,8 @@ export const PlanetarySystem: React.FC = () => {
     jupiterTex,
     saturnTex,
     saturnRingTex,
+    rahuTex,
+    ketuTex,
   ] = useLoader(THREE.TextureLoader, [
     '/textures/planets/mercury.jpg',
     '/textures/planets/venus.jpg',
@@ -194,6 +223,8 @@ export const PlanetarySystem: React.FC = () => {
     '/textures/planets/jupiter.jpg',
     '/textures/planets/saturn.jpg',
     '/textures/planets/saturn_ring_alpha.png',
+    '/textures/planets/rahu.jpg',
+    '/textures/planets/ketu.jpg',
   ]);
 
   const textureMap: Record<string, THREE.Texture> = {
@@ -203,6 +234,8 @@ export const PlanetarySystem: React.FC = () => {
     mangal: marsTex,
     guru: jupiterTex,
     shani: saturnTex,
+    rahu: rahuTex,
+    ketu: ketuTex,
   };
 
   const orbitingWorlds = worldsData.filter((w) => w.orbitRadius > 0);

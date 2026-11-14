@@ -8,15 +8,15 @@ export const LandingHero: React.FC = () => {
 
   return (
     <div className="relative min-h-screen w-full flex flex-col justify-between items-center px-6 py-8 z-30 overflow-hidden select-none">
-      {/* Background: Exact View 1 Artwork (Galaxy, Explorer, Earth Horizon) */}
+      {/* Background: Clean Artwork without any baked-in text */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none"
         style={{
-          backgroundImage: `url('/assets/reference/01-landing-hero.jpg')`,
+          backgroundImage: `url('/assets/reference/01-landing-hero-clean.jpg')`,
         }}
       >
         {/* Subtle dark gradient overlay for optimal text contrast */}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/40 to-slate-950/70" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/30 to-slate-950/60" />
       </div>
 
       {/* Top Navigation Bar (Identical to View 1) */}
