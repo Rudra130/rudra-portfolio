@@ -25,6 +25,7 @@ interface UniverseState {
   closeDrawer: () => void;
   setActiveTab: (tab: string) => void;
   toggleFallback2D: () => void;
+  setFallback2D: (enabled: boolean) => void;
   toggleAudio: () => void;
   toggleOrbitPause: () => void;
   setSearchOpen: (open: boolean) => void;
@@ -102,6 +103,10 @@ export const useUniverseStore = create<UniverseState>((set) => ({
 
   toggleFallback2D: () => {
     set((state) => ({ isFallback2D: !state.isFallback2D }));
+  },
+
+  setFallback2D: (enabled: boolean) => {
+    set({ isFallback2D: enabled });
   },
 
   toggleAudio: () => {

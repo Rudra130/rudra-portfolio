@@ -51,9 +51,9 @@ export const worldsData: CelestialBodyMeta[] = [
     realWorldIdentity: 'UI/UX & Design Systems',
     englishTitle: 'Creativity and Aesthetics',
     theme: 'Creativity & Aesthetics',
-    tagline: 'UI/UX Design Systems, Cosmic Aesthetics & Frontend Craft',
+    tagline: 'Claymorphism, 3D GSAP Choreography, Glassmorphism & Tactile Interfaces',
     description:
-      'The radiant light of beauty and craft. Where high engineering meets immersive visual design, refined typography, and glassmorphic micro-interactions.',
+      'Where engineering rigor meets visual elegance. Crafts tactile claymorphic surfaces, cinematic 3D GSAP camera animations, glassmorphic design systems, and responsive WebGL micro-interactions.',
     radius: 7.5,
     orbitRadius: 76,
     orbitSpeed: 0.17,
@@ -164,9 +164,9 @@ export const worldsData: CelestialBodyMeta[] = [
     realWorldIdentity: 'Generative AI & Agents',
     englishTitle: 'The Frontier of Innovation',
     theme: 'Frontier of Innovation',
-    tagline: 'LangGraph Agents, NVIDIA NIM, RAG & Vector Systems',
+    tagline: 'LangGraph, Multi-Agent Systems, Advanced RAG, AI Guardrails, MCP & OpenAI SDK',
     description:
-      'The shadow singularity and magnetic void. Represents fearless exploration of cutting-edge Generative AI, agentic reasoning, and autonomous LLM orchestration.',
+      'Pioneering autonomous intelligence. Architecting cyclic multi-agent graphs with LangGraph, hybrid RAG pipelines, safety guardrails, Model Context Protocol (MCP) tool integration, OpenAI SDK tool use, and Google Agentic workflows.',
     radius: 9.0,
     orbitRadius: 300,
     orbitSpeed: 0.035,

@@ -46,7 +46,31 @@ export const profileData: ProfileRecord = {
     },
     {
       category: 'AI & Generative AI',
-      skills: ['LLMs', 'LangChain', 'LangGraph', 'RAG', 'AI Agents'],
+      skills: [
+        'LangChain',
+        'LangGraph',
+        'Advanced RAG',
+        'AI Guardrails',
+        'OpenAI SDK',
+        'Model Context Protocol (MCP)',
+        'Google Agentic Dev Kit',
+        'NVIDIA NIM',
+        'Vector DBs (Chroma/FAISS)',
+        'Spring AI',
+      ],
+    },
+    {
+      category: 'UI/UX & Frontend Engineering',
+      skills: [
+        'React 19',
+        'Three.js / React Three Fiber',
+        '3D GSAP Choreography',
+        'Claymorphism',
+        'Glassmorphism',
+        'Tailwind CSS',
+        'Framer Motion',
+        'Figma Design Systems',
+      ],
     },
     {
       category: 'Databases & Caching',

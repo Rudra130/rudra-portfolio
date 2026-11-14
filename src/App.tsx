@@ -18,6 +18,7 @@ export const App: React.FC = () => {
     enterUniverse,
     returnToLanding,
     selectWorld,
+    setFallback2D,
     toggleFallback2D,
   } = useUniverseStore();
 
@@ -74,7 +75,7 @@ export const App: React.FC = () => {
           selectWorld(targetWorld);
         }
       } else if (path === '/2d' || path === '/accessible') {
-        if (!isFallback2D) toggleFallback2D();
+        setFallback2D(true);
       }
     };
 

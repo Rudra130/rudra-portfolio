@@ -1,12 +1,24 @@
 import React from 'react';
-import { Download, ExternalLink, Mail, Award, GraduationCap, Briefcase, Eye, Home } from 'lucide-react';
+import {
+  Download,
+  ExternalLink,
+  Mail,
+  Award,
+  GraduationCap,
+  Briefcase,
+  Eye,
+  Home,
+  Brain,
+  Palette,
+  CheckCircle2,
+} from 'lucide-react';
 import { profileData } from '../../data/profile';
 import { projectsData } from '../../data/projects';
 import { worldsData } from '../../data/worlds';
 import { useUniverseStore } from '../../store/useUniverseStore';
 
 export const AccessiblePortfolioView: React.FC = () => {
-  const { toggleFallback2D, returnToLanding } = useUniverseStore();
+  const { setFallback2D, enterUniverse, returnToLanding } = useUniverseStore();
 
   return (
     <div className="relative min-h-screen bg-space-void text-slate-100 px-6 sm:px-12 py-24 max-w-5xl mx-auto">
@@ -21,7 +33,10 @@ export const AccessiblePortfolioView: React.FC = () => {
         </button>
 
         <button
-          onClick={toggleFallback2D}
+          onClick={() => {
+            setFallback2D(false);
+            enterUniverse();
+          }}
           className="flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-200 text-xs font-mono uppercase tracking-wider hover:bg-amber-500/30 shadow-xl transition-all cursor-pointer"
         >
           <Eye className="w-4 h-4" />
@@ -203,6 +218,120 @@ export const AccessiblePortfolioView: React.FC = () => {
               National merit scholarship awarded in recognition of academic excellence.
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* Generative AI & Autonomous Agents (Rahu) */}
+      <section className="mb-16">
+        <h2 className="text-2xl font-display font-bold text-white mb-6 flex items-center gap-2">
+          <Brain className="w-5 h-5 text-indigo-400" /> Generative AI & Autonomous Agents
+        </h2>
+        <div className="glass-card p-6 border border-indigo-500/30 space-y-4">
+          <div className="flex flex-wrap gap-2 mb-2">
+            {[
+              'LangGraph',
+              'Advanced RAG',
+              'AI Guardrails',
+              'OpenAI SDK',
+              'Model Context Protocol (MCP)',
+              'Google Agentic Dev Kit',
+              'NVIDIA NIM',
+            ].map((t) => (
+              <span
+                key={t}
+                className="text-xs font-mono px-2.5 py-1 rounded-full bg-indigo-950/40 text-indigo-200 border border-indigo-500/20"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+
+          <ul className="space-y-2.5 text-xs text-slate-300">
+            <li className="flex items-start gap-2.5">
+              <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
+              <div>
+                <strong className="text-white">LangGraph Multi-Agent Workflows:</strong> Built stateful cyclic graphs with conditional edge branching, reflection loops, self-correction nodes, and human-in-the-loop checkpoints.
+              </div>
+            </li>
+            <li className="flex items-start gap-2.5">
+              <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
+              <div>
+                <strong className="text-white">Advanced Hybrid RAG:</strong> Engineered hybrid retrieval (dense vector embeddings + BM25 keyword search via Reciprocal Rank Fusion) with hierarchical parent-document chunking and cross-encoder semantic re-ranking.
+              </div>
+            </li>
+            <li className="flex items-start gap-2.5">
+              <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
+              <div>
+                <strong className="text-white">AI Safety & Guardrails:</strong> Configured NeMo Guardrails principles for prompt injection defense, automated PII sanitization, and output factuality checks against ground truth context.
+              </div>
+            </li>
+            <li className="flex items-start gap-2.5">
+              <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
+              <div>
+                <strong className="text-white">OpenAI SDK & Tool Calling:</strong> Implemented structured function calling, parallel tool executions, SSE streaming, and deterministic Pydantic schema decoding.
+              </div>
+            </li>
+            <li className="flex items-start gap-2.5">
+              <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
+              <div>
+                <strong className="text-white">Model Context Protocol (MCP) & Google Agentic Kit:</strong> Built standardized MCP tool servers exposing filesystems, databases, and APIs over JSON-RPC, integrated with Google Agentic tools and Oracle certifications.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      {/* UI/UX Design Systems & Creative Frontend (Shukra) */}
+      <section className="mb-16">
+        <h2 className="text-2xl font-display font-bold text-white mb-6 flex items-center gap-2">
+          <Palette className="w-5 h-5 text-pink-400" /> UI/UX Design Systems & Creative Frontend
+        </h2>
+        <div className="glass-card p-6 border border-pink-500/30 space-y-4">
+          <div className="flex flex-wrap gap-2 mb-2">
+            {[
+              'Claymorphism (Soft 3D)',
+              '3D GSAP Choreography',
+              'ScrollTrigger',
+              'Three.js / WebGL',
+              'Glassmorphism',
+              'Tailwind CSS',
+              'Framer Motion',
+            ].map((t) => (
+              <span
+                key={t}
+                className="text-xs font-mono px-2.5 py-1 rounded-full bg-pink-950/40 text-pink-200 border border-pink-500/20"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+
+          <ul className="space-y-2.5 text-xs text-slate-300">
+            <li className="flex items-start gap-2.5">
+              <CheckCircle2 className="w-4 h-4 text-pink-400 shrink-0 mt-0.5" />
+              <div>
+                <strong className="text-white">Claymorphism & Tactile Soft 3D:</strong> Engineered multi-tiered shadow matrices with ambient outer diffusion and top-left specular highlights, coupled with active push-down depression states (<code className="text-pink-300 bg-pink-950/40 px-1 py-0.5 rounded text-[11px]">translateY(3px)</code>) for tangible touch delight.
+              </div>
+            </li>
+            <li className="flex items-start gap-2.5">
+              <CheckCircle2 className="w-4 h-4 text-pink-400 shrink-0 mt-0.5" />
+              <div>
+                <strong className="text-white">3D GSAP Camera Rig Choreography:</strong> Implemented quaternion-driven camera timelines interpolating coordinates and look-at vectors across 3D space with <code className="text-pink-300 bg-pink-950/40 px-1 py-0.5 rounded text-[11px]">power3.inOut</code> cubic bezier curves at locked 60 FPS.
+              </div>
+            </li>
+            <li className="flex items-start gap-2.5">
+              <CheckCircle2 className="w-4 h-4 text-pink-400 shrink-0 mt-0.5" />
+              <div>
+                <strong className="text-white">Hardware-Accelerated Glassmorphism:</strong> Layered multi-backdrop filters (<code className="text-pink-300 bg-pink-950/40 px-1 py-0.5 rounded text-[11px]">backdrop-filter: blur(16px)</code>) with 1px celestial starlight rim reflections and chromatic planetary color schemes.
+              </div>
+            </li>
+            <li className="flex items-start gap-2.5">
+              <CheckCircle2 className="w-4 h-4 text-pink-400 shrink-0 mt-0.5" />
+              <div>
+                <strong className="text-white">Universal Accessibility:</strong> Complete <code className="text-pink-300 bg-pink-950/40 px-1 py-0.5 rounded text-[11px]">prefers-reduced-motion</code> compliance, semantic keyboard focus, and WCAG 2.1 AA 4.5:1 text contrast ratios.
+              </div>
+            </li>
+          </ul>
         </div>
       </section>
 

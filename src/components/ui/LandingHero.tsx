@@ -4,7 +4,7 @@ import { useUniverseStore } from '../../store/useUniverseStore';
 import { profileData } from '../../data/profile';
 
 export const LandingHero: React.FC = () => {
-  const { enterUniverse, selectWorld, toggleFallback2D } = useUniverseStore();
+  const { enterUniverse, selectWorld, setFallback2D } = useUniverseStore();
 
   return (
     <div className="relative min-h-screen w-full flex flex-col justify-between items-center px-6 py-8 z-30 overflow-hidden select-none">
@@ -89,8 +89,8 @@ export const LandingHero: React.FC = () => {
           </button>
 
           <button
-            onClick={toggleFallback2D}
-            className="text-[11px] font-mono text-slate-400 hover:text-cyan-300 transition-colors pt-2"
+            onClick={() => setFallback2D(true)}
+            className="text-[11px] font-mono text-slate-400 hover:text-cyan-300 transition-colors pt-2 cursor-pointer"
           >
             or view Accessible 2D Portfolio
           </button>

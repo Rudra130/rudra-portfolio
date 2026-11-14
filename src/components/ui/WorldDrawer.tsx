@@ -19,6 +19,8 @@ import { useUniverseStore } from '../../store/useUniverseStore';
 import { worldsData } from '../../data/worlds';
 import { profileData } from '../../data/profile';
 import { projectsData } from '../../data/projects';
+import { ShukraDesignContent } from './drawer-content/ShukraDesignContent';
+import { RahuGenAIContent } from './drawer-content/RahuGenAIContent';
 
 export const WorldDrawer: React.FC = () => {
   const { activeWorldId, closeDrawer, activeTab, setActiveTab } =
@@ -721,46 +723,10 @@ export const WorldDrawer: React.FC = () => {
 
             {/* 6. RAHU: FRONTIER OF INNOVATION */}
             {activeWorldId === 'rahu' && (
-              <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-                className="space-y-5"
-              >
-                <motion.div
-                  variants={itemVariants}
-                  className="glass-card p-6 border border-indigo-500/30 space-y-4"
-                >
-                  <h4 className="text-base font-display font-semibold text-white flex items-center gap-2">
-                    <Brain className="w-5 h-5 text-indigo-400" /> Autonomous AI
-                    Agents & Generative AI
-                  </h4>
-                  <p className="text-xs text-slate-300 leading-relaxed">
-                    Exploring multi-agent reasoning using{' '}
-                    <strong>LangGraph</strong>, fast structured inference via{' '}
-                    <strong>NVIDIA NIM</strong>, and production failure analysis
-                    using <strong>Spring AI</strong>.
-                  </p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-                    <div className="p-3 rounded-xl bg-white/5 border border-white/5">
-                      <p className="text-xs font-semibold text-indigo-300 mb-1">
-                        Agentic Workflows
-                      </p>
-                      <p className="text-[11px] text-slate-400">
-                        Multi-stage LangGraph graphs with schema validation.
-                      </p>
-                    </div>
-                    <div className="p-3 rounded-xl bg-white/5 border border-white/5">
-                      <p className="text-xs font-semibold text-indigo-300 mb-1">
-                        RAG & Vector Stores
-                      </p>
-                      <p className="text-[11px] text-slate-400">
-                        Contextual database schema grounding and failure logging.
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              </motion.div>
+              <RahuGenAIContent
+                containerVariants={containerVariants}
+                itemVariants={itemVariants}
+              />
             )}
 
             {/* 7. CHANDRA: INNER UNIVERSE */}
@@ -790,27 +756,10 @@ export const WorldDrawer: React.FC = () => {
 
             {/* 8. SHUKRA: CREATIVITY & AESTHETICS */}
             {activeWorldId === 'shukra' && (
-              <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-                className="space-y-5"
-              >
-                <motion.div
-                  variants={itemVariants}
-                  className="glass-card p-6 border border-pink-500/30 space-y-3"
-                >
-                  <h4 className="text-base font-display font-bold text-white">
-                    Cosmic Minimalist Design System
-                  </h4>
-                  <p className="text-xs text-slate-300 leading-relaxed">
-                    Bridging deep astronomical visualization with clean,
-                    high-performance UI components. Engineered using custom
-                    Tailwind tokens, glassmorphic blur physics, and 60 FPS Three.js
-                    rendering.
-                  </p>
-                </motion.div>
-              </motion.div>
+              <ShukraDesignContent
+                containerVariants={containerVariants}
+                itemVariants={itemVariants}
+              />
             )}
 
             {/* 9. KETU: SPACE OF REFLECTION */}
