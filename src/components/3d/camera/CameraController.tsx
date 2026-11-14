@@ -12,8 +12,8 @@ export const CameraController: React.FC = () => {
 
   const { activeWorldId, cameraMode, setCameraMode, zoomLevel } = useUniverseStore();
 
-  // Overview camera: elevated vantage point encompassing the expanded planetary system
-  const overviewPos = useRef(new THREE.Vector3(0, 75, 175));
+  // Overview camera: elevated vantage point encompassing the grand expanded planetary system
+  const overviewPos = useRef(new THREE.Vector3(0, 115, 270));
   const sunCenter = useRef(new THREE.Vector3(0, 0, 0));
 
   // Synchronize button zoom changes from HUD relative to current control target
@@ -64,7 +64,7 @@ export const CameraController: React.FC = () => {
             controlsRef.current.update();
           }
 
-          if (camera.position.distanceTo(camVec) < 0.35) {
+          if (camera.position.distanceTo(camVec) < 0.4) {
             setCameraMode('INSPECTING');
           }
         } else if (cameraMode === 'INSPECTING') {
@@ -85,7 +85,7 @@ export const CameraController: React.FC = () => {
           controlsRef.current.update();
         }
 
-        if (camera.position.distanceTo(currentOverview) < 0.8) {
+        if (camera.position.distanceTo(currentOverview) < 1.0) {
           camera.position.copy(currentOverview);
           if (controlsRef.current) {
             controlsRef.current.target.copy(sunCenter.current);
@@ -107,7 +107,7 @@ export const CameraController: React.FC = () => {
       rotateSpeed={0.8}
       enableRotate={true}
       minDistance={15}
-      maxDistance={450}
+      maxDistance={700}
       maxPolarAngle={Math.PI / 2 - 0.05} // prevent clipping through ground plane
       minPolarAngle={Math.PI / 16}
       dampingFactor={0.06}

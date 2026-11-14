@@ -3,7 +3,8 @@ import { useLoader } from '@react-three/fiber';
 import * as THREE from 'three';
 
 export const Starfield: React.FC = () => {
-  const count = 3500;
+  // Decreased star count for clean, uncluttered celestial ambiance
+  const count = 750;
 
   // Load cosmic deep space nebula background map (matching UI reference view 2)
   const bgTexture = useLoader(THREE.TextureLoader, '/textures/backgrounds/cosmic_nebula_bg.jpg');
@@ -15,13 +16,13 @@ export const Starfield: React.FC = () => {
     const palette = [
       new THREE.Color('#ffffff'), // pure white
       new THREE.Color('#cbd5e1'), // slate silver
-      new THREE.Color('#38bdf8'), // azure blue
-      new THREE.Color('#fef08a'), // warm yellow
+      new THREE.Color('#7dd3fc'), // subtle cyan
+      new THREE.Color('#fef08a'), // warm gold
       new THREE.Color('#f472b6'), // faint rose
     ];
 
     for (let i = 0; i < count; i++) {
-      const radius = 220 + Math.random() * 200;
+      const radius = 450 + Math.random() * 400;
       const theta = Math.random() * Math.PI * 2;
       const phi = Math.acos(2 * Math.random() - 1);
 
@@ -42,16 +43,16 @@ export const Starfield: React.FC = () => {
     <group>
       {/* Deep Space Milky Way Skybox Sphere */}
       <mesh>
-        <sphereGeometry args={[500, 48, 48]} />
+        <sphereGeometry args={[900, 48, 48]} />
         <meshBasicMaterial
           map={bgTexture}
           side={THREE.BackSide}
           transparent={true}
-          opacity={0.85}
+          opacity={0.75}
         />
       </mesh>
 
-      {/* Instanced 3D Starfield Particles */}
+      {/* Instanced 3D Subtle Starfield Particles */}
       <points>
         <bufferGeometry>
           <bufferAttribute
@@ -64,11 +65,11 @@ export const Starfield: React.FC = () => {
           />
         </bufferGeometry>
         <pointsMaterial
-          size={1.6}
+          size={1.1}
           sizeAttenuation={true}
           vertexColors={true}
           transparent={true}
-          opacity={0.9}
+          opacity={0.7}
           depthWrite={false}
         />
       </points>

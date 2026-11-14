@@ -9,14 +9,14 @@ import { CelestialBodyMeta } from '../../../types/celestial';
 // Shared live coordinate registry for 100% accurate camera tracking
 export const celestialPositions: Record<string, [number, number, number]> = {
   surya: [0, 0, 0],
-  budh: [26, 0, 0],
-  shukra: [42, 0, 0],
-  chandra: [58, 0, 0],
-  mangal: [76, 0, 0],
-  guru: [98, 0, 0],
-  shani: [122, 0, 0],
-  rahu: [148, 0, 0],
-  ketu: [176, 0, 0],
+  budh: [36, 0, 0],
+  shukra: [60, 0, 0],
+  chandra: [86, 0, 0],
+  mangal: [114, 0, 0],
+  guru: [152, 0, 0],
+  shani: [194, 0, 0],
+  rahu: [238, 0, 0],
+  ketu: [284, 0, 0],
 };
 
 interface PlanetProps {
@@ -54,7 +54,7 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
     // When this planet is selected, freeze its orbital revolution so it stays fixed in frame!
     if (!isSelected) {
       const speedMultiplier = activeWorldId ? 0.15 : 1.0;
-      angleRef.current += delta * world.orbitSpeed * 0.10 * speedMultiplier;
+      angleRef.current += delta * world.orbitSpeed * 0.08 * speedMultiplier;
     }
 
     const x = Math.cos(angleRef.current) * world.orbitRadius;
@@ -65,9 +65,9 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
       groupRef.current.position.set(x, 0, z);
     }
 
-    // Slow, serene planetary axial rotation (0.08 rad/s)
+    // Peaceful, realistic axial rotation
     if (meshRef.current) {
-      meshRef.current.rotation.y += delta * 0.08;
+      meshRef.current.rotation.y += delta * 0.07;
     }
   });
 
@@ -97,8 +97,8 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
       {/* Dedicated Inspection Keylight */}
       {isSelected && (
         <directionalLight
-          position={[3.0, 4.0, 6.0]}
-          intensity={3.5}
+          position={[3.5, 4.5, 7.0]}
+          intensity={3.8}
           color="#fffaf0"
         />
       )}
@@ -183,9 +183,9 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
       {/* 3D Contextual Label Tag - Clickable */}
       {!activeWorldId && (
         <Html
-          position={[0, world.radius + 1.8, 0]}
+          position={[0, world.radius + 2.2, 0]}
           center
-          distanceFactor={70}
+          distanceFactor={80}
           className="select-none transition-all duration-300"
         >
           <div
@@ -193,17 +193,17 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
               e.stopPropagation();
               selectWorld(world.id);
             }}
-            className={`flex flex-col items-center whitespace-nowrap px-3.5 py-1.5 rounded-full text-center transition-all cursor-pointer pointer-events-auto ${
+            className={`flex flex-col items-center whitespace-nowrap px-4 py-1.5 rounded-full text-center transition-all cursor-pointer pointer-events-auto ${
               isHovered
                 ? 'bg-slate-900/90 border border-amber-400 text-amber-300 scale-110 shadow-[0_0_20px_rgba(245,158,11,0.6)]'
                 : 'bg-slate-950/65 text-slate-200 border border-white/10 opacity-90 hover:border-amber-400 hover:text-amber-300'
             }`}
           >
-            <span className="text-[11px] font-display font-semibold tracking-wide flex items-center gap-1.5">
+            <span className="text-[12px] font-display font-semibold tracking-wide flex items-center gap-1.5">
               <span style={{ color: world.color }}>{world.symbol}</span>
               <span>{world.sanskritName}</span>
             </span>
-            <span className="text-[9px] font-mono text-slate-400">
+            <span className="text-[10px] font-mono text-slate-400">
               ({world.theme})
             </span>
           </div>
