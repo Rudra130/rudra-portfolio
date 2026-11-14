@@ -12,7 +12,7 @@ export const CanvasContainer: React.FC = () => {
   return (
     <div className="fixed inset-0 w-full h-full z-10 bg-space-void">
       <Canvas
-        camera={{ position: [0, 50, 115], fov: 45, near: 0.1, far: 1000 }}
+        camera={{ position: [0, 290, 140], fov: 45, near: 0.1, far: 2500 }}
         dpr={[1, Math.min(window.devicePixelRatio, 2)]}
         gl={{
           antialias: true,

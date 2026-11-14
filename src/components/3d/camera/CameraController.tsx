@@ -12,8 +12,8 @@ export const CameraController: React.FC = () => {
 
   const { activeWorldId, cameraMode, setCameraMode, zoomLevel } = useUniverseStore();
 
-  // Overview camera: elevated vantage point encompassing the grand expanded planetary system
-  const overviewPos = useRef(new THREE.Vector3(0, 115, 270));
+  // Overview camera: high top-down vantage point looking down at the Sun with all planets revolving around it
+  const overviewPos = useRef(new THREE.Vector3(0, 290, 140));
   const sunCenter = useRef(new THREE.Vector3(0, 0, 0));
 
   // Synchronize button zoom changes from HUD relative to current control target
