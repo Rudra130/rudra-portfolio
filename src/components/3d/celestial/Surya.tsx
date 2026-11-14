@@ -1,6 +1,5 @@
 import React, { useRef, useMemo } from 'react';
 import { useFrame, useLoader } from '@react-three/fiber';
-import { Html } from '@react-three/drei';
 import * as THREE from 'three';
 import { useUniverseStore } from '../../../store/useUniverseStore';
 
@@ -11,9 +10,8 @@ export const Surya: React.FC = () => {
   const flaresGroupRef = useRef<THREE.Group>(null);
   const downPosRef = useRef<{ x: number; y: number } | null>(null);
 
-  const { selectWorld, setHoveredWorld, hoveredWorldId, activeWorldId } = useUniverseStore();
+  const { selectWorld, setHoveredWorld, hoveredWorldId } = useUniverseStore();
   const isHovered = hoveredWorldId === 'surya';
-  const isSelected = activeWorldId === 'surya';
 
   // Load photorealistic Sun texture
   const sunTexture = useLoader(THREE.TextureLoader, '/textures/planets/sun.jpg');
@@ -177,35 +175,6 @@ export const Surya: React.FC = () => {
           );
         })}
       </group>
-
-      {/* Surya Contextual Label */}
-      {!activeWorldId && (
-        <Html position={[0, -24.5, 0]} center distanceFactor={100} className="select-none">
-          <div
-            onPointerDown={(e) => {
-              e.stopPropagation();
-              selectWorld('surya');
-            }}
-            onClick={(e) => {
-              e.stopPropagation();
-              selectWorld('surya');
-            }}
-            className={`flex flex-col items-center whitespace-nowrap px-4 py-1.5 rounded-full text-center transition-all cursor-pointer pointer-events-auto ${
-              isHovered || isSelected
-                ? 'bg-slate-900/90 border border-amber-400 text-amber-300 scale-110 shadow-[0_0_20px_rgba(245,158,11,0.6)]'
-                : 'bg-slate-950/60 text-slate-200 border border-amber-500/20 shadow-md hover:border-amber-400 hover:text-amber-300'
-            }`}
-          >
-            <span className="text-xs font-display font-bold tracking-wide flex items-center gap-1.5">
-              <span className="text-amber-400">☀️</span>
-              <span>Core Identity & Bio</span>
-            </span>
-            <span className="text-[10px] font-mono text-slate-400">
-              (Resume & Values)
-            </span>
-          </div>
-        </Html>
-      )}
     </group>
   );
 };

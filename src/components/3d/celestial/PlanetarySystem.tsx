@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, useMemo } from 'react';
 import { useFrame, useLoader } from '@react-three/fiber';
-import { Html } from '@react-three/drei';
 import * as THREE from 'three';
 import { worldsData } from '../../../data/worlds';
 import { useUniverseStore } from '../../../store/useUniverseStore';
@@ -284,40 +283,6 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
           depthWrite={false}
         />
       </mesh>
-
-      {/* 3D Contextual Label Tag - Clickable on Pointer Down & Click */}
-      {!activeWorldId && (
-        <Html
-          position={[0, world.radius + 3.2, 0]}
-          center
-          distanceFactor={100}
-          className="select-none transition-all duration-300"
-        >
-          <div
-            onPointerDown={(e) => {
-              e.stopPropagation();
-              selectWorld(world.id);
-            }}
-            onClick={(e) => {
-              e.stopPropagation();
-              selectWorld(world.id);
-            }}
-            className={`flex flex-col items-center whitespace-nowrap px-4 py-1.5 rounded-full text-center transition-all cursor-pointer pointer-events-auto ${
-              isHovered
-                ? 'bg-slate-900/90 border border-amber-400 text-amber-300 scale-110 shadow-[0_0_20px_rgba(245,158,11,0.6)]'
-                : 'bg-slate-950/70 text-slate-200 border border-white/10 opacity-90 hover:border-amber-400 hover:text-amber-300'
-            }`}
-          >
-            <span className="text-[12px] font-display font-semibold tracking-wide flex items-center gap-1.5">
-              <span style={{ color: world.color }}>{world.symbol}</span>
-              <span>{world.realWorldIdentity}</span>
-            </span>
-            <span className="text-[10px] font-mono text-slate-400">
-              ({world.theme})
-            </span>
-          </div>
-        </Html>
-      )}
     </group>
   );
 };
