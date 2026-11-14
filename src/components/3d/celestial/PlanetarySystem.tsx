@@ -35,10 +35,29 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
   const groupRef = useRef<THREE.Group>(null);
   const meshRef = useRef<THREE.Mesh>(null);
   const angleRef = useRef<number>(initialAngle);
+  const downPosRef = useRef<{ x: number; y: number } | null>(null);
 
   const { selectWorld, setHoveredWorld, hoveredWorldId, activeWorldId } = useUniverseStore();
   const isHovered = hoveredWorldId === world.id;
   const isSelected = activeWorldId === world.id;
+
+  // Ultra-reliable single-click handler that ignores minor sub-pixel drag but guarantees instant response
+  const handlePointerDown = (e: any) => {
+    e.stopPropagation();
+    downPosRef.current = { x: e.clientX, y: e.clientY };
+  };
+
+  const handlePointerUp = (e: any) => {
+    e.stopPropagation();
+    if (downPosRef.current) {
+      const dx = e.clientX - downPosRef.current.x;
+      const dy = e.clientY - downPosRef.current.y;
+      if (Math.hypot(dx, dy) < 8) {
+        selectWorld(world.id);
+      }
+    }
+    downPosRef.current = null;
+  };
 
   // Initialize starting coordinate
   useEffect(() => {
@@ -74,10 +93,6 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
   return (
     <group
       ref={groupRef}
-      onClick={(e) => {
-        e.stopPropagation();
-        selectWorld(world.id);
-      }}
       onPointerOver={(e) => {
         e.stopPropagation();
         setHoveredWorld(world.id);
@@ -88,10 +103,17 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
         document.body.style.cursor = 'auto';
       }}
     >
-      {/* Invisible Expanded Click Hitbox for instant, effortless clicking */}
-      <mesh visible={false}>
+      {/* Expanded Raycastable Hitbox (fully captures clicks on moving targets) */}
+      <mesh
+        onPointerDown={handlePointerDown}
+        onPointerUp={handlePointerUp}
+        onClick={(e) => {
+          e.stopPropagation();
+          selectWorld(world.id);
+        }}
+      >
         <sphereGeometry args={[world.radius * 1.35, 16, 16]} />
-        <meshBasicMaterial />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
       </mesh>
 
       {/* Dedicated Inspection Keylight */}
@@ -104,7 +126,15 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
       )}
 
       {/* Photorealistic Planetary Sphere */}
-      <mesh ref={meshRef}>
+      <mesh
+        ref={meshRef}
+        onPointerDown={handlePointerDown}
+        onPointerUp={handlePointerUp}
+        onClick={(e) => {
+          e.stopPropagation();
+          selectWorld(world.id);
+        }}
+      >
         <sphereGeometry args={[world.radius, 64, 64]} />
         {texture ? (
           <meshStandardMaterial
@@ -126,7 +156,15 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
 
       {/* Saturn's Iconic Rings with Alpha Division */}
       {world.id === 'shani' && (
-        <mesh rotation={[-Math.PI / 3, 0.2, 0]}>
+        <mesh
+          rotation={[-Math.PI / 3, 0.2, 0]}
+          onPointerDown={handlePointerDown}
+          onPointerUp={handlePointerUp}
+          onClick={(e) => {
+            e.stopPropagation();
+            selectWorld(world.id);
+          }}
+        >
           <ringGeometry args={[world.radius * 1.35, world.radius * 2.5, 64]} />
           <meshStandardMaterial
             map={ringTexture || undefined}
@@ -141,7 +179,15 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
 
       {/* Rahu Swirling Singularity Accretion Disk */}
       {world.id === 'rahu' && (
-        <mesh rotation={[-Math.PI / 4, 0.1, 0]}>
+        <mesh
+          rotation={[-Math.PI / 4, 0.1, 0]}
+          onPointerDown={handlePointerDown}
+          onPointerUp={handlePointerUp}
+          onClick={(e) => {
+            e.stopPropagation();
+            selectWorld(world.id);
+          }}
+        >
           <ringGeometry args={[world.radius * 1.25, world.radius * 2.4, 48]} />
           <meshBasicMaterial
             color="#6366f1"
@@ -155,7 +201,15 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
 
       {/* Ketu Ethereal Cometary Plume */}
       {world.id === 'ketu' && (
-        <mesh scale={[1.4, 1.4, 3.0]}>
+        <mesh
+          scale={[1.4, 1.4, 3.0]}
+          onPointerDown={handlePointerDown}
+          onPointerUp={handlePointerUp}
+          onClick={(e) => {
+            e.stopPropagation();
+            selectWorld(world.id);
+          }}
+        >
           <sphereGeometry args={[world.radius, 24, 24]} />
           <meshBasicMaterial
             color="#14b8a6"
@@ -180,7 +234,7 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
         </mesh>
       )}
 
-      {/* 3D Contextual Label Tag - Clickable */}
+      {/* 3D Contextual Label Tag - Clickable on Pointer Down & Click */}
       {!activeWorldId && (
         <Html
           position={[0, world.radius + 3.2, 0]}
@@ -189,6 +243,10 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
           className="select-none transition-all duration-300"
         >
           <div
+            onPointerDown={(e) => {
+              e.stopPropagation();
+              selectWorld(world.id);
+            }}
             onClick={(e) => {
               e.stopPropagation();
               selectWorld(world.id);

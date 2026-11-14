@@ -8,6 +8,7 @@ export const Surya: React.FC = () => {
   const meshRef = useRef<THREE.Mesh>(null);
   const coronaRef = useRef<THREE.Mesh>(null);
   const outerGlowRef = useRef<THREE.Mesh>(null);
+  const downPosRef = useRef<{ x: number; y: number } | null>(null);
 
   const { selectWorld, setHoveredWorld, hoveredWorldId, activeWorldId } = useUniverseStore();
   const isHovered = hoveredWorldId === 'surya';
@@ -17,6 +18,23 @@ export const Surya: React.FC = () => {
   const sunTexture = useLoader(THREE.TextureLoader, '/textures/planets/sun.jpg');
   sunTexture.wrapS = THREE.RepeatWrapping;
   sunTexture.wrapT = THREE.ClampToEdgeWrapping;
+
+  const handlePointerDown = (e: any) => {
+    e.stopPropagation();
+    downPosRef.current = { x: e.clientX, y: e.clientY };
+  };
+
+  const handlePointerUp = (e: any) => {
+    e.stopPropagation();
+    if (downPosRef.current) {
+      const dx = e.clientX - downPosRef.current.x;
+      const dy = e.clientY - downPosRef.current.y;
+      if (Math.hypot(dx, dy) < 8) {
+        selectWorld('surya');
+      }
+    }
+    downPosRef.current = null;
+  };
 
   useFrame((_, delta) => {
     if (meshRef.current) {
@@ -35,10 +53,6 @@ export const Surya: React.FC = () => {
   return (
     <group
       position={[0, 0, 0]}
-      onClick={(e) => {
-        e.stopPropagation();
-        selectWorld('surya');
-      }}
       onPointerOver={(e) => {
         e.stopPropagation();
         setHoveredWorld('surya');
@@ -49,14 +63,29 @@ export const Surya: React.FC = () => {
         document.body.style.cursor = 'auto';
       }}
     >
-      {/* Generous Click Hitbox */}
-      <mesh visible={false}>
+      {/* Fully Raycastable Invisible Hitbox */}
+      <mesh
+        onPointerDown={handlePointerDown}
+        onPointerUp={handlePointerUp}
+        onClick={(e) => {
+          e.stopPropagation();
+          selectWorld('surya');
+        }}
+      >
         <sphereGeometry args={[24.0, 16, 16]} />
-        <meshBasicMaterial />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
       </mesh>
 
       {/* Photorealistic Sun Sphere (Enlarged to Radius 20.0) */}
-      <mesh ref={meshRef}>
+      <mesh
+        ref={meshRef}
+        onPointerDown={handlePointerDown}
+        onPointerUp={handlePointerUp}
+        onClick={(e) => {
+          e.stopPropagation();
+          selectWorld('surya');
+        }}
+      >
         <sphereGeometry args={[20.0, 64, 64]} />
         <meshStandardMaterial
           map={sunTexture}
@@ -95,6 +124,10 @@ export const Surya: React.FC = () => {
       {!activeWorldId && (
         <Html position={[0, -24.5, 0]} center distanceFactor={100} className="select-none">
           <div
+            onPointerDown={(e) => {
+              e.stopPropagation();
+              selectWorld('surya');
+            }}
             onClick={(e) => {
               e.stopPropagation();
               selectWorld('surya');
