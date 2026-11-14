@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { CelestialId } from '../types/celestial';
+import { pushPath, getPathForWorld } from '../utils/navigation';
 
 export type CameraMode = 'OVERVIEW' | 'APPROACHING' | 'INSPECTING' | 'RETURNING';
 
@@ -45,7 +46,7 @@ export const useUniverseStore = create<UniverseState>((set) => ({
 
   enterUniverse: () => {
     set({ hasEnteredUniverse: true, cameraMode: 'OVERVIEW' });
-    window.location.hash = '#/universe';
+    pushPath('/universe');
   },
 
   selectWorld: (id: CelestialId | null) => {
@@ -55,7 +56,7 @@ export const useUniverseStore = create<UniverseState>((set) => ({
         cameraMode: 'RETURNING',
         isDrawerOpen: false,
       });
-      window.location.hash = '#/universe';
+      pushPath('/universe');
     } else {
       set({
         activeWorldId: id,
@@ -63,7 +64,7 @@ export const useUniverseStore = create<UniverseState>((set) => ({
         isDrawerOpen: true,
         activeTab: 'Overview',
       });
-      window.location.hash = `#/world/${id}`;
+      pushPath(getPathForWorld(id));
     }
   },
 
@@ -81,7 +82,7 @@ export const useUniverseStore = create<UniverseState>((set) => ({
       cameraMode: 'RETURNING',
       isDrawerOpen: false,
     });
-    window.location.hash = '#/universe';
+    pushPath('/universe');
   },
 
   setActiveTab: (tab: string) => {
