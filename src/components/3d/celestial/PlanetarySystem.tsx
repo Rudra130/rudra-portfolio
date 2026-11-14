@@ -11,7 +11,6 @@ export const celestialPositions: Record<string, [number, number, number]> = {
   surya: [0, 0, 0],
   budh: [46, 0, 0],
   shukra: [76, 0, 0],
-  chandra: [108, 0, 0],
   mangal: [142, 0, 0],
   guru: [188, 0, 0],
   shani: [242, 0, 0],
@@ -48,7 +47,7 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
   const isHovered = hoveredWorldId === world.id;
   const isSelected = activeWorldId === world.id;
 
-  const hasAtmosphere = ['shukra', 'chandra', 'guru'].includes(world.id);
+  const hasAtmosphere = ['shukra', 'guru'].includes(world.id);
 
   // Ultra-reliable single-click handler that ignores minor sub-pixel drag but guarantees instant response
   const handlePointerDown = (e: any) => {
@@ -292,7 +291,6 @@ export const PlanetarySystem: React.FC = () => {
   const [
     mercuryTex,
     venusTex,
-    moonTex,
     marsTex,
     jupiterTex,
     saturnTex,
@@ -302,7 +300,6 @@ export const PlanetarySystem: React.FC = () => {
   ] = useLoader(THREE.TextureLoader, [
     '/textures/planets/mercury.jpg',
     '/textures/planets/venus.jpg',
-    '/textures/planets/moon.jpg',
     '/textures/planets/mars.jpg',
     '/textures/planets/jupiter.jpg',
     '/textures/planets/saturn.jpg',
@@ -314,7 +311,6 @@ export const PlanetarySystem: React.FC = () => {
   const textureMap: Record<string, THREE.Texture> = {
     budh: mercuryTex,
     shukra: venusTex,
-    chandra: moonTex,
     mangal: marsTex,
     guru: jupiterTex,
     shani: saturnTex,

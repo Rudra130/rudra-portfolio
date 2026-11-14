@@ -6,7 +6,6 @@ const CELESTIAL_ORDER: CelestialId[] = [
   'surya',
   'budh',
   'shukra',
-  'chandra',
   'mangal',
   'guru',
   'shani',

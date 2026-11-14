@@ -7,12 +7,11 @@ import {
 import { CelestialId } from '../../src/types/celestial';
 
 describe('Navigation & Clean URL Routing', () => {
-  it('should map all 9 celestial worlds to clean SEO-friendly path slugs without #', () => {
+  it('should map all celestial worlds to clean SEO-friendly path slugs without #', () => {
     const celestialIds: CelestialId[] = [
       'surya',
       'budh',
       'shukra',
-      'chandra',
       'mangal',
       'guru',
       'shani',

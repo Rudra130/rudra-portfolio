@@ -15,11 +15,11 @@ describe('Content Architecture & Data Integrity', () => {
     expect(profileData.linkedinUrl).toBe('https://www.linkedin.com/in/rudratiwari1306/');
   });
 
-  it('should define all 9 Vedic Grahas with valid properties', () => {
-    expect(worldsData.length).toBe(9);
+  it('should define all 8 celestial worlds with valid properties', () => {
+    expect(worldsData.length).toBe(8);
     const ids = worldsData.map((w) => w.id);
     expect(ids).toContain('surya');
-    expect(ids).toContain('chandra');
+    expect(ids).not.toContain('chandra');
     expect(ids).toContain('mangal');
     expect(ids).toContain('budh');
     expect(ids).toContain('guru');

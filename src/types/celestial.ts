@@ -1,10 +1,9 @@
 export type CelestialId =
   | 'surya'
-  | 'chandra'
-  | 'mangal'
   | 'budh'
-  | 'guru'
   | 'shukra'
+  | 'mangal'
+  | 'guru'
   | 'shani'
   | 'rahu'
   | 'ketu';

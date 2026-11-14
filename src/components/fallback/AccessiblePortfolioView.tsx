@@ -409,10 +409,10 @@ export const AccessiblePortfolioView: React.FC = () => {
         </div>
       </section>
 
-      {/* 9 Grahas Guide */}
+      {/* Celestial Dimensions Guide */}
       <section className="pt-8 border-t border-white/10">
         <h2 className="text-xl font-display font-semibold text-white mb-4">
-          The 9 Celestial Dimensions
+          The Celestial Dimensions
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {worldsData.map((w) => (

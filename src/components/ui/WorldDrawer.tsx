@@ -775,32 +775,7 @@ export const WorldDrawer: React.FC = () => {
               />
             )}
 
-            {/* 7. CHANDRA: INNER UNIVERSE */}
-            {activeWorldId === 'chandra' && (
-              <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-                className="space-y-5"
-              >
-                <motion.div
-                  variants={itemVariants}
-                  className="glass-card p-6 border border-slate-400/30 space-y-3"
-                >
-                  <h4 className="text-base font-display font-bold text-white flex items-center gap-2">
-                    🏆 College Cricket Tournament Champion
-                  </h4>
-                  <p className="text-xs text-slate-300 leading-relaxed">
-                    Captaincy, pressure composure, and team coordination.
-                    Winning the tournament at ABES Engineering College taught
-                    lessons in tactical agility that apply directly to
-                    engineering sprints.
-                  </p>
-                </motion.div>
-              </motion.div>
-            )}
-
-            {/* 8. SHUKRA: CREATIVITY & AESTHETICS */}
+            {/* 7. SHUKRA: CREATIVITY & AESTHETICS */}
             {activeWorldId === 'shukra' && (
               <ShukraDesignContent
                 containerVariants={containerVariants}

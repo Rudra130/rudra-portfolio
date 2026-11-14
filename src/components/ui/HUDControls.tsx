@@ -87,7 +87,7 @@ export const HUDControls: React.FC = () => {
               <span className="text-amber-400">✦</span> The Cosmic Concept
             </h3>
             <p className="text-sm text-slate-300 leading-relaxed mb-4">
-              Welcome to the personal portfolio of <strong>Rudra Tiwari</strong>. This interactive 3D portfolio is inspired by the 9 Grahas of Vedic astronomy, representing distinct dimensions of his career, skills, and life.
+              Welcome to the personal portfolio of <strong>Rudra Tiwari</strong>. This interactive 3D portfolio maps distinct celestial bodies to key dimensions of his engineering career, AI architecture, and philosophy.
             </p>
             <ul className="text-xs text-slate-300 space-y-1.5 mb-6 font-mono">
               <li>• <strong>Core Identity & Bio</strong>: Professional summary, values & resume</li>
@@ -97,7 +97,6 @@ export const HUDControls: React.FC = () => {
               <li>• <strong>Generative AI & Agents</strong>: LangGraph, RAG pipelines & LLM workflows</li>
               <li>• <strong>Education & Certifications</strong>: B.Tech CSE (8.02 CGPA) & Oracle certified</li>
               <li>• <strong>UI/UX & Design Systems</strong>: Cosmic design language & frontend engineering</li>
-              <li>• <strong>Personal Life & Memories</strong>: College life, athletics & cricket championship</li>
               <li>• <strong>Philosophy & Reflection</strong>: Engineering mindset & lessons from setbacks</li>
             </ul>
             <button
