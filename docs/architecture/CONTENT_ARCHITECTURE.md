@@ -31,7 +31,7 @@ To uphold the highest engineering standards and integrity:
   * **Degree**: Bachelor of Technology (B.Tech) in Computer Science and Engineering (CSE)
   * **University**: Dr. A.P.J. Abdul Kalam Technical University (AKTU)
   * **College**: ABES Engineering College, Ghaziabad, Uttar Pradesh
-  * **Duration**: 2022 – 2026 (Graduating July 2026)
+  * **Duration**: 2022 – 2026 (Graduated May 2026)
   * **Cumulative GPA**: **8.02 / 10.0**
 * **Work Experience**:
   * **Company**: **Salescode AI** (Gurugram, India)

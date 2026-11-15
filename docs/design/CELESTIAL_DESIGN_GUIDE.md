@@ -115,7 +115,7 @@ graph TD
   * Storm Vortex: Ocher Amber (`#b45309`)
 * **Orbital Parameters**: Semi-major axis $a = 4.5$, semi-minor axis $b = 4.494$, eccentricity $e = 0.05$.
 * **Information Panel Content**:
-  * Academic tenure: B.Tech CSE at ABES Engineering College (8.02 CGPA, graduating July 2026).
+  * Academic tenure: B.Tech CSE at ABES Engineering College (8.02 CGPA, graduated May 2026).
   * National Means-cum-Merit Scholarship.
   * Official Oracle Certifications:
     - **Oracle Certified Associate Cloud Infrastructure 2025 Agentic AI** (Badge ID: `7BA8D764E39E938D6DFDD2DCAB8FB79691641BB4172B812392D5A4DDE37483AB`).

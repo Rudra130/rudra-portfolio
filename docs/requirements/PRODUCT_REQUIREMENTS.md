@@ -20,7 +20,7 @@ To present **Rudra Tiwari's** software engineering capabilities, academic achiev
 
 ## 2. Target Audience & Stakeholders
 
-1. **Technical Recruiters & Talent Partners**: Seeking quick verification of degree completion (B.Tech CSE, ABES EC, July 2026, 8.02 CGPA), core tech stack (Java, Spring Boot, React, AWS, GenAI), downloadable resume, and direct contact options.
+1. **Technical Recruiters & Talent Partners**: Seeking quick verification of degree completion (B.Tech CSE, ABES EC, May 2026, 8.02 CGPA), core tech stack (Java, Spring Boot, React, AWS, GenAI), downloadable resume, and direct contact options.
 2. **Engineering Managers & Principal Architects**: Evaluating system design acumen, code cleanliness, architecture depth, problem-solving mastery, and ability to handle complex 3D math and modern frontend frameworks.
 3. **Open-Source Collaborators & Engineering Peers**: Exploring technical projects, GitHub repositories, creative coding aesthetics, and personal philosophies.
 

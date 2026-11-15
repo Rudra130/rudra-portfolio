@@ -19,7 +19,7 @@ export const profileData: ProfileRecord = {
     college: 'ABES Engineering College',
     location: 'Ghaziabad, Uttar Pradesh',
     duration: '2022 – 2026',
-    graduationDate: 'July 2026',
+    graduationDate: 'May 2026',
     cgpa: '8.02/10',
   },
   experience: {

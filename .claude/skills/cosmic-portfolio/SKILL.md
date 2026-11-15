@@ -13,7 +13,7 @@ This skill defines the technical rules, architecture guidelines, and standards f
 ## 1. Project Context
 
 * **Product**: An immersive, interactive 3D personal universe inspired by the 8 Grahas of Vedic astronomy (Surya, Budh, Shukra, Mangal, Guru, Shani, Rahu, Ketu).
-* **Owner**: Rudra Tiwari (B.Tech CSE, ABES Engineering College, July 2026, 8.02 CGPA; Software Engineer at Salescode AI).
+* **Owner**: Rudra Tiwari (B.Tech CSE, ABES Engineering College, May 2026, 8.02 CGPA; Software Engineer at Salescode AI).
 * **Core Philosophy**: *"The universe should attract attention. My story should create curiosity. My engineering work should earn credibility."*
 
 ---

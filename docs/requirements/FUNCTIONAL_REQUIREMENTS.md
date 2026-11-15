@@ -69,7 +69,7 @@ graph TD
 | **FR-WLD-002** | Surya (Identity) | **P0** | Bio, personal values, resume PDF download button, contact modal. | Resume link verified; bio accurately presents Rudra Tiwari. |
 | **FR-WLD-004** | Mangal (Projects) | **P0** | NL-2-DB, AI Log Investigator, and BarterNow architectures and GitHub links. | Complete architecture details and verifiable links presented. |
 | **FR-WLD-005** | Budh (Skills & DSA) | **P0** | Skill badges (Java, Spring Boot, React, Kafka), 600+ LeetCode, 1,200+ solved, rating 1812. | Accurate metrics displayed with category filters. |
-| **FR-WLD-006** | Guru (Academics) | **P0** | B.Tech CSE (ABES EC, July 2026, 8.02 CGPA), Oracle GenAI & Agentic AI certs. | Degree dates, institution, and certifications 100% verified. |
+| **FR-WLD-006** | Guru (Academics) | **P0** | B.Tech CSE (ABES EC, May 2026, 8.02 CGPA), Oracle GenAI & Agentic AI certs. | Degree dates, institution, and certifications 100% verified. |
 | **FR-WLD-007** | Shukra (Creativity) | **P1** | UI/UX design tokens, Claymorphism, 3D GSAP animations, WCAG AAA contrast. | Documents design system philosophy and aesthetic craft. |
 | **FR-WLD-008** | Shani (Karma Timeline) | **P0** | Professional timeline (Salescode AI SE, OAuth2, OpenTelemetry, multi-device auth). | Accurately details software engineering responsibilities and lessons. |
 | **FR-WLD-009** | Rahu (AI Frontier) | **P1** | Generative AI, LangGraph multi-agent, RAG architectures, vector DBs, guardrails. | In-depth technical breakdown of AI and LLM workflows. |

@@ -242,7 +242,7 @@ export const WorldDrawer: React.FC = () => {
                                 {profileData.metrics.cgpa}
                               </p>
                               <p className="text-[10px] text-slate-400">
-                                (Graduating Jul 2026)
+                                (Graduated May 2026)
                               </p>
                             </div>
                           </div>
