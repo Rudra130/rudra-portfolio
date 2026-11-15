@@ -14,7 +14,7 @@ To present **Rudra Tiwari's** software engineering capabilities, academic achiev
 ### The Mission
 * **Attract Attention**: Engage visitors through high-performance WebGL shaders, celestial orbital physics, and cinematic camera choreography.
 * **Create Curiosity**: Spark meaningful exploration by interpreting the nine Vedic Grahas as allegorical portals into distinct life dimensions.
-* **Earn Credibility**: Deliver verifiable proof of technical excellence through detailed project breakdowns (NL2SQL, Food Delivery System), verified credentials (Oracle GenAI / Agentic AI certifications), competitive programming rigor (~1,200 problems solved, 600+ LeetCode), and production software engineering experience (~10 months).
+* **Earn Credibility**: Deliver verifiable proof of technical excellence through detailed project breakdowns (NL2SQL, Food Delivery System), verified credentials (Oracle GenAI / Agentic AI certifications), competitive programming rigor (~1,200 problems solved, 600+ LeetCode), and production software engineering experience (1 year).
 
 ---
 

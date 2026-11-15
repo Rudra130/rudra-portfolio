@@ -147,7 +147,7 @@ The typographic stack conveys high-tech precision paired with warm readability:
   * Overview Card: Displays portrait photo (`assets/user-photos/profile/profile-main.webp`, rounded-xl, 80x80px), name, subtitle, bio, and bottom stat trio:
     * 🎓 `B.Tech CSE` / `ABES Engineering College`
     * 📊 `8.02 CGPA` / `(Graduated May 2026)`
-    * `</>` `~10 Months` / `Software Engineering`
+    * `</>` `1 Year` / `Software Engineering`
 * **Mangal Archetype**:
   * Left: Mars terrain close-up.
   * Right: Header with red Mars glyph `♂`, serif title `Mangal`, coral subtitle `The World of Action`, category filter pills, and grid of glassmorphic project cards featuring icons, titles, summaries, tech tags, and external link triggers (`↗`).

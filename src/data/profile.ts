@@ -117,7 +117,7 @@ export const profileData: ProfileRecord = {
     },
   ],
   metrics: {
-    experienceMonths: '~10 Months',
+    experienceMonths: '1 Year',
     leetcodeCount: '600+',
     totalProblemsSolved: '1,200+',
     leetcodeRating: '1812',
