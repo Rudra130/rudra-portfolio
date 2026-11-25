@@ -19,7 +19,6 @@ export const App: React.FC = () => {
     returnToLanding,
     selectWorld,
     setFallback2D,
-    toggleFallback2D,
   } = useUniverseStore();
 
   // Enable multi-modal global keyboard navigation (Arrows, Esc, Space, Enter)
@@ -114,7 +113,7 @@ export const App: React.FC = () => {
       window.removeEventListener('popstate', handleRouteSync);
       window.removeEventListener('hashchange', handleRouteSync);
     };
-  }, [enterUniverse, selectWorld, isFallback2D, toggleFallback2D]);
+  }, [enterUniverse, returnToLanding, selectWorld, setFallback2D]);
 
   // Accessible 2D Fallback View
   if (isFallback2D) {

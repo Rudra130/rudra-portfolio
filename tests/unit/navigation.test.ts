@@ -4,6 +4,7 @@ import {
   SLUG_TO_WORLD,
   getPathForWorld,
 } from '../../src/utils/navigation';
+import { useUniverseStore } from '../../src/store/useUniverseStore';
 import { CelestialId } from '../../src/types/celestial';
 
 describe('Navigation & Clean URL Routing', () => {
@@ -46,5 +47,19 @@ describe('Navigation & Clean URL Routing', () => {
     expect(SLUG_TO_WORLD['core-identity']).toBe('surya');
     expect(SLUG_TO_WORLD['skills']).toBe('budh');
     expect(SLUG_TO_WORLD['technical-skills']).toBe('budh');
+  });
+
+  it('should exit 2D fallback mode and reset state when returning to landing page', () => {
+    const store = useUniverseStore.getState();
+    store.enterUniverse();
+    store.setFallback2D(true);
+    expect(useUniverseStore.getState().isFallback2D).toBe(true);
+
+    store.returnToLanding();
+    const state = useUniverseStore.getState();
+    expect(state.isFallback2D).toBe(false);
+    expect(state.hasEnteredUniverse).toBe(false);
+    expect(state.activeWorldId).toBeNull();
+    expect(state.isDrawerOpen).toBe(false);
   });
 });

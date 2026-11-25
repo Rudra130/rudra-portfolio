@@ -47,13 +47,14 @@ export const useUniverseStore = create<UniverseState>((set) => ({
   isOrbitPaused: false,
 
   enterUniverse: () => {
-    set({ hasEnteredUniverse: true, cameraMode: 'OVERVIEW' });
+    set({ hasEnteredUniverse: true, isFallback2D: false, cameraMode: 'OVERVIEW' });
     pushPath('/portfolio');
   },
 
   returnToLanding: () => {
     set({
       hasEnteredUniverse: false,
+      isFallback2D: false,
       activeWorldId: null,
       cameraMode: 'OVERVIEW',
       isDrawerOpen: false,
