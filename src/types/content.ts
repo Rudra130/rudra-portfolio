@@ -49,6 +49,7 @@ export interface CertificationRecord {
 
 export interface ProfileRecord {
   name: string;
+  nameHindi: string;
   titles: string[];
   tagline: string;
   quote: string;

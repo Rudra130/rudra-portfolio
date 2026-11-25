@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowRight, ChevronDown, ArrowUpRight } from 'lucide-react';
 import { useUniverseStore } from '../../store/useUniverseStore';
 import { profileData } from '../../data/profile';
+import { TypewriterText } from './TypewriterText';
 
 export const LandingHero: React.FC = () => {
   const { enterUniverse, selectWorld, setFallback2D } = useUniverseStore();
@@ -69,8 +70,8 @@ export const LandingHero: React.FC = () => {
           Cosmic Portfolio
         </span>
 
-        <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold uppercase tracking-tight text-white mb-4 drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]">
-          {profileData.name}
+        <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold uppercase tracking-tight text-white mb-4 drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)] min-h-[1.2em] flex items-center justify-center">
+          <TypewriterText words={[profileData.name, profileData.nameHindi]} />
         </h1>
 
         <p className="text-base sm:text-xl font-body font-medium text-slate-200 tracking-wide mb-3 drop-shadow-md">

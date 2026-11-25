@@ -2,6 +2,7 @@ import { ProfileRecord } from '../types/content';
 
 export const profileData: ProfileRecord = {
   name: 'Rudra Tiwari',
+  nameHindi: 'रुद्र तिवारी',
   titles: ['Software Engineer', 'AI Enthusiast', 'Problem Solver'],
   tagline: 'Engineer. Explorer. Creator.',
   quote: '“A journey through technology, knowledge, ambition and life.”',

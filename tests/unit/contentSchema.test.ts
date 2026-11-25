@@ -2,10 +2,13 @@ import { describe, it, expect } from 'vitest';
 import { profileData } from '../../src/data/profile';
 import { worldsData } from '../../src/data/worlds';
 import { projectsData } from '../../src/data/projects';
+import { splitGraphemes } from '../../src/components/ui/TypewriterText';
 
 describe('Content Architecture & Data Integrity', () => {
   it('should have verified profile metrics for Rudra Tiwari', () => {
     expect(profileData.name).toBe('Rudra Tiwari');
+    expect(profileData.nameHindi).toBe('रुद्र तिवारी');
+    expect(splitGraphemes(profileData.nameHindi)).toEqual(['रु', 'द्र', ' ', 'ति', 'वा', 'री']);
     expect(profileData.education.cgpa).toBe('8.02/10');
     expect(profileData.education.college).toContain('ABES');
     expect(profileData.metrics.leetcodeCount).toBe('600+');

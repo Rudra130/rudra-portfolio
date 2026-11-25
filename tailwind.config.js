@@ -23,7 +23,7 @@ export default {
         },
       },
       fontFamily: {
-        display: ['"Space Grotesk"', 'Cinzel', 'serif', 'sans-serif'],
+        display: ['"Space Grotesk"', '"Noto Sans Devanagari"', 'Cinzel', 'serif', 'sans-serif'],
         body: ['Inter', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'monospace'],
       },
