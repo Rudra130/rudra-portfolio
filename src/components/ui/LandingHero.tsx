@@ -6,6 +6,9 @@ import { profileData } from '../../data/profile';
 export const LandingHero: React.FC = () => {
   const { enterUniverse, selectWorld, setFallback2D } = useUniverseStore();
 
+  const ctaButtonBase =
+    'group relative inline-flex items-center gap-3 px-8 py-3.5 rounded-full bg-slate-950/70 backdrop-blur-md border font-body text-xs sm:text-sm tracking-wider uppercase transition-all duration-300 hover:text-white hover:bg-slate-900/90 hover:scale-105 active:scale-95 shadow-xl cursor-pointer';
+
   return (
     <div className="relative min-h-screen w-full flex flex-col justify-between items-center px-6 py-8 z-30 overflow-hidden select-none">
       {/* Background: Cinematic AI-generated Cosmic Explorer Artwork */}
@@ -78,11 +81,11 @@ export const LandingHero: React.FC = () => {
           {profileData.quote}
         </p>
 
-        {/* Enter Portfolio CTA */}
-        <div className="flex flex-col items-center gap-3">
+        {/* Enter Portfolio & 2D Portfolio CTAs */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <button
             onClick={enterUniverse}
-            className="group relative inline-flex items-center gap-3 px-8 py-3.5 rounded-full bg-slate-950/70 backdrop-blur-md border border-amber-500/50 text-amber-200 font-body text-xs sm:text-sm tracking-wider uppercase transition-all duration-300 hover:border-amber-400 hover:text-white hover:bg-slate-900/90 hover:shadow-[0_0_30px_rgba(245,158,11,0.5)] hover:scale-105 active:scale-95 shadow-xl"
+            className={`${ctaButtonBase} border-amber-500/50 text-amber-200 hover:border-amber-400 hover:shadow-[0_0_30px_rgba(245,158,11,0.5)]`}
           >
             <span>Enter Portfolio</span>
             <ArrowRight className="w-4 h-4 text-amber-400 group-hover:translate-x-1 transition-transform" />
@@ -90,9 +93,10 @@ export const LandingHero: React.FC = () => {
 
           <button
             onClick={() => setFallback2D(true)}
-            className="text-[11px] font-mono text-slate-400 hover:text-cyan-300 transition-colors pt-2 cursor-pointer"
+            className={`${ctaButtonBase} border-cyan-500/40 text-cyan-200 hover:border-cyan-400 hover:shadow-[0_0_30px_rgba(6,182,212,0.45)]`}
           >
-            or view Accessible 2D Portfolio
+            <span>Accessible 2D Portfolio</span>
+            <ArrowRight className="w-4 h-4 text-cyan-400 group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
       </div>

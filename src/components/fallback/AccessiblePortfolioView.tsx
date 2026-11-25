@@ -9,7 +9,6 @@ import {
   Eye,
   Home,
   Brain,
-  Palette,
   CheckCircle2,
 } from 'lucide-react';
 import { profileData } from '../../data/profile';
@@ -349,60 +348,6 @@ export const AccessiblePortfolioView: React.FC = () => {
               <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
               <div>
                 <strong className="text-white">Model Context Protocol (MCP) & Google Agentic Kit:</strong> Built standardized MCP tool servers exposing filesystems, databases, and APIs over JSON-RPC, integrated with Google Agentic tools and Oracle certifications.
-              </div>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      {/* UI/UX Design Systems & Creative Frontend (Shukra) */}
-      <section className="mb-16">
-        <h2 className="text-2xl font-display font-bold text-white mb-6 flex items-center gap-2">
-          <Palette className="w-5 h-5 text-pink-400" /> UI/UX Design Systems & Creative Frontend
-        </h2>
-        <div className="glass-card p-6 border border-pink-500/30 space-y-4">
-          <div className="flex flex-wrap gap-2 mb-2">
-            {[
-              'Claymorphism (Soft 3D)',
-              '3D GSAP Choreography',
-              'ScrollTrigger',
-              'Three.js / WebGL',
-              'Glassmorphism',
-              'Tailwind CSS',
-              'Framer Motion',
-            ].map((t) => (
-              <span
-                key={t}
-                className="text-xs font-mono px-2.5 py-1 rounded-full bg-pink-950/40 text-pink-200 border border-pink-500/20"
-              >
-                {t}
-              </span>
-            ))}
-          </div>
-
-          <ul className="space-y-2.5 text-xs text-slate-300">
-            <li className="flex items-start gap-2.5">
-              <CheckCircle2 className="w-4 h-4 text-pink-400 shrink-0 mt-0.5" />
-              <div>
-                <strong className="text-white">Claymorphism & Tactile Soft 3D:</strong> Engineered multi-tiered shadow matrices with ambient outer diffusion and top-left specular highlights, coupled with active push-down depression states (<code className="text-pink-300 bg-pink-950/40 px-1 py-0.5 rounded text-[11px]">translateY(3px)</code>) for tangible touch delight.
-              </div>
-            </li>
-            <li className="flex items-start gap-2.5">
-              <CheckCircle2 className="w-4 h-4 text-pink-400 shrink-0 mt-0.5" />
-              <div>
-                <strong className="text-white">3D GSAP Camera Rig Choreography:</strong> Implemented quaternion-driven camera timelines interpolating coordinates and look-at vectors across 3D space with <code className="text-pink-300 bg-pink-950/40 px-1 py-0.5 rounded text-[11px]">power3.inOut</code> cubic bezier curves at locked 60 FPS.
-              </div>
-            </li>
-            <li className="flex items-start gap-2.5">
-              <CheckCircle2 className="w-4 h-4 text-pink-400 shrink-0 mt-0.5" />
-              <div>
-                <strong className="text-white">Hardware-Accelerated Glassmorphism:</strong> Layered multi-backdrop filters (<code className="text-pink-300 bg-pink-950/40 px-1 py-0.5 rounded text-[11px]">backdrop-filter: blur(16px)</code>) with 1px celestial starlight rim reflections and chromatic planetary color schemes.
-              </div>
-            </li>
-            <li className="flex items-start gap-2.5">
-              <CheckCircle2 className="w-4 h-4 text-pink-400 shrink-0 mt-0.5" />
-              <div>
-                <strong className="text-white">Universal Accessibility:</strong> Complete <code className="text-pink-300 bg-pink-950/40 px-1 py-0.5 rounded text-[11px]">prefers-reduced-motion</code> compliance, semantic keyboard focus, and WCAG 2.1 AA 4.5:1 text contrast ratios.
               </div>
             </li>
           </ul>
