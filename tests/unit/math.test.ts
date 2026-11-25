@@ -9,6 +9,7 @@ import {
 import {
   SPEC_SEMI_MAJOR_RADII,
   ORBITAL_CONFIG,
+  ASTEROID_BELT_CONFIG,
   computeSemiMinorAxis,
   computeFocusOffset,
 } from '../../src/config/orbitalConfig';
@@ -92,6 +93,48 @@ describe('Solar System — Orbital Spacing and Keplerian Geometry', () => {
 
       // Every neighboring orbit path has a strictly positive gap (no overlaps)
       expect(minGap).toBeGreaterThan(0.2);
+    }
+  });
+
+  it('should position the asteroid belt cleanly between Mangal (4.5) and Guru (6.7) without overlaps', () => {
+    const mangal = ORBITAL_CONFIG.find((o) => o.id === 'mangal')!;
+    const guru = ORBITAL_CONFIG.find((o) => o.id === 'guru')!;
+
+    expect(ASTEROID_BELT_CONFIG.innerSemiMajorAxis).toBeGreaterThan(mangal.semiMajorAxis + mangal.planetRadius);
+    expect(ASTEROID_BELT_CONFIG.outerSemiMajorAxis).toBeLessThan(guru.semiMajorAxis - guru.planetRadius);
+
+    // Check full 360-degree focus-centered elliptical clearance against Mars and Jupiter radii
+    for (let step = 0; step < 72; step++) {
+      const theta = (step / 72) * Math.PI * 2;
+      const mangalPos = { x: 0, y: 0, z: 0 };
+      const beltInnerPos = { x: 0, y: 0, z: 0 };
+      const beltOuterPos = { x: 0, y: 0, z: 0 };
+      const guruPos = { x: 0, y: 0, z: 0 };
+
+      computeEllipticalPosition(mangal.semiMajorAxis, theta, mangal.eccentricity, mangal.inclinationDeg, mangalPos);
+      computeEllipticalPosition(
+        ASTEROID_BELT_CONFIG.innerSemiMajorAxis,
+        theta,
+        ASTEROID_BELT_CONFIG.eccentricity,
+        ASTEROID_BELT_CONFIG.inclinationDeg,
+        beltInnerPos
+      );
+      computeEllipticalPosition(
+        ASTEROID_BELT_CONFIG.outerSemiMajorAxis,
+        theta,
+        ASTEROID_BELT_CONFIG.eccentricity,
+        ASTEROID_BELT_CONFIG.inclinationDeg,
+        beltOuterPos
+      );
+      computeEllipticalPosition(guru.semiMajorAxis, theta, guru.eccentricity, guru.inclinationDeg, guruPos);
+
+      const rMangal = Math.hypot(mangalPos.x, mangalPos.z) + mangal.planetRadius;
+      const rBeltInner = Math.hypot(beltInnerPos.x, beltInnerPos.z);
+      const rBeltOuter = Math.hypot(beltOuterPos.x, beltOuterPos.z);
+      const rGuru = Math.hypot(guruPos.x, guruPos.z) - guru.planetRadius;
+
+      expect(rBeltInner).toBeGreaterThan(rMangal);
+      expect(rBeltOuter).toBeLessThan(rGuru);
     }
   });
 

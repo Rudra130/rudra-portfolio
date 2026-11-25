@@ -232,3 +232,31 @@ export function computeKeplerianSpeedMultiplier(
   const factor = aOverR * aOverR * Math.sqrt(Math.max(0, 1 - orbit.eccentricity * orbit.eccentricity));
   return Math.max(0.3, Math.min(3.5, factor));
 }
+
+export interface AsteroidBeltConfig {
+  innerSemiMajorAxis: number;
+  outerSemiMajorAxis: number;
+  eccentricity: number;
+  inclinationDeg: number;
+  verticalSpread: number;
+  baseOrbitSpeed: number;
+  count: number;
+  minRadius: number;
+  maxRadius: number;
+}
+
+/**
+ * Main Asteroid Belt placed in the radial gap between Mangal (4.5) and Guru (6.7),
+ * centered around the Sun focus (0, 0, 0) with Keplerian elliptical geometry.
+ */
+export const ASTEROID_BELT_CONFIG: AsteroidBeltConfig = {
+  innerSemiMajorAxis: 5.18,
+  outerSemiMajorAxis: 5.92,
+  eccentricity: 0.045,
+  inclinationDeg: 1.55,
+  verticalSpread: 0.14,
+  baseOrbitSpeed: 0.128,
+  count: 900,
+  minRadius: 0.011,
+  maxRadius: 0.042,
+};

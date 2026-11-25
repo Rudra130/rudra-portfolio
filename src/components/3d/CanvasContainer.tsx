@@ -5,6 +5,7 @@ import { Lighting } from './environment/Lighting';
 import { Starfield } from './environment/Starfield';
 import { Surya } from './celestial/Surya';
 import { OrbitalRings } from './celestial/OrbitalRings';
+import { AsteroidBelt } from './celestial/AsteroidBelt';
 import { PlanetarySystem } from './celestial/PlanetarySystem';
 import { CameraController } from './camera/CameraController';
 
@@ -27,6 +28,7 @@ export const CanvasContainer: React.FC = () => {
           <Starfield />
           <Surya />
           <OrbitalRings />
+          <AsteroidBelt />
           <PlanetarySystem />
           <CameraController />
         </Suspense>
