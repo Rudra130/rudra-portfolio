@@ -1,10 +1,12 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { cn } from '../../../utils/cn';
+import type { Portfolio2DTheme } from './CosmicSpotlight';
 
 interface StarsBackgroundProps {
   className?: string;
   starDensity?: number;
+  theme?: Portfolio2DTheme;
 }
 
 interface ShootingStarSpec {
@@ -60,7 +62,6 @@ const SHOOTING_STARS: ShootingStarSpec[] = [
 ];
 
 const TWINKLE_STARS = Array.from({ length: 36 }, (_, idx) => {
-  // Deterministic pseudo-random spread for crisp twinkle highlights without rAF loops
   const seedA = ((idx * 73 + 19) % 97) / 97;
   const seedB = ((idx * 41 + 37) % 89) / 89;
   const seedC = ((idx * 29 + 11) % 53) / 53;
@@ -71,35 +72,50 @@ const TWINKLE_STARS = Array.from({ length: 36 }, (_, idx) => {
     size: seedC > 0.72 ? 2.5 : 1.5,
     duration: 2.6 + seedC * 3.4,
     delay: seedA * 3.0,
-    tint:
+    darkTint:
       idx % 5 === 0
         ? 'bg-amber-200'
         : idx % 3 === 0
         ? 'bg-cyan-200'
         : 'bg-slate-100',
+    lightTint:
+      idx % 5 === 0
+        ? 'bg-amber-500/70'
+        : idx % 3 === 0
+        ? 'bg-sky-500/70'
+        : 'bg-slate-400/70',
   };
 });
 
 /**
  * Aceternity UI-inspired Shooting Stars & Stars Background for non-WebGL views.
- * Draws static base stars on a 2D canvas on mount/resize and layers Framer Motion
- * twinkle & shooting-star streaks (respecting prefers-reduced-motion).
+ * Adapts smoothly between cosmic dark mode and celestial daylight light mode.
  */
 export const StarsBackground: React.FC<StarsBackgroundProps> = ({
   className,
   starDensity = 0.00018,
+  theme = 'dark',
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const prefersReducedMotion = useReducedMotion();
+  const isLight = theme === 'light';
 
   const starColors = useMemo(
-    () => [
-      'rgba(248, 250, 252, 0.75)',
-      'rgba(186, 230, 253, 0.65)',
-      'rgba(253, 230, 138, 0.6)',
-      'rgba(199, 210, 254, 0.55)',
-    ],
-    []
+    () =>
+      isLight
+        ? [
+            'rgba(71, 85, 105, 0.35)',
+            'rgba(2, 132, 199, 0.32)',
+            'rgba(217, 119, 6, 0.34)',
+            'rgba(79, 70, 229, 0.28)',
+          ]
+        : [
+            'rgba(248, 250, 252, 0.75)',
+            'rgba(186, 230, 253, 0.65)',
+            'rgba(253, 230, 138, 0.6)',
+            'rgba(199, 210, 254, 0.55)',
+          ],
+    [isLight]
   );
 
   useEffect(() => {
@@ -153,7 +169,7 @@ export const StarsBackground: React.FC<StarsBackgroundProps> = ({
       {TWINKLE_STARS.map((star) => (
         <motion.span
           key={star.id}
-          className={cn('absolute rounded-full', star.tint)}
+          className={cn('absolute rounded-full', isLight ? star.lightTint : star.darkTint)}
           style={{
             top: star.top,
             left: star.left,
@@ -187,7 +203,7 @@ export const StarsBackground: React.FC<StarsBackgroundProps> = ({
           <defs>
             {SHOOTING_STARS.map((s) => (
               <linearGradient
-                key={s.id}
+                key={`${theme}-${s.id}`}
                 id={`shooting-star-grad-${s.id}`}
                 x1="0%"
                 y1="0%"
@@ -195,8 +211,16 @@ export const StarsBackground: React.FC<StarsBackgroundProps> = ({
                 y2="100%"
               >
                 <stop offset="0%" stopColor={s.colorEnd} stopOpacity="0" />
-                <stop offset="65%" stopColor={s.colorStart} stopOpacity="0.65" />
-                <stop offset="100%" stopColor="#ffffff" stopOpacity="1" />
+                <stop
+                  offset="65%"
+                  stopColor={s.colorStart}
+                  stopOpacity={isLight ? '0.5' : '0.65'}
+                />
+                <stop
+                  offset="100%"
+                  stopColor={isLight ? '#0284c7' : '#ffffff'}
+                  stopOpacity={isLight ? '0.85' : '1'}
+                />
               </linearGradient>
             ))}
           </defs>

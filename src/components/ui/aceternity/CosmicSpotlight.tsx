@@ -2,8 +2,11 @@ import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { cn } from '../../../utils/cn';
 
+export type Portfolio2DTheme = 'dark' | 'light';
+
 interface CosmicSpotlightProps {
   className?: string;
+  theme?: Portfolio2DTheme;
 }
 
 const BEAM_PATHS = [
@@ -14,10 +17,14 @@ const BEAM_PATHS = [
 
 /**
  * Aceternity UI-style Spotlight + Background Beams + subtle Dot Grid mask
- * tailored for the 2D Accessible Cosmic Portfolio backdrop.
+ * tailored for the 2D Accessible Cosmic Portfolio backdrop in dark or light mode.
  */
-export const CosmicSpotlight: React.FC<CosmicSpotlightProps> = ({ className }) => {
+export const CosmicSpotlight: React.FC<CosmicSpotlightProps> = ({
+  className,
+  theme = 'dark',
+}) => {
   const prefersReducedMotion = useReducedMotion();
+  const isLight = theme === 'light';
 
   return (
     <div
@@ -26,10 +33,11 @@ export const CosmicSpotlight: React.FC<CosmicSpotlightProps> = ({ className }) =
     >
       {/* Subtle Aceternity radial dot grid faded toward edges */}
       <div
-        className="absolute inset-0 opacity-25"
+        className={cn('absolute inset-0', isLight ? 'opacity-45' : 'opacity-25')}
         style={{
-          backgroundImage:
-            'radial-gradient(rgba(148, 163, 184, 0.28) 1px, transparent 1px)',
+          backgroundImage: isLight
+            ? 'radial-gradient(rgba(100, 116, 139, 0.28) 1px, transparent 1px)'
+            : 'radial-gradient(rgba(148, 163, 184, 0.28) 1px, transparent 1px)',
           backgroundSize: '28px 28px',
           maskImage:
             'radial-gradient(ellipse 75% 65% at 50% 35%, black 20%, transparent 100%)',
@@ -42,8 +50,9 @@ export const CosmicSpotlight: React.FC<CosmicSpotlightProps> = ({ className }) =
       <motion.div
         className="absolute -top-44 -left-32 h-[540px] w-[620px] rounded-full blur-[120px]"
         style={{
-          background:
-            'radial-gradient(circle, rgba(245, 158, 11, 0.16) 0%, rgba(245, 158, 11, 0.04) 45%, transparent 72%)',
+          background: isLight
+            ? 'radial-gradient(circle, rgba(245, 158, 11, 0.16) 0%, rgba(251, 191, 36, 0.06) 45%, transparent 72%)'
+            : 'radial-gradient(circle, rgba(245, 158, 11, 0.16) 0%, rgba(245, 158, 11, 0.04) 45%, transparent 72%)',
         }}
         animate={
           prefersReducedMotion
@@ -56,8 +65,9 @@ export const CosmicSpotlight: React.FC<CosmicSpotlightProps> = ({ className }) =
       <motion.div
         className="absolute top-1/4 -right-40 h-[560px] w-[640px] rounded-full blur-[130px]"
         style={{
-          background:
-            'radial-gradient(circle, rgba(99, 102, 241, 0.16) 0%, rgba(6, 182, 212, 0.08) 45%, transparent 72%)',
+          background: isLight
+            ? 'radial-gradient(circle, rgba(56, 189, 248, 0.14) 0%, rgba(99, 102, 241, 0.09) 45%, transparent 72%)'
+            : 'radial-gradient(circle, rgba(99, 102, 241, 0.16) 0%, rgba(6, 182, 212, 0.08) 45%, transparent 72%)',
         }}
         animate={
           prefersReducedMotion
@@ -70,14 +80,15 @@ export const CosmicSpotlight: React.FC<CosmicSpotlightProps> = ({ className }) =
       <div
         className="absolute -bottom-48 left-1/3 h-[480px] w-[580px] rounded-full blur-[130px]"
         style={{
-          background:
-            'radial-gradient(circle, rgba(20, 184, 166, 0.11) 0%, transparent 70%)',
+          background: isLight
+            ? 'radial-gradient(circle, rgba(20, 184, 166, 0.10) 0%, transparent 70%)'
+            : 'radial-gradient(circle, rgba(20, 184, 166, 0.11) 0%, transparent 70%)',
         }}
       />
 
       {/* Aceternity Background Beams SVG Paths */}
       <svg
-        className="absolute inset-0 h-full w-full opacity-55"
+        className={cn('absolute inset-0 h-full w-full', isLight ? 'opacity-45' : 'opacity-55')}
         viewBox="0 0 1440 900"
         fill="none"
         preserveAspectRatio="none"
@@ -85,7 +96,7 @@ export const CosmicSpotlight: React.FC<CosmicSpotlightProps> = ({ className }) =
         <defs>
           {BEAM_PATHS.map((_, idx) => (
             <motion.linearGradient
-              key={idx}
+              key={`${theme}-${idx}`}
               id={`aceternity-beam-${idx}`}
               gradientUnits="userSpaceOnUse"
               initial={{ x1: '0%', x2: '15%', y1: '0%', y2: '15%' }}
@@ -107,9 +118,13 @@ export const CosmicSpotlight: React.FC<CosmicSpotlightProps> = ({ className }) =
                 delay: idx * 1.2,
               }}
             >
-              <stop offset="0%" stopColor="#18ccfc" stopOpacity="0" />
-              <stop offset="45%" stopColor={idx === 1 ? '#f59e0b' : '#22d3ee'} stopOpacity="0.45" />
-              <stop offset="75%" stopColor="#6344f5" stopOpacity="0.35" />
+              <stop offset="0%" stopColor={isLight ? '#0284c7' : '#18ccfc'} stopOpacity="0" />
+              <stop
+                offset="45%"
+                stopColor={idx === 1 ? (isLight ? '#d97706' : '#f59e0b') : isLight ? '#0284c7' : '#22d3ee'}
+                stopOpacity={isLight ? '0.35' : '0.45'}
+              />
+              <stop offset="75%" stopColor={isLight ? '#4f46e5' : '#6344f5'} stopOpacity="0.3" />
               <stop offset="100%" stopColor="#ae48ff" stopOpacity="0" />
             </motion.linearGradient>
           ))}
@@ -117,7 +132,11 @@ export const CosmicSpotlight: React.FC<CosmicSpotlightProps> = ({ className }) =
 
         {BEAM_PATHS.map((d, idx) => (
           <React.Fragment key={idx}>
-            <path d={d} stroke="rgba(255, 255, 255, 0.035)" strokeWidth="1" />
+            <path
+              d={d}
+              stroke={isLight ? 'rgba(15, 23, 42, 0.055)' : 'rgba(255, 255, 255, 0.035)'}
+              strokeWidth="1"
+            />
             <path d={d} stroke={`url(#aceternity-beam-${idx})`} strokeWidth="1.5" />
           </React.Fragment>
         ))}
