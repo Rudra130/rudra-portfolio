@@ -15,17 +15,25 @@ import { profileData } from '../../data/profile';
 import { projectsData } from '../../data/projects';
 import { worldsData } from '../../data/worlds';
 import { useUniverseStore } from '../../store/useUniverseStore';
+import { CosmicSpotlight } from '../ui/aceternity/CosmicSpotlight';
+import { StarsBackground } from '../ui/aceternity/StarsBackground';
 
 export const AccessiblePortfolioView: React.FC = () => {
   const { setFallback2D, enterUniverse, returnToLanding } = useUniverseStore();
 
   return (
-    <div className="relative min-h-screen bg-space-void text-slate-100 px-6 sm:px-12 py-24 max-w-5xl mx-auto">
+    <div className="relative min-h-screen w-full bg-space-void text-slate-100 overflow-x-hidden">
+      {/* Aceternity UI Cosmic Background (Spotlight + Beams + Twinkling Stars & Shooting Stars) */}
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <CosmicSpotlight />
+        <StarsBackground />
+      </div>
+
       {/* Top Navigation Banner */}
       <div className="fixed top-4 right-6 z-50 flex items-center gap-3">
         <button
           onClick={returnToLanding}
-          className="flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/80 border border-white/10 text-slate-200 text-xs font-mono uppercase tracking-wider hover:bg-white/10 shadow-xl transition-all cursor-pointer"
+          className="flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/10 text-slate-200 text-xs font-mono uppercase tracking-wider hover:bg-white/10 shadow-xl transition-all cursor-pointer"
         >
           <Home className="w-4 h-4 text-amber-400" />
           <span>Home</span>
@@ -36,12 +44,15 @@ export const AccessiblePortfolioView: React.FC = () => {
             setFallback2D(false);
             enterUniverse();
           }}
-          className="flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-200 text-xs font-mono uppercase tracking-wider hover:bg-amber-500/30 shadow-xl transition-all cursor-pointer"
+          className="flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/20 backdrop-blur-md border border-amber-500/40 text-amber-200 text-xs font-mono uppercase tracking-wider hover:bg-amber-500/30 shadow-xl transition-all cursor-pointer"
         >
           <Eye className="w-4 h-4" />
           <span>Switch to 3D Portfolio</span>
         </button>
       </div>
+
+      {/* Main Content Container */}
+      <div className="relative z-10 px-6 sm:px-12 py-24 max-w-5xl mx-auto">
 
       {/* Hero Header */}
       <section className="mb-16 border-b border-white/10 pb-12 flex flex-col sm:flex-row items-center sm:items-start gap-8">
@@ -371,6 +382,7 @@ export const AccessiblePortfolioView: React.FC = () => {
           ))}
         </div>
       </section>
+      </div>
     </div>
   );
 };
