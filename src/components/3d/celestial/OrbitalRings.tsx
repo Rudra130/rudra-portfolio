@@ -115,7 +115,7 @@ export const OrbitalRings: React.FC = () => {
 
   const rings = useMemo(() => {
     return ORBITAL_CONFIG.map((orbit) => {
-      const ribbonGeo = createFocusCenteredEllipticalRibbon(orbit, 0.024, 240);
+      const ribbonGeo = createFocusCenteredEllipticalRibbon(orbit, 0.038, 240);
       const line = createFocusCenteredLine(orbit, 240);
 
       return {

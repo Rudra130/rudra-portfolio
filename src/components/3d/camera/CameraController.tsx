@@ -19,9 +19,9 @@ export const CameraController: React.FC = () => {
 
   const { activeWorldId, cameraMode, setCameraMode, zoomLevel } = useUniverseStore();
 
-  // Overview camera: centered high vantage with the Sun in the middle and all planets revolving around it
-  const overviewPos = useRef(new THREE.Vector3(0, 29.0, 2.6));
-  const sunCenter = useRef(new THREE.Vector3(0, 0, 0.65));
+  // Overview camera: centered close framing filling viewport without bottom orbit clipping
+  const overviewPos = useRef(new THREE.Vector3(0, 24.2, 5.6));
+  const sunCenter = useRef(new THREE.Vector3(0, 0, 0.45));
 
   // Synchronize button zoom changes from HUD relative to current control target
   const prevZoomLevel = useRef(zoomLevel);
@@ -199,7 +199,7 @@ export const CameraController: React.FC = () => {
   return (
     <OrbitControls
       ref={controlsRef}
-      target={[0, 0, 0.65]}
+      target={[0, 0, 0.45]}
       enablePan={true}
       enableZoom={true}
       zoomSpeed={1.2}

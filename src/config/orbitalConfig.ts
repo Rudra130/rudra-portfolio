@@ -52,8 +52,8 @@ export const ORBITAL_CONFIG: OrbitalParameter[] = [
     orbitSpeed: 0.28,
     color: '#06b6d4',
     glowColor: '#22d3ee',
-    planetRadius: 0.23,
-    cameraDistance: 0.65,
+    planetRadius: 0.34,
+    cameraDistance: 0.92,
     isActiveWorld: true,
   },
   {
@@ -68,8 +68,8 @@ export const ORBITAL_CONFIG: OrbitalParameter[] = [
     orbitSpeed: 0.22,
     color: '#ec4899',
     glowColor: '#f472b6',
-    planetRadius: 0.31,
-    cameraDistance: 0.85,
+    planetRadius: 0.45,
+    cameraDistance: 1.18,
     isActiveWorld: true,
   },
   {
@@ -84,8 +84,8 @@ export const ORBITAL_CONFIG: OrbitalParameter[] = [
     orbitSpeed: 0.18,
     color: '#475569',
     glowColor: '#64748b',
-    planetRadius: 0.28,
-    cameraDistance: 0.8,
+    planetRadius: 0.40,
+    cameraDistance: 1.05,
     isActiveWorld: false, // subtle celestial resonance ring
   },
   {
@@ -100,8 +100,8 @@ export const ORBITAL_CONFIG: OrbitalParameter[] = [
     orbitSpeed: 0.15,
     color: '#ef4444',
     glowColor: '#dc2626',
-    planetRadius: 0.28,
-    cameraDistance: 0.78,
+    planetRadius: 0.41,
+    cameraDistance: 1.1,
     isActiveWorld: true,
   },
   {
@@ -116,8 +116,8 @@ export const ORBITAL_CONFIG: OrbitalParameter[] = [
     orbitSpeed: 0.11,
     color: '#d97706',
     glowColor: '#f59e0b',
-    planetRadius: 0.58,
-    cameraDistance: 1.55,
+    planetRadius: 0.80,
+    cameraDistance: 2.1,
     isActiveWorld: true,
   },
   {
@@ -132,8 +132,8 @@ export const ORBITAL_CONFIG: OrbitalParameter[] = [
     orbitSpeed: 0.08,
     color: '#a8a29e',
     glowColor: '#78716c',
-    planetRadius: 0.48,
-    cameraDistance: 1.38,
+    planetRadius: 0.62,
+    cameraDistance: 1.75,
     isActiveWorld: true,
   },
   {
@@ -148,8 +148,8 @@ export const ORBITAL_CONFIG: OrbitalParameter[] = [
     orbitSpeed: 0.06,
     color: '#6366f1',
     glowColor: '#4f46e5',
-    planetRadius: 0.38,
-    cameraDistance: 1.1,
+    planetRadius: 0.52,
+    cameraDistance: 1.45,
     isActiveWorld: true,
   },
   {
@@ -164,8 +164,8 @@ export const ORBITAL_CONFIG: OrbitalParameter[] = [
     orbitSpeed: 0.045,
     color: '#14b8a6',
     glowColor: '#0d9488',
-    planetRadius: 0.33,
-    cameraDistance: 0.98,
+    planetRadius: 0.46,
+    cameraDistance: 1.3,
     isActiveWorld: true,
   },
 ];
@@ -250,13 +250,13 @@ export interface AsteroidBeltConfig {
  * centered around the Sun focus (0, 0, 0) with Keplerian elliptical geometry.
  */
 export const ASTEROID_BELT_CONFIG: AsteroidBeltConfig = {
-  innerSemiMajorAxis: 5.18,
-  outerSemiMajorAxis: 5.92,
+  innerSemiMajorAxis: 5.14,
+  outerSemiMajorAxis: 5.74,
   eccentricity: 0.045,
   inclinationDeg: 1.55,
-  verticalSpread: 0.14,
+  verticalSpread: 0.16,
   baseOrbitSpeed: 0.128,
   count: 900,
-  minRadius: 0.011,
-  maxRadius: 0.042,
+  minRadius: 0.015,
+  maxRadius: 0.052,
 };

@@ -53,7 +53,7 @@ const DUST_FRAGMENT_SHADER = /* glsl */ `
   void main() {
     vec2 xz = vWorldPos.xz;
     float r = length(xz);
-    if (r < 1.02 || r > 48.0) discard;
+    if (r < 1.30 || r > 48.0) discard;
 
     // Continuous 360-degree Cartesian swirl coords avoid any atan(-PI..PI) seam
     float angle = atan(xz.y, xz.x);
@@ -66,7 +66,7 @@ const DUST_FRAGMENT_SHADER = /* glsl */ `
 
     // Uniform high dust density matching near-Sun intensity across all of space
     float ringWave = 0.56 + 0.44 * sin(r * 3.4 + cloudNoise * 2.2);
-    float innerFade = smoothstep(1.02, 1.55, r);
+    float innerFade = smoothstep(1.30, 1.88, r);
     float farEdgeFade = 1.0 - smoothstep(42.0, 48.0, r);
 
     float concentricPattern = (0.48 + 0.52 * ringWave) * (0.62 + 0.46 * cloudNoise + 0.24 * fineStreaks);
@@ -150,7 +150,7 @@ export const CosmicDustDisk: React.FC = () => {
     []
   );
 
-  const diskGeo = useMemo(() => new THREE.RingGeometry(1.02, 48.0, 220, 8), []);
+  const diskGeo = useMemo(() => new THREE.RingGeometry(1.30, 48.0, 220, 8), []);
 
   const diskMat = useMemo(
     () =>
@@ -187,7 +187,7 @@ export const CosmicDustDisk: React.FC = () => {
     const cool = new THREE.Color('#b6c2d1');
     const scratch = new THREE.Color();
 
-    const rMinSq = 1.35 * 1.35;
+    const rMinSq = 1.62 * 1.62;
     const rMaxSq = 30.0 * 30.0;
 
     for (let i = 0; i < particleCount; i++) {

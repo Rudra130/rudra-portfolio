@@ -135,7 +135,7 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
   // Dedicated radial UV ring geometry and authentic Cassini-banded texture for Saturn
   const saturnRingGeo = useMemo(() => {
     if (world.id !== 'shani') return null;
-    return createSaturnRingGeometry(world.radius * 1.3, world.radius * 2.65, 128);
+    return createSaturnRingGeometry(world.radius * 1.25, world.radius * 2.22, 128);
   }, [world.id, world.radius]);
 
   const saturnRingTexMemo = useMemo(() => {

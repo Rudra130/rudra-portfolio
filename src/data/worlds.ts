@@ -11,7 +11,7 @@ export const worldsData: CelestialBodyMeta[] = [
     tagline: 'Introduction, Values, Resume & Contact',
     description:
       'The center of my portfolio. It represents who I am, what I do, what I believe in, and where I am headed.',
-    radius: 0.85,
+    radius: 1.18,
     orbitRadius: 0,
     orbitSpeed: 0,
     eccentricity: 0,
@@ -21,8 +21,8 @@ export const worldsData: CelestialBodyMeta[] = [
     color: '#f59e0b',
     glowColor: '#ea580c',
     symbol: '☀️',
-    cameraDistance: 2.1,
-    cameraAngle: [0, 0.2, 2.1],
+    cameraDistance: 2.75,
+    cameraAngle: [0, 0.2, 2.75],
   },
   {
     id: 'budh',
