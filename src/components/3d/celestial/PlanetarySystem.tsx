@@ -280,10 +280,10 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
           {texture ? (
             <meshStandardMaterial
               map={texture}
-              roughness={world.id === 'budh' ? 0.85 : 0.55}
-              metalness={world.id === 'budh' ? 0.15 : 0.05}
+              roughness={world.id === 'budh' ? 0.78 : 0.52}
+              metalness={world.id === 'budh' ? 0.14 : 0.05}
               emissive={world.glowColor}
-              emissiveIntensity={isHovered || isSelected ? 0.38 : 0.08}
+              emissiveIntensity={isHovered || isSelected ? 0.42 : 0.16}
             />
           ) : (
             <meshStandardMaterial
@@ -387,7 +387,7 @@ const IndividualPlanet: React.FC<PlanetProps> = ({
         <meshBasicMaterial
           color={world.glowColor}
           transparent={true}
-          opacity={isHovered ? 0.58 : isSelected ? 0.42 : 0.18}
+          opacity={isHovered ? 0.62 : isSelected ? 0.45 : 0.26}
           side={THREE.BackSide}
           blending={THREE.AdditiveBlending}
           depthWrite={false}

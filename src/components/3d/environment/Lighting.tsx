@@ -4,13 +4,13 @@ export const Lighting: React.FC = () => {
   return (
     <>
       {/* Central Star Illuminator (Surya) casting dramatic sunlit vs night-side planetary contrast */}
-      <pointLight position={[0, 0, 0]} intensity={26} distance={38} decay={1.05} color="#fff0d4" />
+      <pointLight position={[0, 0, 0]} intensity={28} distance={42} decay={0.95} color="#fff2d6" />
 
-      {/* Subtle deep space fill so planet night sides keep faint silhouette relief */}
-      <ambientLight intensity={0.11} color="#0f172a" />
+      {/* Balanced ambient space fill so dark halves of planets stay clearly visible against dust & shadows */}
+      <ambientLight intensity={0.26} color="#1e293b" />
 
-      {/* Subtle cool galactic core fill */}
-      <directionalLight position={[15, 10, 12]} intensity={0.22} color="#e0f2fe" />
+      {/* Subtle overhead & galactic core directional fill to reveal spherical planet silhouettes */}
+      <directionalLight position={[12, 18, 12]} intensity={0.48} color="#e0f2fe" />
     </>
   );
 };
