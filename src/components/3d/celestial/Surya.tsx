@@ -1,7 +1,29 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useMemo, useEffect } from 'react';
 import { useFrame, useLoader } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useUniverseStore } from '../../../store/useUniverseStore';
+
+const noopRaycast = () => {};
+
+function createSolarHaloTexture(): THREE.CanvasTexture {
+  const canvas = document.createElement('canvas');
+  canvas.width = 256;
+  canvas.height = 256;
+  const ctx = canvas.getContext('2d');
+  if (ctx) {
+    const grad = ctx.createRadialGradient(128, 128, 8, 128, 128, 128);
+    grad.addColorStop(0.0, 'rgba(255, 251, 235, 0.95)');
+    grad.addColorStop(0.18, 'rgba(253, 224, 71, 0.72)');
+    grad.addColorStop(0.42, 'rgba(245, 158, 11, 0.34)');
+    grad.addColorStop(0.72, 'rgba(234, 88, 12, 0.10)');
+    grad.addColorStop(1.0, 'rgba(234, 88, 12, 0.0)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, 256, 256);
+  }
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.needsUpdate = true;
+  return tex;
+}
 
 export const Surya: React.FC = () => {
   const meshRef = useRef<THREE.Mesh>(null);
@@ -17,6 +39,9 @@ export const Surya: React.FC = () => {
   const sunTexture = useLoader(THREE.TextureLoader, '/textures/planets/sun.jpg');
   sunTexture.wrapS = THREE.RepeatWrapping;
   sunTexture.wrapT = THREE.ClampToEdgeWrapping;
+
+  const haloTexture = useMemo(() => createSolarHaloTexture(), []);
+  useEffect(() => () => haloTexture.dispose(), [haloTexture]);
 
   // Prominent solar flare prominence configurations (scaled proportionally to Sun radius 0.85)
   const flareConfigs = useMemo(() => {
@@ -106,6 +131,17 @@ export const Surya: React.FC = () => {
         <meshBasicMaterial transparent opacity={0} depthWrite={false} />
       </mesh>
 
+      {/* Volumetric Radial Solar Bloom Halo */}
+      <sprite scale={isHovered ? [6.4, 6.4, 1] : [5.4, 5.4, 1]} raycast={noopRaycast}>
+        <spriteMaterial
+          map={haloTexture}
+          transparent={true}
+          opacity={isHovered ? 0.92 : 0.78}
+          blending={THREE.AdditiveBlending}
+          depthWrite={false}
+        />
+      </sprite>
+
       {/* Photorealistic Sun Sphere (Proportionally scaled to 0.85 Three.js units with Pulsing Core) */}
       <mesh
         ref={meshRef}
@@ -144,7 +180,7 @@ export const Surya: React.FC = () => {
         <meshBasicMaterial
           color="#fef08a"
           transparent={true}
-          opacity={isHovered ? 0.22 : 0.15}
+          opacity={isHovered ? 0.16 : 0.08}
           side={THREE.BackSide}
           blending={THREE.AdditiveBlending}
         />

@@ -104,7 +104,7 @@ export const Starfield: React.FC = () => {
           map={bgTexture}
           side={THREE.BackSide}
           transparent={true}
-          opacity={0.75}
+          opacity={0.44}
         />
       </mesh>
 

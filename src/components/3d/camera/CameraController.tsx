@@ -19,7 +19,7 @@ export const CameraController: React.FC = () => {
 
   const { activeWorldId, cameraMode, setCameraMode, zoomLevel } = useUniverseStore();
 
-  // Overview camera: high top-down vantage point looking down at the Sun with all planets revolving around it
+  // Overview camera: centered high vantage with the Sun in the middle and all planets revolving around it
   const overviewPos = useRef(new THREE.Vector3(0, 29.0, 2.6));
   const sunCenter = useRef(new THREE.Vector3(0, 0, 0.65));
 

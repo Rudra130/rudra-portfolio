@@ -103,7 +103,7 @@ function createFocusCenteredLine(
   const lineMat = new THREE.LineBasicMaterial({
     color: orbit.color,
     transparent: true,
-    opacity: orbit.isActiveWorld ? 0.75 : 0.35,
+    opacity: orbit.isActiveWorld ? 0.42 : 0.16,
     depthWrite: false,
   });
 
@@ -150,8 +150,8 @@ export const OrbitalRings: React.FC = () => {
                   isHighlighted
                     ? 0.85
                     : ring.isActiveWorld
-                    ? 0.42
-                    : 0.18
+                    ? 0.22
+                    : 0.09
                 }
                 side={THREE.DoubleSide}
                 blending={THREE.AdditiveBlending}
