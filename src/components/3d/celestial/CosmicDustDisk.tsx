@@ -53,42 +53,38 @@ const DUST_FRAGMENT_SHADER = /* glsl */ `
   void main() {
     vec2 xz = vWorldPos.xz;
     float r = length(xz);
-    if (r < 1.02 || r > 46.0) discard;
+    if (r < 1.02 || r > 48.0) discard;
 
-    // Differential Keplerian swirl around Surya (0, 0, 0)
+    // Continuous 360-degree Cartesian swirl coords avoid any atan(-PI..PI) seam
     float angle = atan(xz.y, xz.x);
-    float swirlAngle = angle + uTime * (0.24 / pow(max(r, 1.1), 0.72));
-    vec2 swirlCoord = vec2(cos(swirlAngle) * r * 0.34, sin(swirlAngle) * r * 0.34);
+    float swirlAngle = angle + uTime * (0.20 / pow(max(r, 1.1), 0.62));
+    vec2 swirlDir = vec2(cos(swirlAngle), sin(swirlAngle));
+    vec2 swirlCoord = swirlDir * (r * 0.28);
     float cloudNoise = fbm(swirlCoord * 1.15);
-    float cosmicNebula = fbm(xz * 0.14 + vec2(uTime * 0.012, -uTime * 0.008));
-    float fineStreaks = noise(vec2(r * 4.4 + cloudNoise * 1.8, swirlAngle * 3.0));
+    float cosmicWisps = fbm(xz * 0.16 + vec2(uTime * 0.015, -uTime * 0.01));
+    float fineStreaks = noise(swirlDir * 2.2 + vec2(r * 1.8 + cloudNoise * 1.6));
 
-    // Concentric accretion rings inside the solar system transitioning into outer cosmic dust clouds
-    float ringWave = 0.54 + 0.46 * sin(r * 3.6 + cloudNoise * 2.2);
-    float innerZone = 1.0 - smoothstep(6.0, 13.0, r);
-    float beltBoost = exp(-pow((r - 5.55) / 0.95, 2.0)) * 0.28;
-    float innerBoost = exp(-pow((r - 2.55) / 1.5, 2.0)) * 0.34;
+    // Uniform high dust density matching near-Sun intensity across all of space
+    float ringWave = 0.56 + 0.44 * sin(r * 3.4 + cloudNoise * 2.2);
+    float innerFade = smoothstep(1.02, 1.55, r);
+    float farEdgeFade = 1.0 - smoothstep(42.0, 48.0, r);
 
-    float innerFade = smoothstep(1.02, 1.65, r);
-    float farFade = 1.0 - smoothstep(34.0, 46.0, r);
+    float concentricPattern = (0.48 + 0.52 * ringWave) * (0.62 + 0.46 * cloudNoise + 0.24 * fineStreaks);
+    float cosmicPattern = 0.60 + 0.55 * cosmicWisps + 0.22 * fineStreaks;
+    float beltAccent = exp(-pow((r - 5.55) / 1.1, 2.0)) * 0.16;
 
-    // Keep meaningful visible dust density across the whole universe viewport (not fading out at orbit 10)
-    float radialFloor = 0.26 + 0.74 * exp(-max(0.0, r - 1.3) * 0.11);
-    float concentricMix = mix(0.45 + 0.75 * cosmicNebula, (0.45 + 0.55 * ringWave) * (0.58 + 0.52 * cloudNoise + 0.22 * fineStreaks), 0.32 + 0.68 * innerZone);
+    // Equal density across inner solar orbits and vast outer space
+    float density = innerFade * farEdgeFade * (mix(cosmicPattern, concentricPattern, 0.55) + beltAccent);
 
-    float density = innerFade * farFade * (radialFloor * concentricMix + beltBoost + innerBoost);
+    // Rich sunlit golden-taupe dust near Sun carrying smoothly into luminous cosmic dust everywhere
+    vec3 solarAmber = vec3(0.96, 0.72, 0.36);
+    vec3 warmDust = vec3(0.76, 0.63, 0.48);
+    vec3 cosmicTaupe = mix(vec3(0.64, 0.55, 0.46), vec3(0.48, 0.52, 0.60), cosmicWisps * 0.55);
 
-    // Warm golden solar scatter -> dusty silicate taupe -> deep indigo/teal/amber universe nebula dust
-    vec3 solarAmber = vec3(0.98, 0.72, 0.35);
-    vec3 warmDust = vec3(0.74, 0.60, 0.45);
-    vec3 outerSlate = vec3(0.36, 0.44, 0.58);
-    vec3 deepCosmosTint = mix(vec3(0.22, 0.28, 0.42), vec3(0.38, 0.30, 0.26), cosmicNebula);
+    vec3 baseCol = mix(solarAmber, warmDust, smoothstep(1.3, 4.2, r));
+    baseCol = mix(baseCol, cosmicTaupe, smoothstep(7.0, 18.0, r));
 
-    vec3 baseCol = mix(solarAmber, warmDust, smoothstep(1.4, 4.8, r));
-    baseCol = mix(baseCol, outerSlate, smoothstep(6.2, 11.5, r));
-    baseCol = mix(baseCol, deepCosmosTint, smoothstep(11.0, 22.0, r));
-
-    // Real-time analytic long radial shadows cast outward from Surya across inner & outer dust
+    // Real-time analytic long radial shadows extending cleanly across all of space
     float shadowFactor = 1.0;
     for (int i = 0; i < 7; i++) {
       vec2 pXZ = uPlanetPos[i].xz;
@@ -100,17 +96,17 @@ const DUST_FRAGMENT_SHADER = /* glsl */ `
         if (along > 0.0) {
           float perp = abs(rel.x * (-pDir.y) + rel.y * pDir.x);
           float pr = uPlanetRadius[i];
-          float coneHalfWidth = pr * (0.96 + 0.048 * along);
-          float penumbra = pr * (0.30 + 0.10 * along);
+          float coneHalfWidth = pr * (0.96 + 0.045 * along);
+          float penumbra = pr * (0.28 + 0.095 * along);
           float shadowMask = 1.0 - smoothstep(max(0.0, coneHalfWidth - penumbra * 0.35), coneHalfWidth + penumbra, perp);
-          float shadowReach = exp(-along * 0.085) * smoothstep(0.0, pr * 0.55, along);
-          shadowFactor *= (1.0 - 0.78 * shadowMask * shadowReach);
+          float shadowReach = exp(-along * 0.045) * smoothstep(0.0, pr * 0.55, along);
+          shadowFactor *= (1.0 - 0.80 * shadowMask * shadowReach);
         }
       }
     }
 
-    vec3 finalColor = baseCol * (0.38 + 0.92 * shadowFactor);
-    float alpha = clamp(density * (0.34 + 0.38 * shadowFactor), 0.0, 0.72);
+    vec3 finalColor = baseCol * (0.36 + 0.88 * shadowFactor);
+    float alpha = clamp(density * (0.34 + 0.30 * shadowFactor), 0.0, 0.64);
 
     gl_FragColor = vec4(finalColor, alpha);
   }
@@ -124,7 +120,7 @@ function createSoftParticleTexture(): THREE.CanvasTexture {
   if (ctx) {
     const grad = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
     grad.addColorStop(0.0, 'rgba(255, 255, 255, 1.0)');
-    grad.addColorStop(0.35, 'rgba(255, 244, 214, 0.7)');
+    grad.addColorStop(0.35, 'rgba(255, 244, 214, 0.72)');
     grad.addColorStop(1.0, 'rgba(255, 244, 214, 0.0)');
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, 32, 32);
@@ -135,8 +131,9 @@ function createSoftParticleTexture(): THREE.CanvasTexture {
 }
 
 /**
- * Renders the universe-wide swirling cosmic dust disk with concentric solar
- * rings, real-time radial planetary shadows, and sunlit micro-dust specks.
+ * Renders a uniform-density cosmic dust sea across the entire universe with
+ * concentric swirling structure, real-time radial planetary shadows, and
+ * area-uniform sunlit micro-dust grains.
  */
 export const CosmicDustDisk: React.FC = () => {
   const dustPointsRef = useRef<THREE.Points>(null);
@@ -153,7 +150,7 @@ export const CosmicDustDisk: React.FC = () => {
     []
   );
 
-  const diskGeo = useMemo(() => new THREE.RingGeometry(1.02, 46.0, 220, 8), []);
+  const diskGeo = useMemo(() => new THREE.RingGeometry(1.02, 48.0, 220, 8), []);
 
   const diskMat = useMemo(
     () =>
@@ -172,8 +169,8 @@ export const CosmicDustDisk: React.FC = () => {
     [planetVectors, planetRadii]
   );
 
-  // Sunlit micro-dust grains dispersed across the full universe field
-  const particleCount = 3200;
+  // Uniform area-density micro-dust grains across the entire visible universe
+  const particleCount = 5600;
   const spriteTex = useMemo(() => createSoftParticleTexture(), []);
 
   const [particlePositions, particleColors] = useMemo(() => {
@@ -186,34 +183,27 @@ export const CosmicDustDisk: React.FC = () => {
     };
 
     const warm = new THREE.Color('#fde68a');
-    const dust = new THREE.Color('#cdb498');
-    const cool = new THREE.Color('#94a3b8');
-    const deep = new THREE.Color('#7dd3fc');
+    const dust = new THREE.Color('#d6bea3');
+    const cool = new THREE.Color('#b6c2d1');
     const scratch = new THREE.Color();
 
+    const rMinSq = 1.35 * 1.35;
+    const rMaxSq = 30.0 * 30.0;
+
     for (let i = 0; i < particleCount; i++) {
-      const rRoll = rand();
-      const radius =
-        rRoll < 0.24
-          ? 1.45 + rand() * 3.1
-          : rRoll < 0.52
-          ? 4.7 + rand() * 2.2
-          : rRoll < 0.74
-          ? 6.9 + rand() * 4.5
-          : 11.4 + rand() * 22.0;
+      // Sample r proportional to sqrt(area) so visual grain density stays uniform everywhere
+      const radius = Math.sqrt(rMinSq + rand() * (rMaxSq - rMinSq));
       const theta = rand() * Math.PI * 2;
-      const y = (rand() - 0.5) * (0.08 + Math.min(radius, 18) * 0.025);
+      const y = (rand() - 0.5) * 0.26;
 
       pos[i * 3] = Math.cos(theta) * radius;
       pos[i * 3 + 1] = y;
       pos[i * 3 + 2] = Math.sin(theta) * radius;
 
-      if (radius < 3.6) {
-        scratch.copy(warm).lerp(dust, (radius - 1.45) / 2.2);
-      } else if (radius < 10.5) {
-        scratch.copy(dust).lerp(cool, (radius - 3.6) / 6.9);
+      if (radius < 4.5) {
+        scratch.copy(warm).lerp(dust, (radius - 1.35) / 3.15);
       } else {
-        scratch.copy(cool).lerp(deep, Math.min(1, (radius - 10.5) / 18.0) * 0.5);
+        scratch.copy(dust).lerp(cool, Math.min(1, (radius - 4.5) / 16.0) * 0.55);
       }
       col[i * 3] = scratch.r;
       col[i * 3 + 1] = scratch.g;
@@ -244,13 +234,13 @@ export const CosmicDustDisk: React.FC = () => {
     }
 
     if (dustPointsRef.current && speedFactor > 0) {
-      dustPointsRef.current.rotation.y += clampedDelta * 0.028 * speedFactor;
+      dustPointsRef.current.rotation.y += clampedDelta * 0.022 * speedFactor;
     }
   });
 
   return (
     <group>
-      {/* Universe-wide Swirling Accretion Dust Disk with Real-Time Planetary Shadows */}
+      {/* Universe-wide Uniform Cosmic Dust Disk with Real-Time Planetary Shadows */}
       <mesh
         geometry={diskGeo}
         material={diskMat}
@@ -259,18 +249,18 @@ export const CosmicDustDisk: React.FC = () => {
         raycast={noopRaycast}
       />
 
-      {/* Sunlit Micro-Dust Speckles across Whole Universe */}
+      {/* Area-Uniform Sunlit Micro-Dust Speckles across Whole Space */}
       <points ref={dustPointsRef} raycast={noopRaycast}>
         <bufferGeometry>
           <bufferAttribute attach="attributes-position" args={[particlePositions, 3]} />
           <bufferAttribute attach="attributes-color" args={[particleColors, 3]} />
         </bufferGeometry>
         <pointsMaterial
-          size={0.058}
+          size={0.052}
           map={spriteTex}
           vertexColors
           transparent
-          opacity={0.58}
+          opacity={0.54}
           depthWrite={false}
           blending={THREE.AdditiveBlending}
           sizeAttenuation

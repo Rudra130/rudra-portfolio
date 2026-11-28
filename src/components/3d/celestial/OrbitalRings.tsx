@@ -103,7 +103,7 @@ function createFocusCenteredLine(
   const lineMat = new THREE.LineBasicMaterial({
     color: orbit.color,
     transparent: true,
-    opacity: orbit.isActiveWorld ? 0.42 : 0.16,
+    opacity: orbit.isActiveWorld ? 0.56 : 0.22,
     depthWrite: false,
   });
 

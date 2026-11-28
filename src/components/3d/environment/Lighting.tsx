@@ -3,14 +3,14 @@ import React from 'react';
 export const Lighting: React.FC = () => {
   return (
     <>
-      {/* Central Star Illuminator (Surya) casting dramatic sunlit vs night-side planetary contrast */}
-      <pointLight position={[0, 0, 0]} intensity={28} distance={42} decay={0.95} color="#fff2d6" />
+      {/* Central Star Illuminator (Surya) casting vivid sunlit crescents across all planets */}
+      <pointLight position={[0, 0, 0]} intensity={32} distance={48} decay={0.9} color="#fff2d6" />
 
-      {/* Balanced ambient space fill so dark halves of planets stay clearly visible against dust & shadows */}
-      <ambientLight intensity={0.26} color="#1e293b" />
+      {/* Balanced ambient fill keeping every planet crystal clear over dense cosmic dust */}
+      <ambientLight intensity={0.3} color="#1e293b" />
 
-      {/* Subtle overhead & galactic core directional fill to reveal spherical planet silhouettes */}
-      <directionalLight position={[12, 18, 12]} intensity={0.48} color="#e0f2fe" />
+      {/* Crisp overhead rim fill to separate 3D spheres from dust backdrop */}
+      <directionalLight position={[12, 20, 12]} intensity={0.55} color="#e0f2fe" />
     </>
   );
 };
